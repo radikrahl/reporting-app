@@ -1,0 +1,81 @@
+<ScrollView>
+  <StackLayout class="form" [formGroup]="form">
+    <ng-container *ngIf="pageIndex === 0 && form.controls['page1'] as page1">
+      <StackLayout class="input-field" flexDirection="row" [formGroup]="page1">
+        <DatePicker class="datepicker" formControlName="date" date="{{ date }}"></DatePicker>
+        <Label text="Name of Parent"></Label>
+        <TextField class="input" hint="Enter Parents name" required [autocorrect]="false" formControlName="name">
+        </TextField>
+      </StackLayout>
+    </ng-container>
+    <ng-container *ngIf="pageIndex === 1 && form.controls['page2'] as page2">
+      <StackLayout class="input-field" [formGroup]="page2">
+        <Label text="Number of Chicken"></Label>
+        <TextField class="input" hint="Enter Amount of Chicken" keyboardType="integer" required [autocorrect]="false"
+          formControlName="chicken"></TextField>
+      </StackLayout>
+    </ng-container>
+    <ng-container *ngIf="pageIndex === 2 && form.controls['page3'] as page3">
+      <StackLayout class="input-field" [formGroup]="page3">
+        <StackLayout>
+          <Label text="Quantity of food (kg)"></Label>
+          <TextField class="input" keyboardType="integer" formControlName="foodQuantity"></TextField>
+        </StackLayout>
+        <StackLayout>
+          <Label text="Price of food (ugx)"></Label>
+          <TextField class="input" hint="Price of Food" keyboardType="number" required [autocorrect]="false"
+            formControlName="foodPrice"></TextField>
+        </StackLayout>
+      </StackLayout>
+    </ng-container>
+    <ng-container *ngIf="pageIndex === 3 && form.controls['page4'] as page4">
+      <StackLayout class="input-field" [formGroup]="page4">
+        <Label text="Number of eggs"></Label>
+        <TextField class="input" keyboardType="number" required formControlName="eggs"></TextField>
+        <Label text="Any new born bird?"></Label>
+        <Switch class="input" required formControlName="newBorn"></Switch>
+        <ng-container *ngIf="page4.get('newBorn').value === true">
+          <Label text="Amount of new born birds"></Label>
+          <Switch class="input" required formControlName="amountNewBorn"></Switch>
+        </ng-container>
+      </StackLayout>
+    </ng-container>
+    <ng-container *ngIf="pageIndex === 4 && form.controls['page5'] as page5">
+      <StackLayout class="input-field" [formGroup]="page5">
+        <StackLayout>
+          <Label text="Sold birds"></Label>
+          <TextField class="input" required formControlName="soldBirds"></TextField>
+        </StackLayout>
+        <StackLayout>
+          <Label text="Amount received by Parents (ugx)"></Label>
+          <TextField class="input" required keyboardType="number" formControlName="amountReceived"></TextField>
+        </StackLayout>
+      </StackLayout>
+    </ng-container>
+    <ng-container *ngIf="pageIndex === 5 && form.controls['page6'] as page6">
+      <StackLayout class="input-field" [formGroup]="page6">
+        <StackLayout>
+          <Label text="Number of sick birds."></Label>
+          <TextField class="input" required keyboardType="number" formControlName="sickBirds"></TextField>
+        </StackLayout>
+        <StackLayout>
+          <Label text="Medicine needed?"></Label>
+          <Switch class="input" required formControlName="medicineNeeded"></Switch>
+        </StackLayout>
+        <StackLayout>
+          <Label text="Sick biords"></Label>
+          <TextField class="input" required keyboardType="number" formControlName="amountMedicineBought"></TextField>
+        </StackLayout>
+        <StackLayout>
+          <Label text="Sick biords"></Label>
+          <TextField class="input" required keyboardType="number" formControlName="deadChicken"></TextField>
+        </StackLayout>
+      </StackLayout>
+    </ng-container>
+    <FlexboxLayout flexDirection="row">
+      <Button text="Previous" flexGrow="1" *ngIf="pageIndex > 0" id="prev" (tap)="onTap($event)"></Button>
+      <Button text="Next" flexGrow="1" *ngIf="pageIndex < 5" id="next" (tap)="onTap($event)"></Button>
+
+    </FlexboxLayout>
+  </StackLayout>
+</ScrollView>
