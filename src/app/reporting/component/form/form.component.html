@@ -1,0 +1,7 @@
+<StackLayout [formGroup]="form">
+
+    <ng-container *ngFor="let question of questions">
+        <afriknow-report-form-item [question]="question" [form]="form"></afriknow-report-form-item>
+    </ng-container>
+
+</StackLayout>

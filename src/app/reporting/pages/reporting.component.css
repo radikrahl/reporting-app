@@ -10,3 +10,7 @@ label {
 .datepicker {
     color: white;
 }
+
+.switch {
+    text-align: center;
+}

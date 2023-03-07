@@ -1,0 +1,22 @@
+<StackLayout [formGroup]="form">
+  <Label [text]="question.label"></Label>
+  <ng-container [ngSwitch]="question.controlType">
+    <ng-container *ngSwitchCase="'textbox'">
+      <TextField class="input" keyboardType="{{question.keyboardType}}" returnKeyType="{{question.returnKeyType}}" [id]="question.key"
+        [required]="question.required" [autocorrect]="false" [formControlName]="question.key">
+      </TextField>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'datepicker'">
+      <DatePicker class="datepicker" [formControlName]="question.key" [required]="question.required" date="{{ question.value }}"></DatePicker>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'switch'">
+      <Switch class="switch" checked="true" [required]="question.required" [formControlName]="question.key"></Switch>
+    </ng-container>
+
+
+  </ng-container>
+
+  <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+</StackLayout>

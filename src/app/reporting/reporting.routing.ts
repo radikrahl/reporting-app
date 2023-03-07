@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import { Router, RouterModule, Routes } from '@angular/router';
-import { ReportingComponent } from './reporting.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ReportingComponent } from './pages/reporting.component';
 
 const routes: Routes = [
   { path: 'report', component: ReportingComponent },
