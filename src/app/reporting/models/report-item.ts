@@ -4,7 +4,6 @@ export interface ReportItemOptions<T> {
   label?: string;
   required?: boolean;
   page?: number;
-  options?: { key: string; value: string }[];
 }
 
 export abstract class ReportItemBase<T> {
@@ -14,7 +13,6 @@ export abstract class ReportItemBase<T> {
   required: boolean;
   page: number;
   abstract controlType: string;
-  options: { key: string; value: string }[];
 
   constructor(options: ReportItemOptions<T>) {
     this.value = options.value;
@@ -22,7 +20,6 @@ export abstract class ReportItemBase<T> {
     this.label = options.label || "";
     this.required = !!options.required;
     this.page = options.page === undefined ? 1 : options.page;
-    this.options = options.options || [];
   }
 }
 
@@ -53,8 +50,8 @@ export class TextboxReportItem<
 
   constructor(options: TextboxReportItemOptions<T>) {
     super(options);
-    this.keyboardType = options.keyboardType|| '';
-    this.returnKeyType = options.returnKeyType|| '';
+    this.keyboardType = options.keyboardType || "";
+    this.returnKeyType = options.returnKeyType || "";
   }
 }
 
@@ -62,6 +59,15 @@ export class DatepickerReportItem extends ReportItemBase<Date> {
   controlType: string = "datepicker";
 }
 
+export interface SwitchReportItemOptions extends ReportItemOptions<boolean> {
+  switchFor: string | string[];
+}
+
 export class SwitchReportItem extends ReportItemBase<boolean> {
   controlType: string = "switch";
+  switchFor: string | string[];
+  constructor(options: SwitchReportItemOptions) {
+    super(options);
+    this.switchFor = options.switchFor;
+  }
 }

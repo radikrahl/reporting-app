@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { map, of } from "rxjs";
+import { of } from "rxjs";
 import {
   DatepickerReportItem,
   ReportItemBase,
@@ -9,7 +9,7 @@ import {
 } from "../models/report-item";
 
 @Injectable()
-export class ReportItemService {
+export class ReportItemFactory {
   private questions: ReportItemBase<unknown>[] = [
     /* Page 1 */
     new DatepickerReportItem({
@@ -25,7 +25,7 @@ export class ReportItemService {
       label: "Parent name",
       required: true,
       page: 1,
-      returnKeyType: "next"
+      returnKeyType: "next",
     }),
 
     /* Page 2 */
@@ -34,7 +34,7 @@ export class ReportItemService {
       label: "How many chicken",
       required: true,
       page: 2,
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     /* Page 3 */
@@ -42,14 +42,14 @@ export class ReportItemService {
       key: "foodQuantity",
       label: "Quantity of food (kg)",
       page: 3,
-      keyboardType: 'number'
+      keyboardType: "number",
     }),
 
     new TextboxReportItem<number>({
       key: "foodPrice",
       label: "Price of food (ugx)",
       page: 3,
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     /* Page 4 */
@@ -58,21 +58,22 @@ export class ReportItemService {
       key: "eggs",
       label: "How many eggs",
       page: 4,
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     new SwitchReportItem({
       key: "newBorn",
       page: 4,
       label: "Any new born bird?",
-      value: false
+      value: false,
+      switchFor: "amountNewBorn",
     }),
 
     new TextboxReportItem<number>({
       key: "amountNewBorn",
       page: 4,
       label: "How many?",
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     /* Page 5 */
@@ -81,21 +82,22 @@ export class ReportItemService {
       key: "soldBirds",
       page: 5,
       label: "Any sold Birds?",
-      value: false
+      value: false,
+      switchFor: ["soldBirdsAmount", "amountReceived"],
     }),
 
     new TextboxReportItem<number>({
       key: "soldBirdsAmount",
       page: 5,
       label: "How many sold birds",
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     new TextboxReportItem<number>({
       key: "amountReceived",
       page: 5,
       label: "Amount received by the Parents (ugx)",
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     /* Page 6 */
@@ -104,28 +106,30 @@ export class ReportItemService {
       key: "sickBirds",
       page: 6,
       label: "Any sick Birds?",
-      value: false
+      value: false,
+      switchFor: "sickBirdsAmount",
     }),
 
     new TextboxReportItem<number>({
       key: "sickBirdsAmount",
       page: 6,
       label: "How many sick birds",
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     new SwitchReportItem({
       key: "medicineNeeded",
       page: 6,
       label: "Any medicine needed?",
-      value: false
+      value: false,
+      switchFor: "medicineAmount",
     }),
 
     new TextboxReportItem<number>({
       key: "medicineAmount",
       page: 6,
       label: "Amount of medicine bought",
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
 
     /* Page 7 */
@@ -134,14 +138,15 @@ export class ReportItemService {
       key: "deadBirds",
       page: 7,
       label: "Any dead Birds?",
-      value: false
+      value: false,
+      switchFor: "deadBirdsAmount",
     }),
 
     new TextboxReportItem<number>({
       key: "deadBirdsAmount",
       page: 7,
       label: "How many dead birds",
-      keyboardType: 'integer'
+      keyboardType: "integer",
     }),
   ];
 

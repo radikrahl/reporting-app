@@ -1,6 +1,6 @@
 <ScrollView>
   <StackLayout class="form">
-    <afriknow-report-page [controls]="reportItems$ | async"></afriknow-report-page>
+    <afriknow-report-form [questions]="reportItems$ | async"> </afriknow-report-form>
     <FlexboxLayout flexDirection="row">
       <Button text="Previous" flexGrow="1" *ngIf="pageIndex > 1" id="prev" (tap)="onTap($event)"></Button>
       <Button text="Next" flexGrow="1" *ngIf="pageIndex < 7" id="next" (tap)="onTap($event)"></Button>

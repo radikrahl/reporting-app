@@ -1,0 +1,19 @@
+.input {
+  font-size: 20rem;
+}
+
+label {
+  text-align: center;
+  font-size: 30rem;
+}
+
+.datepicker {
+  color: white;
+}
+
+.switch {
+  text-align: center;
+  height: 300px;
+  width: 300px;
+  transform: scale(1.5);
+}

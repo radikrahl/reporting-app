@@ -1,6 +1,4 @@
-import { CommonModule } from "@angular/common";
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NativeScriptModule } from "@nativescript/angular";
 
 import { AppRoutingModule } from "./app-routing.module";
