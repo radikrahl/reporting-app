@@ -1,10 +1,19 @@
-<ScrollView>
-  <StackLayout class="form">
-    <afriknow-report-form [questions]="reportItems$ | async"> </afriknow-report-form>
-    <FlexboxLayout flexDirection="row">
-      <Button text="Previous" flexGrow="1" *ngIf="pageIndex > 1" id="prev" (tap)="onTap($event)"></Button>
-      <Button text="Next" flexGrow="1" *ngIf="pageIndex < 7" id="next" (tap)="onTap($event)"></Button>
-    </FlexboxLayout>
+<GridLayout columns="*" rows="9*,1*" width="100%" height="100%">
 
-  </StackLayout>
-</ScrollView>
+  <ScrollView>
+    <ng-container row="0" col="0" *ngFor="let group of questionGroups; index as i">
+      <afriknow-report-page *ngIf="i + 1 === pageIndex" [mainForm]="form"
+        [questionGroup]="group"></afriknow-report-page>
+    </ng-container>
+  </ScrollView>
+
+  <FlexboxLayout flexDirection="row" row="1" col="0">
+    <Button class="afriknow-btn" text="Previous" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
+      (tap)="onTap($event)"></Button>
+    <Button class="afriknow-btn" text="Next" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
+      (tap)="onTap($event)"></Button>
+    <Button class="Button.-primary" text="Submit" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
+     isEnabled="{{form.valid}}"></Button>
+  </FlexboxLayout>
+
+</GridLayout>

@@ -1,10 +1,9 @@
 import { Component } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Button } from "@nativescript/core";
-import { Observable, tap } from "rxjs";
-import { ReportItemBase } from "../models/report-item";
+import { QuestionGroup } from "../models/report-item";
 import { ReportControlService } from "../services/report-control.service";
-import { ReportItemFactory } from "../services/report-item.service";
+import { ReportItemFactory } from "../services/report-item.factory";
 
 @Component({
   selector: "afriknow-reporting",
@@ -13,22 +12,16 @@ import { ReportItemFactory } from "../services/report-item.service";
   providers: [ReportItemFactory, ReportControlService],
 })
 export class ReportingComponent {
-  form: FormGroup;
-  date = new Date(Date.now());
   pageIndex = 1;
-  reportItems$: Observable<ReportItemBase<unknown>[]>;
+  form: FormGroup = new FormGroup({});
+  questionGroups: QuestionGroup[];
 
   constructor(private factory: ReportItemFactory) {
-    this.reportItems$ = this.factory
-      .getQuestions2(this.pageIndex)
-      .pipe(tap(console.log));
+    this.questionGroups = this.factory.getQuestions3();
   }
 
   onTap(event: { object: Button }) {
     if (event.object.id === "next") this.pageIndex++;
     else if (event.object.id === "prev") this.pageIndex--;
-
-    //todo maybe pipe through action and update pageindex on service
-    this.reportItems$ = this.factory.getQuestions2(this.pageIndex);
   }
 }

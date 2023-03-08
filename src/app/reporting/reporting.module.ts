@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NativeScriptFormsModule } from "@nativescript/angular";
 import { ReportFormItemComponent } from "./component/form-item/form-item.component";
 import { ReportFormComponent } from "./component/form/form.component";
+import { ReportPageComponent } from "./pages/report-page/report-page.component";
 import { ReportingComponent } from "./pages/reporting.component";
 import { ReportingRoutingModule } from "./reporting.routing";
 
@@ -17,6 +18,7 @@ import { ReportingRoutingModule } from "./reporting.routing";
   ],
   declarations: [
     ReportingComponent,
+    ReportPageComponent,
     ReportFormComponent,
     ReportFormItemComponent,
   ],

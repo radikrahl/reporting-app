@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { ReportItemBase, SwitchReportItem } from "../../models/report-item";
+import { QuestionBase, SwitchReportItem } from "../../models/report-item";
 
 @Component({
   selector: "afriknow-report-form-item",
@@ -8,7 +8,7 @@ import { ReportItemBase, SwitchReportItem } from "../../models/report-item";
   styleUrls: ["./form-item.component.css"],
 })
 export class ReportFormItemComponent implements OnInit {
-  @Input() question!: ReportItemBase<unknown>;
+  @Input() question!: QuestionBase<unknown>;
   @Input() form!: FormGroup;
   get isValid() {
     return this.form.controls[this.question.key].valid;

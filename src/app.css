@@ -1,6 +1,6 @@
 @import '@nativescript/theme/css/core.css';
 @import '@nativescript/theme/css/forest.css';
 
-Button.-primary {
-  font-size: 18;
+.afriknow-btn {
+
 }

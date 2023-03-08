@@ -3,23 +3,15 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import {
   DatepickerReportItem,
-  ReportItemBase,
+  QuestionBase,
+  QuestionGroup,
   SwitchReportItem,
   TextboxReportItem,
 } from "../models/report-item";
 
 @Injectable()
 export class ReportItemFactory {
-  private questions: ReportItemBase<unknown>[] = [
-    /* Page 1 */
-    new DatepickerReportItem({
-      key: "date",
-      label: "Enter Date",
-      value: new Date(Date.now()),
-      required: true,
-      page: 1,
-    }),
-
+  private questions1: QuestionBase<unknown>[] = [
     new TextboxReportItem<string>({
       key: "parentName",
       label: "Parent name",
@@ -27,8 +19,16 @@ export class ReportItemFactory {
       page: 1,
       returnKeyType: "next",
     }),
+    new DatepickerReportItem({
+      key: "date",
+      label: "Enter Date",
+      value: new Date(Date.now()),
+      required: true,
+      page: 1,
+    }),
+  ];
 
-    /* Page 2 */
+  private questions2: QuestionBase<unknown>[] = [
     new TextboxReportItem<number>({
       key: "chicken",
       label: "How many chicken",
@@ -36,8 +36,8 @@ export class ReportItemFactory {
       page: 2,
       keyboardType: "integer",
     }),
-
-    /* Page 3 */
+  ];
+  private questions3: QuestionBase<unknown>[] = [
     new TextboxReportItem<number>({
       key: "foodQuantity",
       label: "Quantity of food (kg)",
@@ -51,9 +51,8 @@ export class ReportItemFactory {
       page: 3,
       keyboardType: "integer",
     }),
-
-    /* Page 4 */
-
+  ];
+  private questions4: QuestionBase<unknown>[] = [
     new TextboxReportItem<number>({
       key: "eggs",
       label: "How many eggs",
@@ -75,9 +74,8 @@ export class ReportItemFactory {
       label: "How many?",
       keyboardType: "integer",
     }),
-
-    /* Page 5 */
-
+  ];
+  private questions5: QuestionBase<unknown>[] = [
     new SwitchReportItem({
       key: "soldBirds",
       page: 5,
@@ -99,9 +97,8 @@ export class ReportItemFactory {
       label: "Amount received by the Parents (ugx)",
       keyboardType: "integer",
     }),
-
-    /* Page 6 */
-
+  ];
+  private questions6: QuestionBase<unknown>[] = [
     new SwitchReportItem({
       key: "sickBirds",
       page: 6,
@@ -131,9 +128,8 @@ export class ReportItemFactory {
       label: "Amount of medicine bought",
       keyboardType: "integer",
     }),
-
-    /* Page 7 */
-
+  ];
+  private questions7: QuestionBase<unknown>[] = [
     new SwitchReportItem({
       key: "deadBirds",
       page: 7,
@@ -150,6 +146,21 @@ export class ReportItemFactory {
     }),
   ];
 
+  private get questions() {
+    return [].concat.apply(
+      [],
+      [
+        this.questions1,
+        this.questions2,
+        this.questions3,
+        this.questions4,
+        this.questions5,
+        this.questions6,
+        this.questions7,
+      ]
+    );
+  }
+
   getQuestions() {
     //todo: evaluate if observable and set paging
     return of(this.questions.sort((a, b) => a.page - b.page));
@@ -157,5 +168,19 @@ export class ReportItemFactory {
 
   getQuestions2(pageIndex: number) {
     return of(this.questions.filter((y) => y.page === pageIndex));
+  }
+
+  getQuestions3(): QuestionGroup[] {
+    const arr: QuestionGroup[] = [];
+
+    arr.push(new QuestionGroup(this.questions1));
+    arr.push(new QuestionGroup(this.questions2));
+    arr.push(new QuestionGroup(this.questions3));
+    arr.push(new QuestionGroup(this.questions4));
+    arr.push(new QuestionGroup(this.questions5));
+    arr.push(new QuestionGroup(this.questions6));
+    arr.push(new QuestionGroup(this.questions7));
+
+    return arr;
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ReportItemBase } from "../models/report-item";
+import { QuestionBase } from "../models/report-item";
 
 export type ReportPageControlMap = {
   [key: string]: FormGroup;
@@ -9,7 +9,7 @@ export type ReportPageControlMap = {
 @Injectable()
 export class ReportControlService {
   toFormGroup(
-    questions: ReportItemBase<unknown>[]
+    questions: QuestionBase<unknown>[]
   ): FormGroup<ReportPageControlMap> {
     const group: ReportPageControlMap = {};
     questions.forEach((question) => {
@@ -27,7 +27,7 @@ export class ReportControlService {
     return new FormGroup(group);
   }
 
-  toFormGroup2(questions: ReportItemBase<unknown>[]) {
+  toFormGroup2(questions: QuestionBase<unknown>[]) {
     const group: any = {};
     if (questions) {
       questions.forEach((question) => {
