@@ -173,13 +173,13 @@ export class ReportItemFactory {
   getQuestions3(): QuestionGroup[] {
     const arr: QuestionGroup[] = [];
 
-    arr.push(new QuestionGroup(this.questions1));
-    arr.push(new QuestionGroup(this.questions2));
-    arr.push(new QuestionGroup(this.questions3));
-    arr.push(new QuestionGroup(this.questions4));
-    arr.push(new QuestionGroup(this.questions5));
-    arr.push(new QuestionGroup(this.questions6));
-    arr.push(new QuestionGroup(this.questions7));
+    arr.push(new QuestionGroup('1', this.questions1));
+    arr.push(new QuestionGroup('2', this.questions2));
+    arr.push(new QuestionGroup('3', this.questions3));
+    arr.push(new QuestionGroup('4', this.questions4));
+    arr.push(new QuestionGroup('5', this.questions5));
+    arr.push(new QuestionGroup('6', this.questions6));
+    arr.push(new QuestionGroup('7', this.questions7));
 
     return arr;
   }

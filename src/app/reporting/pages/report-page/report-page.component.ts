@@ -1,16 +1,20 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { Component, Input, OnChanges } from "@angular/core";
+import { FormGroup, FormRecord } from "@angular/forms";
 import { QuestionGroup } from "../../../forms/classes/report-item";
 
 @Component({
   selector: "afriknow-report-page",
-  template: ` <afriknow-report-form [questionGroup]="questionGroup"></afriknow-report-form> `,
+  template: `
+    <afriknow-report-form
+      [questionGroup]="questionGroup"
+    ></afriknow-report-form>
+  `,
 })
-export class ReportPageComponent implements OnInit {
+export class ReportPageComponent implements OnChanges {
   @Input() questionGroup!: QuestionGroup;
-  @Input() mainForm!: FormGroup;
+  @Input() mainForm!: FormRecord;
 
-ngOnInit(): void {
+  ngOnChanges(): void {
     if (!this.mainForm.contains(this.questionGroup.key))
       this.mainForm.addControl(this.questionGroup.key, this.questionGroup.form);
   }

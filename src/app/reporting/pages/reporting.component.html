@@ -8,13 +8,14 @@
         [questionGroup]="group"></afriknow-report-page>
     </ng-container>
   </ScrollView>
+
   <FlexboxLayout flexDirection="row" row="1" col="0">
     <Button class="afriknow-btn" text="Previous" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
       (tap)="onTap($event)"></Button>
     <Button class="afriknow-btn" text="Next" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
       (tap)="onTap($event)"></Button>
     <Button class="Button.-primary" text="Submit" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
-     isEnabled="{{form.valid}}"></Button>
+      isEnabled="{{form.valid}}" (tap)="onSubmit()"></Button>
   </FlexboxLayout>
 
 </GridLayout>

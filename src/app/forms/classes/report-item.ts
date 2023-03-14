@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
 
 export interface ReportItemOptions<T> {
@@ -28,9 +28,11 @@ export abstract class QuestionBase<T> {
 
 export class QuestionGroup {
   private _form: FormGroup;
-  key: string;
 
-  constructor(public questions: QuestionBase<unknown>[]) {}
+  constructor(
+    public readonly key: string,
+    public questions: QuestionBase<unknown>[]
+  ) {}
 
   public get form() {
     if (!this._form) this._form = this.toFormGroup();
