@@ -7,7 +7,7 @@ import {
   QuestionGroup,
   SwitchReportItem,
   TextboxReportItem,
-} from "../models/report-item";
+} from "../../forms/classes/report-item";
 
 @Injectable()
 export class ReportItemFactory {

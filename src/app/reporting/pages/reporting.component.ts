@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Button } from "@nativescript/core";
-import { QuestionGroup } from "../models/report-item";
-import { ReportControlService } from "../services/report-control.service";
+import { QuestionGroup } from "../../forms/classes/report-item";
+import { ReportControlService } from "../../forms/services/report-control.service";
 import { ReportItemFactory } from "../services/report-item.factory";
 
 @Component({

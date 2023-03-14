@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { QuestionBase } from "../models/report-item";
+import { QuestionBase } from "../classes/report-item";
 
 export type ReportPageControlMap = {
   [key: string]: FormGroup;

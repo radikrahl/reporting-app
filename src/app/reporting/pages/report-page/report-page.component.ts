@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { QuestionGroup } from "../../models/report-item";
+import { QuestionGroup } from "../../../forms/classes/report-item";
 
 @Component({
   selector: "afriknow-report-page",

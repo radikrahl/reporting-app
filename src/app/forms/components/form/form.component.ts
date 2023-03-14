@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { QuestionBase, QuestionGroup } from "../../models/report-item";
+import { QuestionGroup } from "../../classes/report-item";
 
 @Component({
   selector: "afriknow-report-form",
@@ -12,7 +11,5 @@ export class ReportFormComponent implements OnChanges {
 
   constructor() {}
 
-  ngOnChanges() {
-
-  }
+  ngOnChanges() {}
 }

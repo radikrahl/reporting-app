@@ -1,4 +1,6 @@
-<GridLayout columns="*" rows="9*,1*" width="100%" height="100%">
+<ActionBar title="Report!"></ActionBar>
+
+<GridLayout columns="*" rows="*,auto" width="100%" height="100%">
 
   <ScrollView>
     <ng-container row="0" col="0" *ngFor="let group of questionGroups; index as i">
@@ -6,7 +8,6 @@
         [questionGroup]="group"></afriknow-report-page>
     </ng-container>
   </ScrollView>
-
   <FlexboxLayout flexDirection="row" row="1" col="0">
     <Button class="afriknow-btn" text="Previous" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
       (tap)="onTap($event)"></Button>

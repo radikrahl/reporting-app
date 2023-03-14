@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { QuestionBase, SwitchReportItem } from "../../models/report-item";
+import { QuestionBase, SwitchReportItem } from "../../classes/report-item";
 
 @Component({
   selector: "afriknow-report-form-item",
