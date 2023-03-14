@@ -1,11 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { NativeScriptRouterModule } from "@nativescript/angular";
 import { ReportingComponent } from "./pages/reporting.component";
 
-const routes: Routes = [{ path: "report", component: ReportingComponent }];
+const routes: Routes = [{ path: "", component: ReportingComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [NativeScriptRouterModule.forChild(routes)],
   declarations: [],
 })
 export class ReportingRoutingModule {}

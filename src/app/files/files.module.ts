@@ -3,7 +3,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FilesComponent } from "./pages/files.component";
 
-const routes: Routes = [{ path: "files", component: FilesComponent }];
+const routes: Routes = [{ path: "", component: FilesComponent }];
 
 @NgModule({
   declarations: [FilesComponent],
