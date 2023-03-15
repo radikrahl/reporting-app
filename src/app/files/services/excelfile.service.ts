@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { FormRecord } from "@angular/forms";
-import { ShareFile } from "@nativescript-community/ui-share-file";
-import { knownFolders, path, File, Folder, Utils } from "@nativescript/core";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import * as XLSX from "xlsx";
+import { File } from "@nativescript/core";
+import { FileService } from "./file.service";
 
 type ExcelData = {
   head: string[];
-  rows: any[][];
+  rows: any[];
 };
 
 interface IFileService {
@@ -25,12 +26,16 @@ export class ExcelFileService implements IFileService {
     return entities.map((x) => folder.getFile(x.name));
   }
 
-  save(object: FormRecord) {
-    const fileDate = <Date>object.get("1").get("date").value;
-    const parentName = <string>object.get("1").get("parentName").value;
+  save(object: FormArray) {
+    const fileDate = <Date>object.controls[0].get("date").value;
+    const parentName = <string>object.controls[0].get("parentName").value;
 
-    const fileName = `report-${parentName}-${fileDate.getUTCFullYear()}-${fileDate.getUTCMonth()}-${fileDate.getUTCDate()}.csv`;
-    const content = JSON.stringify(object.value);
+    const fileName = `${parentName}-${fileDate.getUTCFullYear()}-${fileDate.getUTCMonth()}-${fileDate.getUTCDate()}.csv`;
+
+    const content = this.createFileContent(
+      this.createExcelData(object),
+      parentName
+    );
 
     return this.files.save({ content, fileName });
   }
@@ -42,43 +47,35 @@ export class ExcelFileService implements IFileService {
     return this.files.open(args);
   }
 
-  delete(args: {fileName:string}){
+  delete(args: { fileName: string }) {
     return this.files.delete(args);
   }
-}
 
-@Injectable({ providedIn: 'root' })
-export class FileService {
-  getFolder(): Folder | null {
-    const documents = knownFolders.documents();
+  private createFileContent(data: ExcelData, sheetName: string) {
+    const workbook = XLSX.utils.book_new();
 
-    return documents.getFolder("reports");
+    const worksheet = XLSX.utils.aoa_to_sheet([data.head, data.rows]);
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+    return XLSX.write(workbook, { type: "string", bookType: "csv" });
   }
 
-  share(args: { path: string; fileName: string }) {
-    try {
-      return new ShareFile().open({
-        path: args.path,
-      });
-    } catch (e) {
-      console.error(e);
+  private createExcelData(form: FormArray): ExcelData {
+    var head = [];
+    var rows: any[] = [];
+
+    for (let index = 0; index < form.controls.length; index++) {
+      const group: FormGroup = <FormGroup>form.controls[index];
+      for (var controlKey in group.controls) {
+        var control = <FormControl>group.controls[controlKey];
+
+        if (!control.disabled) {
+          head.push(controlKey);
+          rows.push(control.value);
+        }
+      }
     }
-  }
 
-  open(args: { path: string }) {
-    return Utils.openFile(args.path);
-  }
-
-  save(args: { content: string; fileName: string }) {
-    const folder = this.getFolder();
-    var file = folder.getFile(args.fileName);
-
-    return file.writeText(args.content);
-  }
-
-  delete(args: {fileName:string}) {
-    const folder = this.getFolder();
-    var file = folder.getFile(args.fileName);
-    return file.remove();
+    return { head, rows };
   }
 }

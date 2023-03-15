@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
 
 export interface ReportItemOptions<T> {
@@ -40,15 +40,19 @@ export class QuestionGroup {
   }
 
   private toFormGroup() {
-    const group: any = {};
+    const group: FormGroup = new FormGroup({});
+
     if (this.questions) {
       this.questions.forEach((question) => {
-        group[question.key] = question.required
+        const control = question.required
           ? new FormControl(question.value, Validators.required)
           : new FormControl(question.value);
+
+        group.addControl(question.key, control);
       });
     }
-    return new FormGroup(group);
+
+    return group;
   }
 }
 

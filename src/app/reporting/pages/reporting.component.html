@@ -4,8 +4,8 @@
 
   <ScrollView>
     <ng-container row="0" col="0" *ngFor="let group of questionGroups; index as i">
-      <afriknow-report-page *ngIf="i + 1 === pageIndex" [mainForm]="form"
-        [questionGroup]="group"></afriknow-report-page>
+      <afriknow-report-form *ngIf="i + 1 === pageIndex"
+        [questionGroup]="group"></afriknow-report-form>
     </ng-container>
   </ScrollView>
 

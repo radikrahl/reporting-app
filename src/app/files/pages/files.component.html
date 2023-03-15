@@ -1,12 +1,11 @@
 <StackLayout>
     <ng-container *ngFor="let item of reports$ | async">
 
-        <FlexboxLayout>
+        <FlexboxLayout justifyContent="space-between">
 
             <StackLayout orientation="vertical">
-
-                <Button (tap)="onOpen(item)" [text]="item.name"></Button>
-                <Label [text]="item.lastModified.toLocaleDateString()"></Label>
+                <Label [text]="item.name"></Label>
+                <Button (tap)="onOpen(item)" [text]="'Open'"></Button>
             </StackLayout>
             <StackLayout orientation="horizontal">
                 <Button (tap)="onShare(item)" [text]="'Share'"></Button>

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { FormGroup, FormRecord } from "@angular/forms";
+import { FormArray } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Button } from "@nativescript/core";
 import { ExcelFileService } from "~/app/files/services/excelfile.service";
@@ -14,7 +14,7 @@ import { ReportItemFactory } from "../services/report-item.factory";
 })
 export class ReportingComponent {
   pageIndex = 1;
-  form: FormRecord = new FormRecord({});
+  form: FormArray = new FormArray([]);
   questionGroups: QuestionGroup[];
 
   constructor(
@@ -23,6 +23,7 @@ export class ReportingComponent {
     private router: Router
   ) {
     this.questionGroups = this.factory.getQuestions3();
+    this.questionGroups.forEach((group) => this.form.push(group.form));
   }
 
   onTap(event: { object: Button }) {
@@ -31,12 +32,8 @@ export class ReportingComponent {
   }
 
   onSubmit() {
-    const json = JSON.stringify(this.form.value);
     this.files.save(this.form).then((file) => {
-      if (file) {
-        this.router.navigate(["/files"]);
-        console.log(file.name);
-      }
+      this.router.navigate(["/files"]);
     });
   }
 }
