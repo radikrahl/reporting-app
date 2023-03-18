@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { Component, Input, OnChanges } from "@angular/core";
 import { QuestionGroup } from "../../classes/report-item";
 
 @Component({
@@ -7,7 +7,7 @@ import { QuestionGroup } from "../../classes/report-item";
   providers: [],
 })
 export class ReportFormComponent implements OnChanges {
-  @Input() questionGroup: QuestionGroup;
+  @Input() questionGroup!: QuestionGroup;
 
   constructor() {}
 

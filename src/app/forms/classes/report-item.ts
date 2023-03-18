@@ -1,38 +1,47 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
+import { ExcelData } from "~/app/files/services/excelfile.service";
 
 export interface ReportItemOptions<T> {
   value?: T;
   key: string;
   label?: string;
   required?: boolean;
-  page?: number;
+  errorText?: string;
 }
 
 export abstract class QuestionBase<T> {
-  value: T | undefined;
   key: string;
   label: string;
   required: boolean;
-  page: number;
+  errorText: string;
   abstract controlType: string;
 
   constructor(options: ReportItemOptions<T>) {
-    this.value = options.value;
     this.key = options.key || "";
     this.label = options.label || "";
     this.required = !!options.required;
-    this.page = options.page === undefined ? 1 : options.page;
+    this.errorText = options.errorText || "";
+  }
+}
+
+export abstract class ReportControl<T> extends QuestionBase<T> {
+  formControl: FormControl<T | null>;
+  public get value(): T | null {
+    return this.formControl.value;
+  }
+  constructor(options: ReportItemOptions<T>) {
+    super(options);
+    this.formControl = options.required
+      ? new FormControl<T | null>(options.value ?? null)
+      : new FormControl<T | null>(options.value ?? null, Validators.required);
   }
 }
 
 export class QuestionGroup {
-  private _form: FormGroup;
+  private _form?: FormGroup;
 
-  constructor(
-    public readonly key: string,
-    public questions: QuestionBase<unknown>[]
-  ) {}
+  constructor(public questions: ReportControl<unknown>[]) {}
 
   public get form() {
     if (!this._form) this._form = this.toFormGroup();
@@ -42,17 +51,31 @@ export class QuestionGroup {
   private toFormGroup() {
     const group: FormGroup = new FormGroup({});
 
-    if (this.questions) {
-      this.questions.forEach((question) => {
-        const control = question.required
-          ? new FormControl(question.value, Validators.required)
-          : new FormControl(question.value);
-
-        group.addControl(question.key, control);
-      });
-    }
+    this.questions.forEach((question) => {
+      group.addControl(question.key, question.formControl);
+    });
 
     return group;
+  }
+
+  private toCsv(): ExcelData {
+    const data: { head: string[]; rows: any[] } = { head: [], rows: [] };
+
+    // for (let index = 0; index < this.questionGroups.length; index++) {
+    //   const group: QuestionGroup = this.questionGroups[index];
+
+      for (let index = 0; index < this.questions.length; index++) {
+        const element = this.questions[index];
+
+        if (!element.formControl.disabled && element.controlType !== "switch") {
+          data.head.push(element.label);
+          data.rows.push(element.value);
+        }
+      }
+    // }
+    console.log(data);
+    return data;
+
   }
 }
 
@@ -62,23 +85,29 @@ export interface TextboxReportItemOptions<T> extends ReportItemOptions<T> {
   hint?: string;
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
+  unit?: string;
+  maxLength?: number;
 }
 
-export class TextboxReportItem<T extends TextboxType> extends QuestionBase<T> {
+export class TextboxReportItem<T extends TextboxType> extends ReportControl<T> {
   controlType: string = "textbox";
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
   hint: string;
+  unit: string;
+  maxLength?: number;
 
   constructor(options: TextboxReportItemOptions<T>) {
     super(options);
     this.keyboardType = options.keyboardType;
     this.returnKeyType = options.returnKeyType;
     this.hint = options.hint || "";
+    this.unit = options.unit || "";
+    this.maxLength = options.maxLength;
   }
 }
 
-export class DatepickerReportItem extends QuestionBase<Date> {
+export class DatepickerReportItem extends ReportControl<Date> {
   controlType: string = "datepicker";
 }
 
@@ -86,7 +115,7 @@ export interface SwitchReportItemOptions extends ReportItemOptions<boolean> {
   switchFor: string | string[];
 }
 
-export class SwitchReportItem extends QuestionBase<boolean> {
+export class SwitchReportItem extends ReportControl<boolean> {
   controlType: string = "switch";
   switchFor: string | string[];
   constructor(options: SwitchReportItemOptions) {

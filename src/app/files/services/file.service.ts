@@ -26,14 +26,18 @@ export class FileService {
 
   save(args: { content: any; fileName: string }) {
     const folder = this.getFolder();
-    var file = folder.getFile(args.fileName);
+    var file = folder?.getFile(args.fileName);
 
-    return file.writeText(args.content).catch((error) => console.log(error));
+    if (file)
+    {
+      return file.writeText(args.content).catch((error) => console.log(error));
+    }
+
   }
 
   delete(args: { fileName: string }) {
     const folder = this.getFolder();
-    var file = folder.getFile(args.fileName);
-    return file.remove();
+    var file = folder?.getFile(args.fileName);
+    return file?.remove();
   }
 }

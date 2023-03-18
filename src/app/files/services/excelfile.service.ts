@@ -4,15 +4,15 @@ import * as XLSX from "xlsx";
 import { File } from "@nativescript/core";
 import { FileService } from "./file.service";
 
-type ExcelData = {
+export type ExcelData = {
   head: string[];
   rows: any[];
 };
 
 interface IFileService {
-  share(args: { path: string; fileName: string }): Promise<boolean>;
+  share(args: { path: string; fileName: string }): Promise<boolean> | undefined;
   open(args: { path: string }): boolean;
-  save(args: any): Promise<void>;
+  save(args: any): Promise<any> | undefined;
 }
 
 @Injectable()
@@ -21,20 +21,20 @@ export class ExcelFileService implements IFileService {
 
   async getReports(): Promise<File[]> {
     const folder = this.files.getFolder();
-    const entities = await folder.getEntities();
-
-    return entities.map((x) => folder.getFile(x.name));
+    const entities = await folder?.getEntities();
+    if (folder && entities) {
+      return entities.map((x) => folder.getFile(x.name));
+    }
+    return []
   }
 
-  save(object: FormArray) {
-    const fileDate = <Date>object.controls[0].get("date").value;
-    const parentName = <string>object.controls[0].get("parentName").value;
-
-    const fileName = `${parentName}-${fileDate.getUTCFullYear()}-${fileDate.getUTCMonth()}-${fileDate.getUTCDate()}.csv`;
+  save(args :{date: Date, fileName: string, data: ExcelData}) {
+    const fileDate = args.date;
+    const fileName = `${args.fileName}-${fileDate.getUTCFullYear()}-${fileDate.getUTCMonth()}-${fileDate.getUTCDate()}.csv`;
 
     const content = this.createFileContent(
-      this.createExcelData(object),
-      parentName
+      args.data,
+      args.fileName
     );
 
     return this.files.save({ content, fileName });
@@ -58,24 +58,5 @@ export class ExcelFileService implements IFileService {
 
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
     return XLSX.write(workbook, { type: "string", bookType: "csv" });
-  }
-
-  private createExcelData(form: FormArray): ExcelData {
-    var head = [];
-    var rows: any[] = [];
-
-    for (let index = 0; index < form.controls.length; index++) {
-      const group: FormGroup = <FormGroup>form.controls[index];
-      for (var controlKey in group.controls) {
-        var control = <FormControl>group.controls[controlKey];
-
-        if (!control.disabled) {
-          head.push(controlKey);
-          rows.push(control.value);
-        }
-      }
-    }
-
-    return { head, rows };
   }
 }

@@ -1,18 +1,20 @@
-import { Component } from "@angular/core";
-import { BehaviorSubject, from, Observable, tap } from "rxjs";
+import { Component, NgZone, OnInit } from "@angular/core";
+import { from, Observable, tap } from "rxjs";
 import { ExcelFileService } from "../services/excelfile.service";
-import { File, Utils } from "@nativescript/core";
-import { ad } from "@nativescript/core/utils";
+import { File } from "@nativescript/core";
 
 @Component({
   selector: "afriknow-files",
   templateUrl: "./files.component.html",
-  styleUrls: ["./files.component.css"],
+  styleUrls: ["./files.component.scss"],
   providers: [ExcelFileService],
 })
-export class FilesComponent {
-  reports$: Observable<File[]>;
-  constructor(private files: ExcelFileService) {
+export class FilesComponent implements OnInit {
+  reports$?: Observable<File[]>;
+  reports: File[] = [];
+  constructor(private files: ExcelFileService, private ngZone: NgZone) {
+  }
+  ngOnInit(): void {
     this.reports$ = from(this.files.getReports());
   }
 
@@ -25,7 +27,7 @@ export class FilesComponent {
   }
 
   onDelete(file: File) {
-    this.files.delete({fileName: file.name}).then(console.log).catch(console.error);
-    this.reports$ = from(this.files.getReports());
+    this.files.delete({fileName: file.name})?.then(console.log).catch(console.error);
+    this.reports$ = from(this.files.getReports()).pipe(tap(x => this.reports = x));
   }
 }

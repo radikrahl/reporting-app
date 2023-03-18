@@ -1,16 +1,14 @@
-<StackLayout>
-    <ng-container *ngFor="let item of reports$ | async">
-
+<ListView [items]="reports$ | async">
+    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
         <FlexboxLayout justifyContent="space-between">
-
             <StackLayout orientation="vertical">
                 <Label [text]="item.name"></Label>
-                <Button (tap)="onOpen(item)" [text]="'Open'"></Button>
+                <Button class="fas" (tap)="onOpen(item)" [text]="'&#xf15b;'"></Button>
             </StackLayout>
             <StackLayout orientation="horizontal">
-                <Button (tap)="onShare(item)" [text]="'Share'"></Button>
-                <Button (tap)="onDelete(item)" [text]="'Delete'"></Button>
+                <Button class="fas" (tap)="onShare(item)" [text]="'&#xf064;'"></Button>
+                <Button class="fas" (tap)="onDelete(item)" [text]="'&#xf1f8;'"></Button>
             </StackLayout>
         </FlexboxLayout>
-    </ng-container>
-</StackLayout>
+    </ng-template>
+</ListView>

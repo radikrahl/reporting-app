@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import {
   DatepickerReportItem,
-  QuestionBase,
+  ReportControl,
   QuestionGroup,
   SwitchReportItem,
   TextboxReportItem,
@@ -11,12 +11,12 @@ import {
 
 @Injectable()
 export class ReportItemFactory {
-  private questions1: QuestionBase<unknown>[] = [
+  private questions1: ReportControl<unknown>[] = [
     new TextboxReportItem<string>({
       key: "parentName",
       label: "Parent name",
+      hint: "Enter name of parent.",
       required: true,
-      page: 1,
       returnKeyType: "next",
     }),
     new DatepickerReportItem({
@@ -24,45 +24,56 @@ export class ReportItemFactory {
       label: "Enter Date",
       value: new Date(Date.now()),
       required: true,
-      page: 1,
     }),
   ];
 
-  private questions2: QuestionBase<unknown>[] = [
+  private questions2: ReportControl<unknown>[] = [
     new TextboxReportItem<number>({
       key: "chicken",
       label: "How many chicken",
+      hint: "How many chicken are at the parent's place.",
+      errorText: "How many chicken are at the parent's place.",
       required: true,
-      page: 2,
       keyboardType: "integer",
     }),
   ];
-  private questions3: QuestionBase<unknown>[] = [
+
+  /* FOOD */
+  private questions3: ReportControl<unknown>[] = [
     new TextboxReportItem<number>({
       key: "foodQuantity",
-      label: "Quantity of food (kg)",
-      page: 3,
+      label: "Quantity of food",
+      hint: "How much food was needed today?",
+      errorText: "How much extra food in kg was needed today? 0-100",
+      unit: "kg",
       keyboardType: "number",
+      required: true,
     }),
 
     new TextboxReportItem<number>({
       key: "foodPrice",
-      label: "Price of food (ugx)",
-      page: 3,
+      label: "Price of food",
+      unit: "ugx",
+      hint: "How much does 1kg of food cost?",
+      errorText: "How much does 1kg of food cost?",
       keyboardType: "integer",
+      required: true
     }),
   ];
-  private questions4: QuestionBase<unknown>[] = [
+
+  /* NEW BIRDS */
+  private questions4: ReportControl<unknown>[] = [
     new TextboxReportItem<number>({
       key: "eggs",
-      label: "How many eggs",
-      page: 4,
+      label: "How many eggs are in the shelter?",
       keyboardType: "integer",
+      hint: "X-XX",
+      errorText: "How many eggs are in the shelter?",
+      required: true
     }),
 
     new SwitchReportItem({
       key: "newBorn",
-      page: 4,
       label: "Any new born bird?",
       value: false,
       switchFor: "amountNewBorn",
@@ -70,15 +81,17 @@ export class ReportItemFactory {
 
     new TextboxReportItem<number>({
       key: "amountNewBorn",
-      page: 4,
-      label: "How many?",
+      label: "Amount of new born",
+      hint: "Amount of new born birds",
       keyboardType: "integer",
+      required: true
     }),
   ];
-  private questions5: QuestionBase<unknown>[] = [
+
+  /* SOLD */
+  private questions5: ReportControl<unknown>[] = [
     new SwitchReportItem({
       key: "soldBirds",
-      page: 5,
       label: "Any sold Birds?",
       value: false,
       switchFor: ["soldBirdsAmount", "amountReceived"],
@@ -86,37 +99,48 @@ export class ReportItemFactory {
 
     new TextboxReportItem<number>({
       key: "soldBirdsAmount",
-      page: 5,
       label: "How many sold birds",
       keyboardType: "integer",
+      required: true
     }),
 
     new TextboxReportItem<number>({
       key: "amountReceived",
-      page: 5,
-      label: "Amount received by the Parents (ugx)",
+      label: "Amount received by the Parents",
+      unit: "ugx",
       keyboardType: "integer",
+      required: true
     }),
   ];
-  private questions6: QuestionBase<unknown>[] = [
+
+  /* SICKNESS */
+  private questions6: ReportControl<unknown>[] = [
     new SwitchReportItem({
       key: "sickBirds",
-      page: 6,
       label: "Any sick Birds?",
       value: false,
-      switchFor: "sickBirdsAmount",
+      switchFor: ["sickBirdsAmount", "sickness"],
     }),
 
     new TextboxReportItem<number>({
       key: "sickBirdsAmount",
-      page: 6,
-      label: "How many sick birds",
+      label: "How many sick birds?",
       keyboardType: "integer",
+      required: true
     }),
+
+    new TextboxReportItem<string>( {
+      key: "sickness",
+      label: "Which sickness?",
+      required: true
+    })
+  ];
+
+  /* MEDICINE */
+  private questions7: ReportControl<unknown>[] = [
 
     new SwitchReportItem({
       key: "medicineNeeded",
-      page: 6,
       label: "Any medicine needed?",
       value: false,
       switchFor: "medicineAmount",
@@ -124,15 +148,16 @@ export class ReportItemFactory {
 
     new TextboxReportItem<number>({
       key: "medicineAmount",
-      page: 6,
       label: "Amount of medicine bought",
       keyboardType: "integer",
+      required: true
     }),
   ];
-  private questions7: QuestionBase<unknown>[] = [
+
+  /* DEAD */
+  private questions8: ReportControl<unknown>[] = [
     new SwitchReportItem({
       key: "deadBirds",
-      page: 7,
       label: "Any dead Birds?",
       value: false,
       switchFor: "deadBirdsAmount",
@@ -140,14 +165,14 @@ export class ReportItemFactory {
 
     new TextboxReportItem<number>({
       key: "deadBirdsAmount",
-      page: 7,
       label: "How many dead birds",
       keyboardType: "integer",
+      required: true
     }),
   ];
 
   private get questions() {
-    return [].concat.apply(
+    return Array.prototype.concat.apply(
       [],
       [
         this.questions1,
@@ -157,6 +182,7 @@ export class ReportItemFactory {
         this.questions5,
         this.questions6,
         this.questions7,
+        this.questions8
       ]
     );
   }
@@ -173,13 +199,14 @@ export class ReportItemFactory {
   getQuestions3(): QuestionGroup[] {
     const arr: QuestionGroup[] = [];
 
-    arr.push(new QuestionGroup('1', this.questions1));
-    arr.push(new QuestionGroup('2', this.questions2));
-    arr.push(new QuestionGroup('3', this.questions3));
-    arr.push(new QuestionGroup('4', this.questions4));
-    arr.push(new QuestionGroup('5', this.questions5));
-    arr.push(new QuestionGroup('6', this.questions6));
-    arr.push(new QuestionGroup('7', this.questions7));
+    arr.push(new QuestionGroup(this.questions1));
+    arr.push(new QuestionGroup(this.questions2));
+    arr.push(new QuestionGroup(this.questions3));
+    arr.push(new QuestionGroup(this.questions4));
+    arr.push(new QuestionGroup(this.questions5));
+    arr.push(new QuestionGroup(this.questions6));
+    arr.push(new QuestionGroup(this.questions7));
+    arr.push(new QuestionGroup(this.questions8));
 
     return arr;
   }

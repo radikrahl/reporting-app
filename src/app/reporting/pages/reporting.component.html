@@ -1,21 +1,25 @@
-<ActionBar title="Report!"></ActionBar>
+<ActionBar title="Create Report!">
+  <NavigationButton text="Go back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+</ActionBar>
 
 <GridLayout columns="*" rows="*,auto" width="100%" height="100%">
 
-  <ScrollView>
+  <ScrollView class="mb-6">
     <ng-container row="0" col="0" *ngFor="let group of questionGroups; index as i">
-      <afriknow-report-form *ngIf="i + 1 === pageIndex"
-        [questionGroup]="group"></afriknow-report-form>
+      <afriknow-report-form *ngIf="i + 1 === pageIndex" [questionGroup]="group"></afriknow-report-form>
     </ng-container>
   </ScrollView>
 
-  <FlexboxLayout flexDirection="row" row="1" col="0">
-    <Button class="afriknow-btn" text="Previous" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
+  <FlexboxLayout class="mb-12" flexDirection="row" justifyContent="space-between" row="1" col="0">
+
+    <Button class="afriknow-btn fas" text="&#xf060;" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
       (tap)="onTap($event)"></Button>
-    <Button class="afriknow-btn" text="Next" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
-      (tap)="onTap($event)"></Button>
-    <Button class="Button.-primary" text="Submit" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
-      isEnabled="{{form.valid}}" (tap)="onSubmit()"></Button>
+
+    <Button class="afriknow-btn fas" text="&#xf061;" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
+      (tap)="onTap($event)" ></Button>
+
+    <Button class="afriknow-btn" text="Save" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
+       (tap)="onSubmit()"></Button>
   </FlexboxLayout>
 
 </GridLayout>

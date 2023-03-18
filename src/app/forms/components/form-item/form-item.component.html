@@ -1,22 +1,30 @@
-<StackLayout [formGroup]="form" *ngIf="this.form.get(question.key).enabled">
-  <Label [text]="question.label"></Label>
+<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hide': ''">
   <ng-container [ngSwitch]="question.controlType">
     <ng-container *ngSwitchCase="'textbox'">
-      <TextField class="input" keyboardType="{{question.keyboardType}}" returnKeyType="{{question.returnKeyType}}"
-        [id]="question.key" [required]="question.required" [autocorrect]="false" [formControlName]="question.key">
-      </TextField>
+      <Label class="form-item__label" [text]="question.label"></Label>
+      <FlexboxLayout>
+        <TextField flexShrink="1" flexGrow="0" class="text-field" keyboardType="{{question.keyboardType}}"
+          returnKeyType="{{question.returnKeyType}}" [id]="question.key" [required]="question.required"
+          [hint]="question.hint" [maxlength]="question.maxLength" [autocorrect]="false" [formControlName]="question.key">
+        </TextField>
+          <Label flexGrow="1" flexShrink="0" class="text-field__unit ml-6" [text]="question.unit"></Label>
+      </FlexboxLayout>
     </ng-container>
 
     <ng-container *ngSwitchCase="'datepicker'">
-      <DatePicker class="datepicker" [formControlName]="question.key" [required]="question.required"
-        date="{{ question.value }}"></DatePicker>
+      <Label class="form-item__label" [text]="question.label"></Label>
+      <DatePickerField width="100%" class="text-field" [formControlName]="question.key" [required]="question.required"
+        date="{{ question.value }}"></DatePickerField>
     </ng-container>
 
     <ng-container *ngSwitchCase="'switch'">
-      <Switch class="switch" checked="{{question.value}}" [required]="question.required"
-        [formControlName]="question.key" (checkedChange)="onCheckedChange($event, question)"></Switch>
+      <FlexBoxLayout justifyContent="space-between">
+        <Label class="text-lg" [text]="question.label"></Label>
+        <Switch class="" checked="{{question.value}}" [required]="question.required" [formControlName]="question.key"
+          (checkedChange)="onCheckedChange($event, question)"></Switch>
+      </FlexBoxLayout>
     </ng-container>
   </ng-container>
 
-  <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+  <Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>
 </StackLayout>
