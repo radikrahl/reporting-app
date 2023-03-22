@@ -1,14 +1,21 @@
-<ListView [items]="reports$ | async">
+<ActionBar [title]="folderName || 'My Reports'">
+    <NavigationButton text="Go back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <ActionItem [text]="'Mock data'" (tap)="mock()"></ActionItem>
+</ActionBar>
+<StackLayout></StackLayout>
+<!-- <ListView [items]="entities$ |async">
     <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+
         <FlexboxLayout justifyContent="space-between">
-            <StackLayout orientation="vertical">
-                <Label [text]="item.name"></Label>
-                <Button class="fas" (tap)="onOpen(item)" [text]="'&#xf15b;'"></Button>
-            </StackLayout>
-            <StackLayout orientation="horizontal">
-                <Button class="fas" (tap)="onShare(item)" [text]="'&#xf064;'"></Button>
-                <Button class="fas" (tap)="onDelete(item)" [text]="'&#xf1f8;'"></Button>
-            </StackLayout>
+            <ng-container [fileEntity]="item" (onOpen)="onOpen($event)"></ng-container>
         </FlexboxLayout>
     </ng-template>
-</ListView>
+</ListView> -->
+
+<ScrollView>
+    <StackLayout justifyContent="space-between">
+        <ng-container [fileEntity]="item" (onOpen)="onOpen($event)" *ngFor="let item of entities$ | async">
+
+        </ng-container>
+    </StackLayout>
+</ScrollView>

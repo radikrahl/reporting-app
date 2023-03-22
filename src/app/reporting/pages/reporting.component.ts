@@ -1,32 +1,28 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { FormArray } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
+import { REPORT_FORM_DATA } from "~/app/core/constants/mockdata";
 import {
   ExcelData,
   ExcelFileService,
-} from "~/app/files/services/excelfile.service";
-import { QuestionGroup } from "~/app/shared/forms/classes/report-item";
-
-import { ReportItemFactory } from "../services/report-item.factory";
+} from "~/app/core/services/excelfile.service";
+import { QuestionGroup } from "~/app/core/models/report-item";
 
 @Component({
   selector: "afriknow-reporting",
   templateUrl: "./reporting.component.html",
   styleUrls: ["./reporting.component.scss"],
-  providers: [ExcelFileService],
 })
 export class ReportingComponent {
   pageIndex = 1;
   form: FormArray<any> = new FormArray<any>([]);
-  questionGroups: QuestionGroup[];
 
   constructor(
-    private factory: ReportItemFactory,
+    @Inject(REPORT_FORM_DATA) public questionGroups: QuestionGroup[],
     private files: ExcelFileService,
     private router: RouterExtensions
   ) {
-    this.questionGroups = this.factory.getQuestions3();
     this.questionGroups.forEach((group) => this.form.push(group.form));
   }
 
@@ -37,12 +33,13 @@ export class ReportingComponent {
 
   onSubmit() {
     const date = <Date>this.questionGroups[0].form.get("date")?.value;
-    const fileName = <string>(
+    const parentName = <string>(
       this.questionGroups[0].form.get("parentName")?.value
     );
+    const fileName = `${parentName}-${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}.csv`;
 
     this.files
-      .save({ date, fileName, data: this.toExcelData() })
+      .save({ fileName, data: this.toExcelData() })
       ?.then((file) => {
         this.router.navigate(["/files"]);
       });
@@ -53,19 +50,26 @@ export class ReportingComponent {
   }
 
   toExcelData(): ExcelData {
-    const data: { head: string[]; rows: any[] } = { head: [], rows: [] };
+    let data: { head: string[]; rows: any[] } = { head: [], rows: [] };
 
     for (let index = 0; index < this.questionGroups.length; index++) {
       const group: QuestionGroup = this.questionGroups[index];
 
-      for (let index = 0; index < group.questions.length; index++) {
-        const element = group.questions[index];
+      if (data.head.length > 0) {
 
-        if (!element.formControl.disabled && element.controlType !== "switch") {
-          data.head.push(element.label);
-          data.rows.push(element.value);
-        }
+        data.rows.push(group.toCsv().rows)
       }
+      else {
+        data = group.toCsv();
+      }
+      // for (let index = 0; index < group.questions.length; index++) {
+      //   const element = group.questions[index];
+
+      //   if (!element.formControl.disabled && element.controlType !== "switch") {
+      //     data.head.push(element.label);
+      //     data.rows.push(element.value);
+      //   }
+      // }
     }
     console.log(data);
     return data;

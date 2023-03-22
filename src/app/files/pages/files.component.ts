@@ -1,33 +1,69 @@
-import { Component, NgZone, OnInit } from "@angular/core";
-import { from, Observable, tap } from "rxjs";
-import { ExcelFileService } from "../services/excelfile.service";
-import { File } from "@nativescript/core";
+import {
+  AfterContentChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  inject,
+  NgZone,
+  OnInit,
+  Query,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+} from "@angular/core";
+import { BehaviorSubject, from, Observable, Subscription, tap } from "rxjs";
+import { ExcelFileService } from "../../core/services/excelfile.service";
+import { File, FileSystemEntity, Folder, Template } from "@nativescript/core";
+import { NativeScriptNgZone, RouterExtensions } from "@nativescript/angular";
+import { MockdataFactory } from "~/app/shared/forms/services/mock-data.factory";
+import { FileComponent } from "../components/file/file.component";
+import { FolderComponent } from "../components/folder/folder.component";
+import { FilesEntityComponent } from "../components/files.directive";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "afriknow-files",
   templateUrl: "./files.component.html",
   styleUrls: ["./files.component.scss"],
-  providers: [ExcelFileService],
 })
-export class FilesComponent implements OnInit {
-  reports$?: Observable<File[]>;
+export class FilesComponent implements OnInit, AfterContentChecked {
+  entities$?: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
+    FileSystemEntity[]
+  >([]);
+  entities?: FileSystemEntity[];
   reports: File[] = [];
-  constructor(private files: ExcelFileService, private ngZone: NgZone) {
+  folderName = this.route.snapshot.params.folder || "";
+  @ViewChildren(FilesEntityComponent)
+  components?: ComponentRef<FilesEntityComponent>[];
+
+  constructor(
+    private files: ExcelFileService,
+    private router: RouterExtensions,
+    private route: ActivatedRoute,
+    private mockFactory: MockdataFactory,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NativeScriptNgZone
+  ) {}
+  ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
   }
+
   ngOnInit(): void {
-    this.reports$ = from(this.files.getReports());
+    this.files.getEntites(this.folderName).then((x) => this.entities$?.next(x));
   }
 
-  onShare(file: File) {
-    this.files.share({ path: file.path, fileName: file.name });
+  goBack() {
+    this.router.back();
   }
 
-  onOpen(file: File) {
-    this.files.open({ path: file.path });
-  }
-
-  onDelete(file: File) {
-    this.files.delete({fileName: file.name})?.then(console.log).catch(console.error);
-    this.reports$ = from(this.files.getReports()).pipe(tap(x => this.reports = x));
+  mock() {
+    this.mockFactory.create().then((x) => {
+      this.files
+        .getEntites(this.folderName)
+        .then((x) => this.entities$?.next(x));
+    });
   }
 }

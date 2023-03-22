@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from "@angular/core";
-import { QuestionGroup } from "../../classes/report-item";
+import { QuestionGroup } from "../../../../core/models/report-item";
 
 @Component({
   selector: "afriknow-report-form",

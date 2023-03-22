@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
 import { NativeScriptModule } from "@nativescript/angular";
-import { ReportItemFactory } from "../reporting/services/report-item.factory";
+import { ExcelFileService } from "./services/excelfile.service";
 
 @NgModule({
   imports: [NativeScriptModule],
-  providers: [ReportItemFactory],
+  providers: [ExcelFileService],
   exports: [],
   declarations: [],
 })

@@ -14,7 +14,7 @@ import {
   QuestionBase,
   ReportControl,
   SwitchReportItem,
-} from "../../classes/report-item";
+} from "../../../../core/models/report-item";
 
 @Component({
   selector: "afriknow-report-form-item",

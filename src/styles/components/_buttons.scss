@@ -1,5 +1,5 @@
 .afriknow-btn {
-    border-radius: $space-4;
+    border-radius: $space-2;
     border-width: $space-1;
     border-color: $complementary;
 
@@ -8,8 +8,8 @@
     padding: $space-4 $space-6;
 
 
-    .-primary {
-
+    &.-bare {
+        border-color: $white;
     }
 
     &.-full {

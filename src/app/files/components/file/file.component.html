@@ -1,0 +1,9 @@
+
+    <StackLayout orientation="vertical">
+        <Label [text]="fileSystemEntity.name"></Label>
+        <Button class="fas" (tap)="onOpen(fileSystemEntity)" [text]="'&#xf15b;'"></Button>
+    </StackLayout>
+    <StackLayout orientation="horizontal">
+        <Button class="fas" (tap)="onShare(fileSystemEntity)" [text]="'&#xf1e0;'"></Button>
+        <Button class="fas" (tap)="delete(fileSystemEntity)" [text]="'&#xf1f8;'"></Button>
+    </StackLayout>

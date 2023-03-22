@@ -1,0 +1,7 @@
+<StackLayout orientation="vertical">
+    <Label [text]="fileSystemEntity.name"></Label>
+    <Button class="fas" [nsRouterLink]="[fileSystemEntity.name]" [text]="'&#xf064;'"></Button>
+</StackLayout>
+<StackLayout orientation="horizontal">
+    <Button class="fas" (tap)="delete(fileSystemEntity)" [text]="'&#xf1f8;'"></Button>
+</StackLayout>

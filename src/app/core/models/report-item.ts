@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
-import { ExcelData } from "~/app/files/services/excelfile.service";
+import { ExcelData } from "~/app/core/services/excelfile.service";
 
 export interface ReportItemOptions<T> {
   value?: T;
@@ -57,11 +57,8 @@ export class QuestionGroup {
     return group;
   }
 
-  private toCsv(): ExcelData {
+  public toCsv(): ExcelData {
     const data: { head: string[]; rows: any[] } = { head: [], rows: [] };
-
-    // for (let index = 0; index < this.questionGroups.length; index++) {
-    //   const group: QuestionGroup = this.questionGroups[index];
 
     for (let index = 0; index < this.questions.length; index++) {
       const element = this.questions[index];
@@ -71,8 +68,6 @@ export class QuestionGroup {
         data.rows.push(element.value);
       }
     }
-    // }
-    console.log(data);
     return data;
   }
 }

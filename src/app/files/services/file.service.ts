@@ -4,8 +4,12 @@ import { Folder, knownFolders, Utils } from "@nativescript/core";
 
 @Injectable({ providedIn: "root" })
 export class FileService {
-  getFolder(): Folder | null {
+  getFolder(folderName?:string): Folder | null {
     const documents = knownFolders.documents();
+
+    if (folderName) {
+      return documents.getFolder("reports").getFolder(folderName);
+    }
 
     return documents.getFolder("reports");
   }
@@ -24,10 +28,11 @@ export class FileService {
     return Utils.openFile(args.path);
   }
 
-  save(args: { content: any; fileName: string }) {
-    const folder = this.getFolder();
+  save(args: { content: any; folderName?: string, fileName: string }) {
+    const folder = this.getFolder(args.folderName);
     var file = folder?.getFile(args.fileName);
 
+    // should there be only one file?
     if (file)
     {
       return file.writeText(args.content).catch((error) => console.log(error));
@@ -39,5 +44,10 @@ export class FileService {
     const folder = this.getFolder();
     var file = folder?.getFile(args.fileName);
     return file?.remove();
+  }
+
+  deleteFolder(folderName: string) {
+    const folder = this.getFolder(folderName);
+    return folder?.remove();
   }
 }
