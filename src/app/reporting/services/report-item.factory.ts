@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 
 import { of } from "rxjs";
 import {
-  DatepickerReportItem,
   ReportControl,
-  QuestionGroup,
-  SwitchReportItem,
   TextboxReportItem,
-} from "../../forms/classes/report-item";
+  DatepickerReportItem,
+  SwitchReportItem,
+  QuestionGroup,
+} from "~/app/shared/forms/classes/report-item";
 
 @Injectable()
 export class ReportItemFactory {
@@ -57,7 +57,7 @@ export class ReportItemFactory {
       hint: "How much does 1kg of food cost?",
       errorText: "How much does 1kg of food cost?",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
   ];
 
@@ -69,7 +69,7 @@ export class ReportItemFactory {
       keyboardType: "integer",
       hint: "X-XX",
       errorText: "How many eggs are in the shelter?",
-      required: true
+      required: true,
     }),
 
     new SwitchReportItem({
@@ -84,7 +84,7 @@ export class ReportItemFactory {
       label: "Amount of new born",
       hint: "Amount of new born birds",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
   ];
 
@@ -101,7 +101,7 @@ export class ReportItemFactory {
       key: "soldBirdsAmount",
       label: "How many sold birds",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
 
     new TextboxReportItem<number>({
@@ -109,7 +109,7 @@ export class ReportItemFactory {
       label: "Amount received by the Parents",
       unit: "ugx",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
   ];
 
@@ -126,19 +126,18 @@ export class ReportItemFactory {
       key: "sickBirdsAmount",
       label: "How many sick birds?",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
 
-    new TextboxReportItem<string>( {
+    new TextboxReportItem<string>({
       key: "sickness",
       label: "Which sickness?",
-      required: true
-    })
+      required: true,
+    }),
   ];
 
   /* MEDICINE */
   private questions7: ReportControl<unknown>[] = [
-
     new SwitchReportItem({
       key: "medicineNeeded",
       label: "Any medicine needed?",
@@ -150,7 +149,7 @@ export class ReportItemFactory {
       key: "medicineAmount",
       label: "Amount of medicine bought",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
   ];
 
@@ -167,7 +166,7 @@ export class ReportItemFactory {
       key: "deadBirdsAmount",
       label: "How many dead birds",
       keyboardType: "integer",
-      required: true
+      required: true,
     }),
   ];
 
@@ -182,7 +181,7 @@ export class ReportItemFactory {
         this.questions5,
         this.questions6,
         this.questions7,
-        this.questions8
+        this.questions8,
       ]
     );
   }

@@ -1,6 +1,7 @@
 import {
   AfterContentChecked,
   AfterContentInit,
+  ChangeDetectionStrategy,
   Component,
   Input,
   NgZone,
@@ -19,12 +20,14 @@ import {
   selector: "afriknow-report-form-item",
   templateUrl: "./form-item.component.html",
   styleUrls: ["./form-item.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ReportFormItemComponent implements OnInit{
   ngOnInit(): void {
     if (this.question instanceof SwitchReportItem && this.question.switchFor) {
       this.setFormControls(this.question.formControl.value ?? false);
     }
+
   }
   @Input() question!: ReportControl<unknown>;
   @Input() form!: FormGroup;
@@ -42,7 +45,7 @@ export class ReportFormItemComponent implements OnInit{
   }
 
   setFormControls(enable: boolean) {
-    // this.ngZone.run(() => {
+    this.ngZone.run(() => {
     if (this.question instanceof SwitchReportItem && this.question.switchFor) {
       if (Array.isArray(this.question.switchFor)) {
         this.question.switchFor.forEach((x) => {
@@ -54,6 +57,6 @@ export class ReportFormItemComponent implements OnInit{
         else this.form.get(this.question.switchFor)?.disable();
       }
     }
-    // })
+    })
   }
 }

@@ -50,7 +50,6 @@ export class QuestionGroup {
 
   private toFormGroup() {
     const group: FormGroup = new FormGroup({});
-
     this.questions.forEach((question) => {
       group.addControl(question.key, question.formControl);
     });
@@ -64,18 +63,17 @@ export class QuestionGroup {
     // for (let index = 0; index < this.questionGroups.length; index++) {
     //   const group: QuestionGroup = this.questionGroups[index];
 
-      for (let index = 0; index < this.questions.length; index++) {
-        const element = this.questions[index];
+    for (let index = 0; index < this.questions.length; index++) {
+      const element = this.questions[index];
 
-        if (!element.formControl.disabled && element.controlType !== "switch") {
-          data.head.push(element.label);
-          data.rows.push(element.value);
-        }
+      if (!element.formControl.disabled && element.controlType !== "switch") {
+        data.head.push(element.label);
+        data.rows.push(element.value);
       }
+    }
     // }
     console.log(data);
     return data;
-
   }
 }
 

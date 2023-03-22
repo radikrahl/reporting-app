@@ -2,6 +2,16 @@
 
 </ActionBar>
 <FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center">
-    <Button class="afriknow-btn text-xl" [text]="'Report'" [nsRouterLink]="['/report']" pageTransition="slide"></Button>
-    <Button class="afriknow-btn text-md" [text]="'Files'" [nsRouterLink]="['/files']" pageTransition="slide"></Button>
+    <Button class="afriknow-btn text-xl" [nsRouterLink]="['/report']" pageTransition="slide">
+        <FormattedString>
+            <Label [text]="'&#xe494;\n'" class="fas"></Label>
+            <Label [text]="'New report'"></Label>
+        </FormattedString>
+    </Button>
+    <Button class="afriknow-btn text-md" [nsRouterLink]="['/files']" pageTransition="slide">
+        <FormattedString>
+            <Label [text]="'&#xf07b;\n'" class="fas"></Label>
+            <Label [text]="'My Reports'"></Label>
+        </FormattedString>
+    </Button>
 </FlexboxLayout>

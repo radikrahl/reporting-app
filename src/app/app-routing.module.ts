@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "@nativescript/angular";
+import { GridLayoutComponent } from "./core/layout/grid/grid.component";
 
 const routes: Routes = [
   {

@@ -1,23 +1,20 @@
 import { Component } from "@angular/core";
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
+import { FormArray } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
 import {
   ExcelData,
   ExcelFileService,
 } from "~/app/files/services/excelfile.service";
-import {
-  QuestionGroup,
-  SwitchReportItem,
-} from "../../forms/classes/report-item";
+import { QuestionGroup } from "~/app/shared/forms/classes/report-item";
+
 import { ReportItemFactory } from "../services/report-item.factory";
 
 @Component({
   selector: "afriknow-reporting",
   templateUrl: "./reporting.component.html",
   styleUrls: ["./reporting.component.scss"],
-  providers: [ReportItemFactory, ExcelFileService],
+  providers: [ExcelFileService],
 })
 export class ReportingComponent {
   pageIndex = 1;

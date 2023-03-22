@@ -1,15 +1,11 @@
-import { CommonModule } from "@angular/common";
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { NativeScriptCommonModule } from "@nativescript/angular";
-import { ReportFormsModule } from "../forms/forms.module";
+import { SharedModule } from "../shared/shared.module";
 import { ReportingComponent } from "./pages/reporting.component";
 import { ReportingRoutingModule } from "./reporting.routing";
 
 @NgModule({
   imports: [
-    CommonModule,
-    NativeScriptCommonModule,
-    ReportFormsModule,
+    SharedModule,
     ReportingRoutingModule,
   ],
   declarations: [ReportingComponent],
