@@ -4,11 +4,11 @@
 
 //   :root,
 //   * {
-    $text-base: 100;
+    // $text-base: 100;
     $text-scale-ratio: 1.2;
 
     // inspired by https://codyhouse.co/blog/post/responsive-layouts-css-custom-properties-em-units
-    $text-xs: calc((15 / $text-scale-ratio) / $text-scale-ratio);
+    $text-xs: calc((18 / $text-scale-ratio) / $text-scale-ratio);
     $text-sm: calc($text-xs * $text-scale-ratio);
     $text-md: calc(
       $text-sm * $text-scale-ratio * $text-scale-ratio);

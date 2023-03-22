@@ -1,16 +1,16 @@
 <ActionBar title="Home">
 
 </ActionBar>
-<FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center">
-    <Button class="afriknow-btn text-xl" [nsRouterLink]="['/report']" pageTransition="slide">
+<FlexboxLayout class="m-12" flexDirection="column" justifyContent="center" alignItems="center">
+    <Button class="afriknow-btn -full" [nsRouterLink]="['/report']" pageTransition="slide">
         <FormattedString>
             <Label [text]="'&#xe494;\n'" class="fas"></Label>
             <Label [text]="'New report'"></Label>
         </FormattedString>
     </Button>
-    <Button class="afriknow-btn text-md" [nsRouterLink]="['/files']" pageTransition="slide">
+    <Button class="afriknow-btn -full" [nsRouterLink]="['/files']" pageTransition="slide">
         <FormattedString>
-            <Label [text]="'&#xf07b;\n'" class="fas"></Label>
+            <Span [text]="'&#xf07b;\n'" class="fas"></Span>
             <Label [text]="'My Reports'"></Label>
         </FormattedString>
     </Button>

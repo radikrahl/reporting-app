@@ -2,22 +2,26 @@
     margin-bottom: $space-6;
 }
 
-.mb-12 {
-    margin-bottom: $space-12;
-}
 
 .mt-6 {
     margin-top: $space-6;
 }
 
-.mt-12 {
-    margin-top: $space-12;
-}
 
 .ml-6 {
     margin-left: $space-6;
 }
 
+.m-12 {
+    margin: $space-12;
+}
+
+.mb-12 {
+    margin-bottom: $space-12;
+}
+.mt-12 {
+    margin-top: $space-12;
+}
 .text-center {
     text-align: center;
   }
