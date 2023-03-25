@@ -1,12 +1,7 @@
 import { Injectable, TemplateRef } from "@angular/core";
-import * as XLSX from "xlsx";
 import { File, FileSystemEntity, Folder } from "@nativescript/core";
-import { FileService } from "../../files/services/file.service";
-
-export type ExcelData = {
-  head: string[];
-  rows: any[];
-};
+import { FileService } from "./files/file.service";
+import { CsvData, CsvWorkSheetAdapter } from "../classes/csv-data";
 
 interface IFileService {
   share(args: { path: string; fileName: string }): Promise<boolean> | undefined;
@@ -19,52 +14,59 @@ interface IFileService {
 })
 export class ExcelFileService implements IFileService {
   constructor(private files: FileService) {}
-  async getFolders(): Promise<Folder[]> {
-    const folder = this.files.getFolder();
-    const entities = await folder?.getEntities();
-
-    if (entities && folder) {
-      const folders: Folder[] = entities
-        .filter((entity) => entity instanceof Folder)
-        .map((x) => folder.getFolder(x.name));
-
-      return folders;
-    }
-    return [];
-  }
-  async getReports(): Promise<File[]> {
-    const folder = this.files.getFolder();
-    const entities = await folder?.getEntities();
-    if (folder && entities) {
-      return entities.map((x) => folder.getFile(x.name));
-    }
-    return [];
-  }
 
   async getEntites(folderName: string): Promise<FileSystemEntity[]> {
-    const folder = this.files.getFolder(folderName);
-    const entities = await folder?.getEntities();
-    if (folder && entities) {
-      return entities.map((x) => {
-        if (x instanceof File)
-        return folder.getFile(x.name);
-        else if (x instanceof Folder)
-        return folder.getFolder(x.name);
-        else return x;
-      });
-    }
-    return [];
+    return this.files.getEntities(folderName);
   }
 
-  save(args: { fileName: string; folder?: string; data: ExcelData }) {
+  save(args: { fileName: string; folder?: string; data: CsvData }) {
     const sheetName = args.fileName;
 
-    const content = this.createFileContent(args.data, sheetName);
+    const content = args.data.toFileContent();
 
     return this.files.save({
       content,
       fileName: args.fileName,
       folderName: args.folder,
+    });
+  }
+
+  shareFolder(folder: Folder) {
+    this.files.getEntities(folder.name).then((entities) => {
+      var sheet = CsvWorkSheetAdapter.createSheet(this.readEach(entities));
+      if (sheet) {
+        var data: CsvData = sheet.toCsvData();
+        this.save({
+          fileName: "temp" + folder.name,
+          folder: folder.name,
+          data,
+        })?.then((file) => {
+          this.share({
+            path: folder.path,
+            fileName: "temp" + folder.name,
+          })?.then(() =>
+            this.delete({ path: folder.path, fileName: "temp" + folder.name })
+          );
+        });
+      }
+    });
+  }
+
+  openFolder(folder: Folder) {
+    this.files.getEntities(folder.name).then((entities) => {
+      var sheet = CsvWorkSheetAdapter.createSheet(this.readEach(entities));
+      if (sheet) {
+        var data: CsvData = sheet.toCsvData();
+        this.save({
+          fileName: "temp" + folder.name,
+          folder: folder.name,
+          data,
+        })?.then((file) => {
+          this.open({ path: folder.path + "temp" + folder.name });
+
+          // this.delete({path: folder.path, fileName: 'temp' + folder.name})
+        });
+      }
     });
   }
 
@@ -75,7 +77,7 @@ export class ExcelFileService implements IFileService {
     return this.files.open(args);
   }
 
-  delete(args: { fileName: string }) {
+  delete(args: { path: string; fileName: string }) {
     return this.files.delete(args);
   }
 
@@ -83,12 +85,11 @@ export class ExcelFileService implements IFileService {
     return this.files.deleteFolder(folderName);
   }
 
-  private createFileContent(data: ExcelData, sheetName: string) {
-    const workbook = XLSX.utils.book_new();
-
-    const worksheet = XLSX.utils.aoa_to_sheet([data.head, data.rows]);
-
-    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
-    return XLSX.write(workbook, { type: "string", bookType: "csv" });
+  readEach(entities: FileSystemEntity[]): string[] {
+    return entities
+      .filter((entity) => entity instanceof File)
+      .map((entity) => {
+        return (<File>entity).readTextSync();
+      });
   }
 }

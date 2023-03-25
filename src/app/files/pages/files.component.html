@@ -3,19 +3,11 @@
     <ActionItem [text]="'Mock data'" (tap)="mock()"></ActionItem>
 </ActionBar>
 <StackLayout></StackLayout>
-<!-- <ListView [items]="entities$ |async">
-    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-
-        <FlexboxLayout justifyContent="space-between">
-            <ng-container [fileEntity]="item" (onOpen)="onOpen($event)"></ng-container>
-        </FlexboxLayout>
-    </ng-template>
-</ListView> -->
 
 <ScrollView>
     <StackLayout justifyContent="space-between">
-        <ng-container [fileEntity]="item" (onOpen)="onOpen($event)" *ngFor="let item of entities$ | async">
+        <ng-template [fileEntity]="item" (onOpen)="onOpen($event)" *ngFor="let item of entities$ | async">
 
-        </ng-container>
+        </ng-template>
     </StackLayout>
 </ScrollView>

@@ -3,11 +3,9 @@ import { FormArray } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
 import { REPORT_FORM_DATA } from "~/app/core/constants/mockdata";
-import {
-  ExcelData,
-  ExcelFileService,
-} from "~/app/core/services/excelfile.service";
+import { ExcelFileService } from "~/app/core/services/excelfile.service";
 import { QuestionGroup } from "~/app/core/models/report-item";
+import { CsvData } from "~/app/core/classes/csv-data";
 
 @Component({
   selector: "afriknow-reporting",
@@ -38,40 +36,28 @@ export class ReportingComponent {
     );
     const fileName = `${parentName}-${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}.csv`;
 
-    this.files
-      .save({ fileName, data: this.toExcelData() })
-      ?.then((file) => {
-        this.router.navigate(["/files"]);
-      });
+    this.files.save({ fileName, data: this.toExcelData() })?.then((file) => {
+      this.router.navigate(["/files"]);
+    });
   }
 
   goBack() {
     this.router.back();
   }
 
-  toExcelData(): ExcelData {
+  toExcelData(): CsvData {
     let data: { head: string[]; rows: any[] } = { head: [], rows: [] };
 
     for (let index = 0; index < this.questionGroups.length; index++) {
       const group: QuestionGroup = this.questionGroups[index];
 
       if (data.head.length > 0) {
-
-        data.rows.push(group.toCsv().rows)
-      }
-      else {
+        data.rows.push(group.toCsv().rows);
+      } else {
         data = group.toCsv();
       }
-      // for (let index = 0; index < group.questions.length; index++) {
-      //   const element = group.questions[index];
-
-      //   if (!element.formControl.disabled && element.controlType !== "switch") {
-      //     data.head.push(element.label);
-      //     data.rows.push(element.value);
-      //   }
-      // }
     }
     console.log(data);
-    return data;
+    return new CsvData(data.head, data.rows);
   }
 }

@@ -1,7 +1,9 @@
-<StackLayout orientation="vertical">
-    <Label [text]="fileSystemEntity.name"></Label>
-    <Button class="fas" [nsRouterLink]="[fileSystemEntity.name]" [text]="'&#xf064;'"></Button>
+
+<StackLayout (tap)="onOpen(fileSystemEntity)" orientation="horizontal">
+    <Label [text]="fileSystemEntity.name" class="text-lg"></Label>
 </StackLayout>
 <StackLayout orientation="horizontal">
-    <Button class="fas" (tap)="delete(fileSystemEntity)" [text]="'&#xf1f8;'"></Button>
+    <Button class="fas" (tap)="onDownload()" [text]="'&#xf07b;'"></Button>
+    <Button class="fas" (tap)="onShare()" [text]="'&#xf1e0;'"></Button>
+    <Button class="fas" (tap)="delete()" [text]="'&#xf1f8;'"></Button>
 </StackLayout>

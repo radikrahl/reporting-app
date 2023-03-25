@@ -1,26 +1,16 @@
 import {
   AfterContentChecked,
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ComponentRef,
-  inject,
-  NgZone,
   OnInit,
-  Query,
-  QueryList,
-  TemplateRef,
-  ViewChild,
   ViewChildren,
-  ViewContainerRef,
 } from "@angular/core";
-import { BehaviorSubject, from, Observable, Subscription, tap } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { ExcelFileService } from "../../core/services/excelfile.service";
-import { File, FileSystemEntity, Folder, Template } from "@nativescript/core";
-import { NativeScriptNgZone, RouterExtensions } from "@nativescript/angular";
-import { MockdataFactory } from "~/app/shared/forms/services/mock-data.factory";
-import { FileComponent } from "../components/file/file.component";
-import { FolderComponent } from "../components/folder/folder.component";
+import { File, FileSystemEntity } from "@nativescript/core";
+import { RouterExtensions } from "@nativescript/angular";
+import { MockdataFactory } from "~/app/core/services/mock-data.factory";
 import { FilesEntityComponent } from "../components/files.directive";
 import { ActivatedRoute } from "@angular/router";
 
@@ -35,7 +25,8 @@ export class FilesComponent implements OnInit, AfterContentChecked {
   >([]);
   entities?: FileSystemEntity[];
   reports: File[] = [];
-  folderName = this.route.snapshot.params.folder || "";
+  folderName = this.route.snapshot.queryParams.folder || "";
+  path = this.route.snapshot.queryParams.path || "";
   @ViewChildren(FilesEntityComponent)
   components?: ComponentRef<FilesEntityComponent>[];
 
@@ -44,8 +35,7 @@ export class FilesComponent implements OnInit, AfterContentChecked {
     private router: RouterExtensions,
     private route: ActivatedRoute,
     private mockFactory: MockdataFactory,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NativeScriptNgZone
+    private cdr: ChangeDetectorRef
   ) {}
   ngAfterContentChecked(): void {
     this.cdr.detectChanges();
