@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ShareFile } from "@nativescript-community/ui-share-file";
-import { Folder, knownFolders, Utils } from "@nativescript/core";
+import { File, Folder, knownFolders, Utils } from "@nativescript/core";
 
 @Injectable({ providedIn: "root" })
 export class FileService {
@@ -22,10 +22,10 @@ export class FileService {
     return this.reports.getFolder(path).getEntities();
   }
 
-  share(args: { path: string; fileName: string }) {
+  share(args: { path: string }) {
     try {
       return new ShareFile().open({
-        path: args.path,
+        path: this.reports.getFile(args.path).path,
       });
     } catch (e) {
       console.error(e);
@@ -33,26 +33,31 @@ export class FileService {
   }
 
   open(args: { path: string }) {
-    return Utils.openFile(args.path);
+    var file = this.reports.getFile(args.path);
+    return Utils.openFile(file.path);
   }
 
-  delete(args: { path: string; fileName: string }) {
-    // const folder = this._documents.getFolder(args.path);
+  delete(args: { path: string }) {
     var file = this.reports.getFile(args.path);
-    return file?.remove();
+    return file.remove();
   }
 
   deleteFolder(folderName: string) {
     const folder = this.reports.getFolder(folderName);
-    return folder?.remove();
+    return folder.remove();
   }
 
-  save(args: { content: any; folderName?: string; fileName: string }) {
-    // const folder = this._documents.getFolder(args.folderName || "");
-    var file = this.reports.getFile(args.folderName + "/" + args.fileName);
-    // should there be only one file?
-    if (file) {
-      return file.writeText(args.content).catch((error) => console.log(error));
+  async writeText(args: { content: string; path: string }): Promise<any> {
+    var file = this.reports.getFile(args.path);
+    try {
+      return await file.writeText(args.content);
+    } catch (error) {
+      return console.log(error);
     }
+  }
+
+  readText(args: { path: string }): Promise<string> {
+    var file = this.reports.getFile(args.path);
+    return file.readText();
   }
 }

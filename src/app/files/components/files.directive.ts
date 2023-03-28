@@ -17,7 +17,6 @@ import { FolderComponent } from "./folder/folder.component";
 export class FilesEntityComponent implements AfterViewInit, OnDestroy {
   @Input("fileEntity") fileEntity?: FileSystemEntity;
 
-
   componentRef?: ComponentRef<any>;
 
   constructor(private view: ViewContainerRef) {}
@@ -32,6 +31,8 @@ export class FilesEntityComponent implements AfterViewInit, OnDestroy {
       this.componentRef = this.view.createComponent(FolderComponent);
     }
     this.componentRef?.setInput("fileSystemEntity", this.fileEntity);
-    (<EventEmitter<void>>this.componentRef?.instance.onDelete)?.asObservable().subscribe(() => this.componentRef?.destroy())
+    (<EventEmitter<void>>this.componentRef?.instance.onDelete)
+      ?.asObservable()
+      .subscribe(() => this.componentRef?.destroy());
   }
 }

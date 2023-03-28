@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
-import { Routes } from "@angular/router";
+import { RouteReuseStrategy, Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "@nativescript/angular";
-import { GridLayoutComponent } from "./core/layout/grid/grid.component";
+import { ForceReloadRouteReuseStrategy } from "./files/files.module";
 
 const routes: Routes = [
   {
@@ -10,16 +10,21 @@ const routes: Routes = [
   },
   {
     path: "report",
-    loadChildren: () => import("./reporting/reporting.module").then((m) => m.ReportingModule),
+    loadChildren: () =>
+      import("./reporting/reporting.module").then((m) => m.ReportingModule),
   },
   {
     path: "files",
-    loadChildren: () => import("./files/files.module").then((m) => m.FilesModule),
-  }
+    loadChildren: () =>
+      import("./files/files.module").then((m) => m.FilesModule),
+  },
 ];
 
 @NgModule({
   imports: [NativeScriptRouterModule.forRoot(routes)],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: ForceReloadRouteReuseStrategy },
+  ],
   exports: [NativeScriptRouterModule],
 })
 export class AppRoutingModule {}

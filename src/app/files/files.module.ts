@@ -12,7 +12,7 @@ import { FolderComponent } from "./components/folder/folder.component";
 import { FilesComponent } from "./pages/files.component";
 
 const routes: Routes = [
-  { path: "", component: FilesComponent },
+  { path: "", component: FilesComponent, data: { noReuse: true } },
   {
     path: ":folder",
     component: FilesComponent,
