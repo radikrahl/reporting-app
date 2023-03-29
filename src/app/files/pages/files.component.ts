@@ -1,5 +1,4 @@
 import {
-  AfterContentInit,
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -9,10 +8,10 @@ import {
 import { BehaviorSubject } from "rxjs";
 import { File, FileSystemEntity } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
-import { MockdataFactory } from "~/app/core/services/mock-data.factory";
 import { FilesEntityComponent } from "../components/files.directive";
 import { ActivatedRoute } from "@angular/router";
 import { FileManager } from "~/app/core/services/files/file.manager";
+import { MockdataFactory } from "../services/mock-data.factory";
 
 @Component({
   selector: "afriknow-files",

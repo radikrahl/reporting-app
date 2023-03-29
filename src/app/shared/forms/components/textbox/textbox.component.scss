@@ -1,0 +1,27 @@
+@import "../../../../../styles/variables/variables.scss";
+
+.form-item {
+  margin-left: $space-10;
+  margin-right: $space-10;
+  width:90%;
+  &__label {
+    font-size: $text-xl;
+    text-align: center;
+    white-space: normal;
+  }
+
+  &__error {
+    font-size: $text-md;
+    color: red;
+  }
+}
+
+.text-field {
+  font-size: $text-md;
+  margin: 0;
+  width: 100%;
+  placeholder-color: lightgrey;
+  &__unit {
+    font-size: $text-md;
+  }
+}

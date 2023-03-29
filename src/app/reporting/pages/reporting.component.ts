@@ -1,11 +1,11 @@
-import { Component, Inject } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormArray } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
-import { REPORT_FORM_DATA } from "~/app/core/constants/mockdata";
-import { QuestionGroup } from "~/app/core/models/report-item";
 import { CsvData } from "~/app/core/classes/csv-data";
 import { FileManager } from "~/app/core/services/files/file.manager";
+import { ReportForm } from "~/app/shared/forms/classes/report-form";
+import { ReportFormFactory } from "../classes/reportform.factory";
 
 @Component({
   selector: "afriknow-reporting",
@@ -15,12 +15,10 @@ import { FileManager } from "~/app/core/services/files/file.manager";
 export class ReportingComponent {
   pageIndex = 1;
   form: FormArray<any> = new FormArray<any>([]);
+  questionGroups: ReportForm[];
 
-  constructor(
-    @Inject(REPORT_FORM_DATA) public questionGroups: QuestionGroup[],
-    private files: FileManager,
-    private router: RouterExtensions
-  ) {
+  constructor(private files: FileManager, private router: RouterExtensions) {
+    this.questionGroups = new ReportFormFactory().createForm();
     this.questionGroups.forEach((group) => this.form.push(group.form));
   }
 
@@ -46,6 +44,7 @@ export class ReportingComponent {
   }
 
   goBack() {
+    this.questionGroups.forEach((x) => x.form.reset());
     this.router.back();
   }
 
@@ -57,7 +56,7 @@ export class ReportingComponent {
     let data = new CsvData({});
 
     for (let index = 0; index < this.questionGroups.length; index++) {
-      const group: QuestionGroup = this.questionGroups[index];
+      const group = this.questionGroups[index];
 
       data.combine(group.toCsv());
     }

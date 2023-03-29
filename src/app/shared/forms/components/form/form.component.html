@@ -1,5 +1,5 @@
 <StackLayout [formGroup]="questionGroup.form">
-    <ng-container *ngFor="let question of questionGroup.questions">
-        <afriknow-report-form-item [question]="question" [form]="questionGroup.form"></afriknow-report-form-item>
+    <ng-container [formItem]="question" [form]="questionGroup.form" *ngFor="let question of questionGroup.questions">
+        <!-- <afriknow-report-form-item [question]="question" [form]="questionGroup.form"></afriknow-report-form-item> -->
     </ng-container>
 </StackLayout>

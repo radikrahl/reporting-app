@@ -1,12 +1,21 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from "@angular/core";
-import { QuestionGroup } from "../../../../core/models/report-item";
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from "@angular/core";
+import { ReportForm } from "../../classes/report-form";
 
 @Component({
   selector: "afriknow-report-form",
   templateUrl: "./form.component.html",
   providers: [],
 })
-export class ReportFormComponent {
-  @Input() questionGroup!: QuestionGroup;
-  constructor() {}
+export class ReportFormComponent implements AfterContentChecked {
+  @Input() questionGroup!: ReportForm;
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
+  }
 }
