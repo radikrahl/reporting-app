@@ -6,23 +6,7 @@ import {
   Output,
 } from "@angular/core";
 import { File } from "@nativescript/core";
-import { ExcelFileService } from "~/app/core/services/excelfile.service";
-
-function Required(target: object, propertyKey: string) {
-  Object.defineProperty(target, propertyKey, {
-    get() {
-      throw new Error(`Attribute ${propertyKey} is required`);
-    },
-    set(value) {
-      Object.defineProperty(target, propertyKey, {
-        value,
-        writable: true,
-        configurable: true,
-      });
-    },
-    configurable: true,
-  });
-}
+import { FileManager } from "~/app/core/services/files/file.manager";
 
 @Component({
   selector: "afriknow-file",
@@ -31,21 +15,21 @@ function Required(target: object, propertyKey: string) {
 })
 export class FileComponent {
   @Input() fileSystemEntity!: File;
-  @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
-  constructor(private files: ExcelFileService) {}
+  @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
+  constructor(private files: FileManager) {}
 
   onShare(file: File) {
-    this.files.share({ path: file.path, fileName: file.name });
+    this.files.share({ path: file.parent.name + "/" + file.name });
   }
 
   onOpen(file: File) {
-    this.files.open({ path: file.path });
+    this.files.open({ path: file.parent.name + "/" + file.name });
   }
 
-  delete(file: File) {
+  onDelete(file: File) {
     this.files
-      .delete({ path: file.parent.path, fileName: file.name })
-      ?.then(this.onDelete.emit)
+      .delete({ path: file.parent.name + "/" + file.name })
+      ?.then(this.deleteEvent.emit)
       .catch(console.error);
   }
 }

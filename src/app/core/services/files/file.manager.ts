@@ -3,7 +3,7 @@ import { ShareFile } from "@nativescript-community/ui-share-file";
 import { File, Folder, knownFolders, Utils } from "@nativescript/core";
 
 @Injectable({ providedIn: "root" })
-export class FileService {
+export class FileManager {
   private readonly _documents: Folder = knownFolders.documents();
 
   public get documents() {

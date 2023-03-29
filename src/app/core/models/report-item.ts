@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
-import { CsvData } from "../classes/csv-data";
+import { CsvDataRecord } from "../classes/csv-data";
 
 export interface ReportItemOptions<T> {
   value?: T;
@@ -57,18 +57,17 @@ export class QuestionGroup {
     return group;
   }
 
-  public toCsv(): CsvData {
-    const data: { head: string[]; rows: any[] } = { head: [], rows: [] };
+  public toCsv(): CsvDataRecord {
+    const data: CsvDataRecord = {};
 
     for (let index = 0; index < this.questions.length; index++) {
       const element = this.questions[index];
 
       if (!element.formControl.disabled && element.controlType !== "switch") {
-        data.head.push(element.label);
-        data.rows.push(element.value);
+        data[element.label] = element.value;
       }
     }
-    return new CsvData(data.head, data.rows);
+    return data;
   }
 }
 

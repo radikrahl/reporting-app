@@ -1,62 +1,91 @@
-import { WorkSheet, read, utils, write } from "xlsx";
+export type CsvDataRecord = Record<string, any | any[]>;
 
 export class CsvData {
-  constructor(public head: string[], public rows: string[][]) {}
+  private _data: CsvDataRecord;
 
-  toFileContent(): string {
-    const workbook = utils.book_new();
-
-    const worksheet = utils.aoa_to_sheet([this.head, this.rows]);
-
-    utils.book_append_sheet(workbook, worksheet);
-    return write(workbook, { type: "string", bookType: "csv" });
-  }
-}
-
-export class CsvWorkSheetAdapter implements WorkSheet {
-  private readonly _sheet: WorkSheet;
-
-  constructor(sheet: WorkSheet) {
-    this._sheet = sheet;
+  public get data(): CsvDataRecord {
+    return this._data;
   }
 
-  append(sheet: WorkSheet) {
-    const json = utils.sheet_to_json(sheet);
-    var currentSheetJson = utils.sheet_to_json(this._sheet);
-
-    currentSheetJson.push(json[0]);
-
-    return utils.sheet_add_json(sheet, currentSheetJson);
+  public get text(): string {
+    return this.writeToText();
   }
 
-  combine(entities: string[]) {
-    let sheet: WorkSheet | undefined;
-    entities.forEach((entity) => {
-      const data = read(entity, { type: "string" }).Sheets["Sheet1"];
-      this.append(data);
-    });
-    return sheet ? this.toCsvData() : undefined;
+  constructor(data: CsvDataRecord) {
+    this._data = data;
   }
 
-  toCsvData() {
-    var csvText = utils.sheet_to_csv(this._sheet).split("\n");
-    var head = csvText.shift()!.split(",");
-    var rows = csvText.map((rowText) => rowText.split(","));
-    return new CsvData(head, rows);
-  }
-
-  static createSheet(csvText: string[]): CsvWorkSheetAdapter | undefined {
-    let sheet: CsvWorkSheetAdapter | undefined;
-    csvText.forEach((entity) => {
-      if (!sheet) {
-        sheet = new CsvWorkSheetAdapter(
-          read(entity, { type: "string" }).Sheets["Sheet1"]
-        );
-      } else {
-        const data = read(entity, { type: "string" }).Sheets["Sheet1"];
-        sheet.append(data);
+  static createFromText(text: string) {
+    var data: CsvDataRecord = {};
+    var colDef = text.split("\n").shift()?.split(",");
+    if (colDef) {
+      for (let i = 0; i < colDef.length; i++) {
+        const element = colDef[i];
+        text.split("\n").forEach((row, index) => {
+          if (index === 0) return;
+          if (data[element]) {
+            data[element].push(row.split(",")[i]);
+          } else {
+            data[element] = [row.split(",")[i]];
+          }
+        });
       }
-    });
-    return sheet ? new CsvWorkSheetAdapter(sheet) : undefined;
+    }
+    return data;
+  }
+
+  public combine(newData: CsvDataRecord) {
+    for (const key in newData) {
+      if (Object.prototype.hasOwnProperty.call(newData, key)) {
+        if (this._data[key] && !Array.isArray(this._data[key]))
+          this._data[key] = [this._data[key]];
+
+        if (!Array.isArray(newData[key])) {
+          newData[key] = [newData[key]];
+        }
+
+        newData[key].forEach((x: any) => {
+          if (this._data[key]) this._data[key].push(x);
+          else this._data[key] = [x];
+        });
+      }
+    }
+
+    return this._data;
+  }
+
+  private writeToText() {
+    var keys: string[] = Object.keys(this._data);
+    var rows: string[][] = [];
+
+    if (Array.isArray(this._data[keys[0]])) {
+      for (let i = 0; i < this._data[keys[0]].length; i++) {
+        var row: string[] = [];
+
+        keys.forEach((key, index) => {
+          var value = this._data[key];
+          row.push(value[i]);
+        });
+        rows.push(row);
+      }
+    } else {
+      var row: string[] = [];
+
+      keys.forEach((key, index) => {
+        var value = this._data[key];
+        if (Array.isArray(value)) {
+          throw new Error("not implmented");
+        } else if (value) {
+          row.push(value);
+        } else {
+          row.push("");
+        }
+      });
+      rows.push(row);
+    }
+
+    var csvText =
+      keys.join(",") + "\n" + rows.map((x) => x?.join(",")).join("\n");
+    return csvText;
   }
 }

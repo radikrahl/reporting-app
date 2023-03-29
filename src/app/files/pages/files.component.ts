@@ -1,5 +1,5 @@
 import {
-  AfterContentChecked,
+  AfterContentInit,
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -7,42 +7,49 @@ import {
   ViewChildren,
 } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { ExcelFileService } from "../../core/services/excelfile.service";
 import { File, FileSystemEntity } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { MockdataFactory } from "~/app/core/services/mock-data.factory";
 import { FilesEntityComponent } from "../components/files.directive";
 import { ActivatedRoute } from "@angular/router";
+import { FileManager } from "~/app/core/services/files/file.manager";
 
 @Component({
   selector: "afriknow-files",
   templateUrl: "./files.component.html",
   styleUrls: ["./files.component.scss"],
 })
-export class FilesComponent implements OnInit, AfterContentChecked {
+export class FilesComponent implements OnInit {
   entities$?: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
     FileSystemEntity[]
   >([]);
+
   entities?: FileSystemEntity[];
   reports: File[] = [];
-  folderName = this.route.snapshot.queryParams.folder || "";
-  path = this.route.snapshot.queryParams.path || "";
+  folderName: string = "";
+  path = "";
   @ViewChildren(FilesEntityComponent)
   components?: ComponentRef<FilesEntityComponent>[];
 
   constructor(
-    private files: ExcelFileService,
+    private files: FileManager,
     private router: RouterExtensions,
     private route: ActivatedRoute,
     private mockFactory: MockdataFactory,
     private cdr: ChangeDetectorRef
-  ) {}
-  ngAfterContentChecked(): void {
-    this.cdr.detectChanges();
+  ) {
+    this.route.queryParams.subscribe((x) => {
+      this.folderName = x.folder || "";
+      this.path = x.path || "";
+    });
   }
 
   ngOnInit(): void {
-    this.files.getEntites(this.folderName).then((x) => this.entities$?.next(x));
+    this.files
+      .getEntities(this.folderName)
+      .then((x) =>
+        this.entities$?.next(x.sort((a, b) => a.name.localeCompare(b.name)))
+      );
   }
 
   goBack() {
@@ -51,9 +58,10 @@ export class FilesComponent implements OnInit, AfterContentChecked {
 
   mock() {
     this.mockFactory.create().then((x) => {
-      this.files
-        .getEntites(this.folderName)
-        .then((x) => this.entities$?.next(x));
+      this.files.getEntities(this.folderName).then((x) => {
+        this.entities$?.next(x.sort((a, b) => a.name.localeCompare(b.name)));
+        this.cdr.detectChanges();
+      });
     });
   }
 }

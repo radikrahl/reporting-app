@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouteReuseStrategy, Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "@nativescript/angular";
-import { ForceReloadRouteReuseStrategy } from "./files/files.module";
+import { ForceReloadRouteReuseStrategy } from "./core/force-reload.strategy";
 
 const routes: Routes = [
   {

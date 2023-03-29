@@ -3,9 +3,9 @@ import { FormArray } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
 import { REPORT_FORM_DATA } from "~/app/core/constants/mockdata";
-import { ExcelFileService } from "~/app/core/services/excelfile.service";
 import { QuestionGroup } from "~/app/core/models/report-item";
 import { CsvData } from "~/app/core/classes/csv-data";
+import { FileManager } from "~/app/core/services/files/file.manager";
 
 @Component({
   selector: "afriknow-reporting",
@@ -18,7 +18,7 @@ export class ReportingComponent {
 
   constructor(
     @Inject(REPORT_FORM_DATA) public questionGroups: QuestionGroup[],
-    private files: ExcelFileService,
+    private files: FileManager,
     private router: RouterExtensions
   ) {
     this.questionGroups.forEach((group) => this.form.push(group.form));
@@ -34,30 +34,34 @@ export class ReportingComponent {
     const parentName = <string>(
       this.questionGroups[0].form.get("parentName")?.value
     );
+
+    const data = this.toCsvData();
     const fileName = `${parentName}-${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}.csv`;
 
-    this.files.save({ fileName, data: this.toExcelData() })?.then((file) => {
-      this.router.navigate(["/files"]);
-    });
+    this.files
+      .writeText({ content: data.text, path: parentName + "/" + fileName })
+      .then(() => {
+        this.router.navigate([""]);
+      });
   }
 
   goBack() {
     this.router.back();
   }
 
-  toExcelData(): CsvData {
-    let data: { head: string[]; rows: any[] } = { head: [], rows: [] };
+  isCurrentFormValid() {
+    return this.questionGroups[this.pageIndex - 1].form.valid;
+  }
+
+  toCsvData(): CsvData {
+    let data = new CsvData({});
 
     for (let index = 0; index < this.questionGroups.length; index++) {
       const group: QuestionGroup = this.questionGroups[index];
 
-      if (data.head.length > 0) {
-        data.rows.push(group.toCsv().rows);
-      } else {
-        data = group.toCsv();
-      }
+      data.combine(group.toCsv());
     }
-    console.log(data);
-    return new CsvData(data.head, data.rows);
+
+    return data;
   }
 }

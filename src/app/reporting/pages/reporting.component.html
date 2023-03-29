@@ -24,8 +24,7 @@
       (tap)="onTap($event)"></Button>
 
     <Button class="afriknow-btn fas" text="&#xf061;" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
-      isEnabled="{{questionGroups[pageIndex- 1].form.valid && (questionGroups[pageIndex -1].form.touched || questionGroups[pageIndex -1].form.dirty) }}"
-      (tap)="onTap($event)"></Button>
+      isEnabled="{{isCurrentFormValid()}}" (tap)="onTap($event)"></Button>
     <Button class="afriknow-btn" text="Save" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
       isEnabled="{{form.valid}}" (tap)="onSubmit()"></Button>
   </FlexboxLayout>

@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { RouteReuseStrategy, Routes } from "@angular/router";
+import { Routes } from "@angular/router";
 import {
   NativeScriptCommonModule,
   NativeScriptNgZone,
@@ -12,11 +12,11 @@ import { FolderComponent } from "./components/folder/folder.component";
 import { FilesComponent } from "./pages/files.component";
 
 const routes: Routes = [
-  { path: "", component: FilesComponent, data: { noReuse: true } },
+  { path: "", component: FilesComponent },
   {
-    path: ":folder",
+    path: "folder",
     component: FilesComponent,
-    providers: [{ provide: RouteReuseStrategy, useFactory: () => false }],
+    data: { noReuse: true },
   },
 ];
 
