@@ -1,9 +1,22 @@
 
-<StackLayout (tap)="onOpen(fileSystemEntity)" orientation="horizontal">
-    <Label [text]="fileSystemEntity.name" class="text-lg"></Label>
-</StackLayout>
-<StackLayout orientation="horizontal">
-    <Button class="fas" (tap)="onDownload()" [text]="'&#xf07b;'"></Button>
-    <Button class="fas" (tap)="onShare()" [text]="'&#xf1e0;'"></Button>
-    <Button class="fas" (tap)="onDelete()" [text]="'&#xf1f8;'"></Button>
-</StackLayout>
+<StackLayout class="mt-12 hr"></StackLayout>
+<FlexboxLayout class="text-lg" justifyContent="space-between" (tap)="onOpen(fileSystemEntity)" orientation="horizontal">
+    <Label [text]="fileSystemEntity.name"   class="ml-4"></Label>
+    <Label flexShrink="1" alignSelf="center" class="fas mr-4 text-sm" [text]="'&#xf07c;'"></Label>
+</FlexboxLayout>
+<FlexboxLayout  class="mt-4" flexWrap="nowrap" style="width:100%">
+    <Button flexGrow="1" flexShrink="0" class="afriknow-btn -small" (tap)="onDownload()">
+        <FormattedString>
+            <Span class="fas" [text]="'&#xf019;' + '&nbsp; '"></Span>
+            <Span [text]="' download'"></Span>
+        </FormattedString>
+    </Button>
+    <Button  flexGrow="1" flexShrink="0" class="afriknow-btn -small -full" (tap)="onShare()">
+        <FormattedString>
+            <Span class="fas text-sm" [text]="'&#xf1e0;' + '&nbsp; '"></Span>
+            <Span [text]="' share'"></Span>
+        </FormattedString>
+    </Button>
+    <Button flexGrow="0" flexShrink="1" class="afriknow-btn -small -alert fas" style="width:50;" (tap)="onDelete()" [text]="'&#xf1f8;'">
+    </Button>
+</FlexboxLayout>

@@ -1,3 +1,15 @@
+.ml-4 {
+    padding-left: $space-4;
+}
+
+.mt-4 {
+    margin-top: $space-4;
+}
+
+.mr-4 {
+    margin-right: $space-4;
+}
+
 .mb-6 {
     margin-bottom: $space-6;
 }
@@ -22,6 +34,11 @@
 .mt-12 {
     margin-top: $space-12;
 }
+
+.p-6 {
+    padding: $space-6;
+}
+
 .text-center {
     text-align: center;
   }

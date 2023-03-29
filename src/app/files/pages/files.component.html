@@ -5,8 +5,9 @@
 <StackLayout></StackLayout>
 
 <ScrollView>
-    <StackLayout justifyContent="space-between">
-        <ng-template [fileEntity]="item" (onOpen)="onOpen($event)" *ngFor="let item of entities$ | async">
+    <StackLayout class="p-6" justifyContent="space-between">
+        <ng-template class="file-entity" [fileEntity]="item" (onOpen)="onOpen($event)"
+            *ngFor="let item of entities$ | async">
 
         </ng-template>
     </StackLayout>

@@ -18,17 +18,17 @@ export class FileComponent {
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
   constructor(private files: FileManager) {}
 
-  onShare(file: File) {
-    this.files.share({ path: file.parent.name + "/" + file.name });
+  onShare() {
+    this.files.share({ path: this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name });
   }
 
-  onOpen(file: File) {
-    this.files.open({ path: file.parent.name + "/" + file.name });
+  onOpen() {
+    this.files.open({ path: this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name });
   }
 
-  onDelete(file: File) {
+  onDelete() {
     this.files
-      .delete({ path: file.parent.name + "/" + file.name })
+      .delete({ path: this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name })
       ?.then(this.deleteEvent.emit)
       .catch(console.error);
   }
