@@ -5,7 +5,9 @@ import { FileManager } from "~/app/core/services/files/file.manager";
 
 @Injectable()
 export class FolderService {
-  constructor(private files: FileManager) {}
+  constructor(private files: FileManager) {
+    this.files.base = "temp";
+  }
 
   async open(folder: Folder) {
     var path = `temp/${folder.name}.csv`;
@@ -14,11 +16,9 @@ export class FolderService {
     await this.files.writeText({
       content: data.text,
       path,
-      writeToTemp: true
     });
 
     this.files.open({ path });
-
   }
 
   async share(folder: Folder) {
@@ -29,7 +29,6 @@ export class FolderService {
     await this.files.writeText({
       content: data.text,
       path,
-      writeToTemp: true
     });
 
     await this.files.share({ path });

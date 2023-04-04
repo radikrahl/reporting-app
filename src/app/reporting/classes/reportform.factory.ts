@@ -1,11 +1,37 @@
 import { ReportForm } from "~/app/shared/forms/classes/report-form";
 import { DatepickerReportItem } from "~/app/shared/forms/components/datepicker/datepicker.component";
-import { ListpickerComponent, ListpickerReportItem } from "~/app/shared/forms/components/listpicker/listpicker.component";
+import { ListpickerReportItem } from "~/app/shared/forms/components/listpicker/listpicker.component";
 import { SwitchReportItem } from "~/app/shared/forms/components/switch/switch.component";
 import { TextboxReportItem } from "~/app/shared/forms/components/textbox/textbox.component";
 import { TextViewReportItem } from "~/app/shared/forms/components/textview/textview.component";
 
 export class ReportFormFactory {
+
+  private readonly parentNames = [
+    "Manana Moses",
+    "Shere Lydia",
+    "Rebecca Bilunji",
+    "Francis Gimungu",
+    "Kissa Joy",
+    "Beatrice",
+    "Kolya Martin",
+    "Olivia Namagendo",
+    "Nadundu Farida",
+    "Sano Zaina",
+    "Namajja, Suzan",
+    "Nagudi Juliet",
+    "Fazila Nawusanyi",
+    "Zulha Kagaya",
+    "Atim Sarah",
+    "Margret Wazemba",
+    "Witsulala John",
+    "Katono",
+    "Nasaka Jennipeher",
+    "Nasaka Jennifa",
+    "Hellen",
+    "Magret",
+  ];
+
   createForm() {
     return [
       new ReportForm([
@@ -34,6 +60,9 @@ export class ReportFormFactory {
           errorText: "0, 00, 000",
           required: true,
           keyboardType: "integer",
+          min: 1,
+          max: 1000,
+          maxLength: 3
         }),
       ]),
 
@@ -47,6 +76,9 @@ export class ReportFormFactory {
           unit: "kg",
           keyboardType: "number",
           required: true,
+          min: 1,
+          max: 1000,
+          maxLength: 3
         }),
 
         new TextboxReportItem({
@@ -58,6 +90,9 @@ export class ReportFormFactory {
           errorText: "000, 0000",
           keyboardType: "integer",
           required: true,
+          value: '00',
+          min: 100,
+          max: 10000,
         }),
       ]),
 
@@ -69,6 +104,9 @@ export class ReportFormFactory {
           placeholder: "1-2 digits",
           keyboardType: "integer",
           required: true,
+          min: 0,
+          max: 100,
+          maxLength: 2
         }),
 
         new SwitchReportItem({
@@ -84,6 +122,9 @@ export class ReportFormFactory {
           placeholder: "1-3 digits",
           keyboardType: "integer",
           required: true,
+          min: 1,
+          max: 1000,
+          maxLength: 3
         }),
       ]),
 
@@ -103,6 +144,9 @@ export class ReportFormFactory {
           errorText: "0",
           keyboardType: "integer",
           required: true,
+          min: 1,
+          max: 1000,
+          maxLength: 4
         }),
 
         new TextboxReportItem({
@@ -113,6 +157,9 @@ export class ReportFormFactory {
           errorText: "0000, 000000",
           keyboardType: "integer",
           required: true,
+          value: '000',
+          min: 1,
+          minLength: 4
         }),
       ]),
 
@@ -132,6 +179,9 @@ export class ReportFormFactory {
           errorText: "0",
           keyboardType: "integer",
           required: true,
+          min: 1,
+          max: 1000,
+          maxLength: 4
         }),
 
         new TextViewReportItem({
@@ -140,6 +190,7 @@ export class ReportFormFactory {
           required: true,
           placeholder: "e.g. newcastle, cough, etc...",
           errorText: "Please provide a sickness reason.",
+          minLength: 3
         }),
       ]),
 
@@ -159,6 +210,9 @@ export class ReportFormFactory {
           errorText: "0000, 000000",
           keyboardType: "integer",
           required: true,
+          value: '000',
+          min: 1,
+          minLength: 4
         }),
       ]),
 
@@ -178,33 +232,10 @@ export class ReportFormFactory {
           errorText: "0",
           keyboardType: "integer",
           required: true,
+          min: 1,
+          maxLength: 3
         }),
       ]),
     ];
   }
-
-  parentNames = [
-    "Manana Moses",
-    "Shere Lydia",
-    "Rebecca Bilunji",
-    "Francis Gimungu",
-    "Kissa Joy",
-    "Beatrice",
-    "Kolya Martin",
-    "Olivia Namagendo",
-    "Nadundu Farida",
-    "Sano Zaina",
-    "Namajja, Suzan",
-    "Nagudi Juliet",
-    "Fazila Nawusanyi",
-    "Zulha Kagaya",
-    "Atim Sarah",
-    "Margret Wazemba",
-    "Witsulala John",
-    "Katono",
-    "Nasaka Jennipeher",
-    "Nasaka Jennifa",
-    "Hellen",
-    "Magret",
-  ];
 }

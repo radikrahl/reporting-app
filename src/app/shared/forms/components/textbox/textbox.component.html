@@ -10,7 +10,9 @@
     <Label flexGrow="1" flexShrink="0" class="text-field__unit ml-6" *ngIf="question.unit" [text]="question.unit"></Label>
   </FlexboxLayout>
   <StackLayout class=" mt-2">
-    <Label class="form-item__error mt-2 text-sm" *ngIf="showError" [text]="question.errorText"></Label>
     <Label class="text-sm"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
+    <!-- <Label class="form-item__error mt-2" *ngIf="showError" [text]="'Please provide a value.'"></Label> -->
+    <Label class="form-item__error mt-2"  *ngIf="question.formControl.errors?.min && question.formControl.touched || question.formControl.dirty" [text]="'Minimum of ' + question.formControl.errors?.min.min"></Label>
+    <Label class="form-item__error mt-2"  *ngIf="question.formControl.errors?.max && question.formControl.touched || question.formControl.dirty" [text]="'Maximum of ' + question.formControl.errors?.max.max"></Label>
   </StackLayout>
 </StackLayout>

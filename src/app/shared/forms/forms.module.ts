@@ -12,6 +12,7 @@ import { TextboxComponent } from "./components/textbox/textbox.component";
 import { TextViewComponent } from "./components/textview/textview.component";
 import { FormItemDirective } from "./directives/form-item.directive";
 import { ListpickerComponent } from "./components/listpicker/listpicker.component";
+import { TextbaseComponent } from "./components/textbase/textbase.component";
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { ListpickerComponent } from "./components/listpicker/listpicker.componen
   declarations: [
     ReportFormComponent,
     FormItemDirective,
+    TextbaseComponent,
     TextboxComponent,
     SwitchComponent,
     TextViewComponent,

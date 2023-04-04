@@ -4,20 +4,22 @@ import { CoreTypes } from "@nativescript/core";
 import { QuestionOptions } from "~/app/core/models/report-item";
 import { ReportControl } from "../../classes/report-control";
 
-type TextboxType = string | number | "integer";
+type TextbaseType = string | number | "integer";
 
-export interface TextViewReportItemOptions extends QuestionOptions<unknown> {
+export interface TextbaseReportItemOptions extends QuestionOptions<unknown> {
   hint?: string;
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
   unit?: string;
   maxLength?: number;
   minLength?: number;
+  min?: number;
+  max?: number;
   placeholder?: string;
 }
 
-export class TextViewReportItem extends ReportControl<unknown> {
-  component = TextViewComponent;
+export class TextbaseReportItem extends ReportControl<unknown> {
+  component = TextbaseComponent;
   controlType: string = "textbox";
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
@@ -25,7 +27,7 @@ export class TextViewReportItem extends ReportControl<unknown> {
   unit: string;
   maxLength?: number;
   placeholder: string;
-  constructor(options: TextViewReportItemOptions) {
+  constructor(options: TextbaseReportItemOptions) {
     super(options);
     this.keyboardType = options.keyboardType;
     this.returnKeyType = options.returnKeyType;
@@ -41,16 +43,25 @@ export class TextViewReportItem extends ReportControl<unknown> {
     if (options.minLength) {
       this.formControl.addValidators(Validators.minLength(options.minLength))
     }
+
+    if (options.min) {
+      this.formControl.addValidators(Validators.min(options.min))
+    }
+
+    if (options.max) {
+      this.formControl.addValidators(Validators.max(options.max))
+    }
+
   }
 }
 
 @Component({
-  selector: "afriknow-textview",
-  templateUrl: "./textview.component.html",
-  styleUrls: ["./textview.component.scss"],
+  selector: "afriknow-textbase",
+  templateUrl: "./textbase.component.html",
+  styleUrls: ["./textbase.component.scss"],
 })
-export class TextViewComponent {
-  @Input() question!: TextViewReportItem;
+export class TextbaseComponent {
+  @Input() question!: TextbaseReportItem;
   @Input() form!: FormGroup;
 
   get showError() {

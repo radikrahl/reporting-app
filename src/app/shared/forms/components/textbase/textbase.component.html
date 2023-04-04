@@ -1,0 +1,19 @@
+<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hidden' : ''">
+
+  <Label class="form-item__label" [text]="question.label"></Label>
+  <FlexboxLayout>
+    <ng-content class="text-field">
+
+    </ng-content>
+    <!-- <TextField flexShrink="1" flexGrow="0" class="text-field" [keyboardType]="question.keyboardType"
+      [returnKeyType]="question.returnKeyType" [id]="question.key" [required]="question.required"
+      [hint]="question.placeholder" [maxlength]="question.maxLength" [autocorrect]="false"
+      [formControl]="question.formControl">
+    </TextField>
+    <Label flexGrow="1" flexShrink="0" class="text-field__unit ml-6" *ngIf="question.unit" [text]="question.unit"></Label> -->
+  </FlexboxLayout>
+  <StackLayout class=" mt-2">
+    <Label class="form-item__error mt-2 text-sm" *ngIf="showError" [text]="question.errorText"></Label>
+    <Label class="text-sm"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
+  </StackLayout>
+</StackLayout>
