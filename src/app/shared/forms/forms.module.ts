@@ -9,6 +9,7 @@ import { DatepickerComponent } from "./components/datepicker/datepicker.componen
 import { ReportFormComponent } from "./components/form/form.component";
 import { SwitchComponent } from "./components/switch/switch.component";
 import { TextboxComponent } from "./components/textbox/textbox.component";
+import { TextViewComponent } from "./components/textview/textview.component";
 import { FormItemDirective } from "./directives/form-item.directive";
 
 @NgModule({
@@ -24,6 +25,7 @@ import { FormItemDirective } from "./directives/form-item.directive";
     FormItemDirective,
     TextboxComponent,
     SwitchComponent,
+    TextViewComponent,
     DatepickerComponent,
   ],
   exports: [ReportFormComponent],

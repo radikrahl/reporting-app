@@ -12,7 +12,7 @@ export class MockdataFactory {
     const date = new Date(Date.now());
     var data = new CsvData(createMockData());
 
-    const dateString = `${date.getUTCMonth()}-${date.getUTCDate()}-${date.getHours()}--${date.getMinutes()}`;
+    const dateString = `${date.getUTCMonth()}-${date.getUTCDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
     const fileName = `${data.data.parentName}-${dateString}.csv`;
 
     return this.csv.writeText({

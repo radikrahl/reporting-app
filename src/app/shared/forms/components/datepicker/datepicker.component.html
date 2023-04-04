@@ -2,7 +2,7 @@
 
   <ng-container>
     <Label class="form-item__label" [text]="question.label"></Label>
-    <DatePickerField width="100%" class="text-field" [formControl]="question.formControl" [required]="question.required"
+    <DatePickerField width="100%" class="text-md" [formControl]="question.formControl" [required]="question.required"
       date="{{ question.value }}"></DatePickerField>
   </ng-container>
   <Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>

@@ -20,12 +20,12 @@
   </ScrollView>
 
   <FlexboxLayout class="mb-12" flexDirection="row" justifyContent="space-between" row="2" col="0">
-    <Button class="afriknow-btn -bare fas" text="&#xf060;" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
+    <Button class="afriknow-btn fas" text="&#xf060;" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
       (tap)="onTap($event)"></Button>
 
     <Button class="afriknow-btn fas" text="&#xf061;" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
       isEnabled="{{isCurrentFormValid()}}" (tap)="onTap($event)"></Button>
-    <Button class="afriknow-btn" text="Save" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
+    <Button class="afriknow-btn -full" text="Save" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
       isEnabled="{{form.valid}}" (tap)="onSubmit()"></Button>
   </FlexboxLayout>
 

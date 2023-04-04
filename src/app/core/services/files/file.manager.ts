@@ -4,17 +4,15 @@ import { File, Folder, knownFolders, Utils } from "@nativescript/core";
 
 @Injectable({ providedIn: "root" })
 export class FileManager {
-  private readonly _documents: Folder = knownFolders.documents();
-
-  public get documents() {
+  private get documents() {
     return knownFolders.documents();
   }
 
-  public get reports() {
+  private get reports() {
     return this.documents.getFolder("reports");
   }
 
-  public get temp() {
+  private get temp() {
     return knownFolders.temp();
   }
 
@@ -47,8 +45,18 @@ export class FileManager {
     return folder.remove();
   }
 
-  async writeText(args: { content: string; path: string }): Promise<any> {
-    var file = this.reports.getFile(args.path);
+  async writeText(args: {
+    content: string;
+    path: string;
+    writeToTemp?: boolean;
+  }): Promise<any> {
+
+    if (args.writeToTemp) {
+      var file = this.temp.getFile(args.path);
+    } else {
+      var file = this.reports.getFile(args.path);
+    }
+
     try {
       return await file.writeText(args.content);
     } catch (error) {

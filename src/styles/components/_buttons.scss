@@ -1,9 +1,9 @@
 .afriknow-btn {
     border-radius: $space-2;
     border-width: $space-1;
-    border-color: $complementary;
+    border-color: $accent;
 
-    color: $complementary;
+    color: $accent;
     // height: $space-16;
     padding: $space-4 $space-6;
     word-wrap: normal;
@@ -26,6 +26,11 @@
 
         font-weight: bold;
 
+    }
+
+    &.-complementary {
+        border-color: $complementary;
+        color: $complementary;
     }
 
     &.-alert {

@@ -6,7 +6,7 @@ import { ReportControl } from "../../classes/report-control";
 
 type TextboxType = string | number | "integer";
 
-export interface TextboxReportItemOptions extends QuestionOptions<unknown> {
+export interface TextViewReportItemOptions extends QuestionOptions<unknown> {
   hint?: string;
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
@@ -15,8 +15,8 @@ export interface TextboxReportItemOptions extends QuestionOptions<unknown> {
   placeholder?: string;
 }
 
-export class TextboxReportItem extends ReportControl<unknown> {
-  component = TextboxComponent;
+export class TextViewReportItem extends ReportControl<unknown> {
+  component = TextViewComponent;
   controlType: string = "textbox";
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
@@ -24,7 +24,7 @@ export class TextboxReportItem extends ReportControl<unknown> {
   unit: string;
   maxLength?: number;
   placeholder: string;
-  constructor(options: TextboxReportItemOptions) {
+  constructor(options: TextViewReportItemOptions) {
     super(options);
     this.keyboardType = options.keyboardType;
     this.returnKeyType = options.returnKeyType;
@@ -36,12 +36,12 @@ export class TextboxReportItem extends ReportControl<unknown> {
 }
 
 @Component({
-  selector: "afriknow-textbox",
-  templateUrl: "./textbox.component.html",
-  styleUrls: ["./textbox.component.scss"],
+  selector: "afriknow-textview",
+  templateUrl: "./textview.component.html",
+  styleUrls: ["./textview.component.scss"],
 })
-export class TextboxComponent {
-  @Input() question!: TextboxReportItem;
+export class TextViewComponent {
+  @Input() question!: TextViewReportItem;
   @Input() form!: FormGroup;
 
   get showError() {
