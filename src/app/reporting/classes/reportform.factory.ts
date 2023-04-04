@@ -91,7 +91,7 @@ export class ReportFormFactory {
       new ReportForm([
         new SwitchReportItem({
           key: "soldBirds",
-          label: "Any sold birds this week??",
+          label: "Any sold birds this week?",
           value: false,
           switchFor: ["soldBirdsAmount", "amountReceived"],
         }),

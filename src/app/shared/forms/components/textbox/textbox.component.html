@@ -9,8 +9,8 @@
     </TextField>
     <Label flexGrow="1" flexShrink="0" class="text-field__unit ml-6" *ngIf="question.unit" [text]="question.unit"></Label>
   </FlexboxLayout>
-  <StackLayout>
-    <Label class="text-sm mt-2" [text]="question.hint"></Label>
+  <StackLayout class=" mt-2">
     <Label class="form-item__error mt-2 text-sm" *ngIf="showError" [text]="question.errorText"></Label>
+    <Label class="text-sm"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
   </StackLayout>
 </StackLayout>

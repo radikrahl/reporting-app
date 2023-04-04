@@ -5,11 +5,11 @@
   margin-right: $space-10;
   width:90%;
 
-  // &__label {
-  //   font-size: $text-xl;
-  //   text-align: center;
-  //   white-space: normal;
-  // }
+  &__label {
+    font-size: $text-xl;
+    text-align: center;
+    white-space: normal;
+  }
 
   &__error {
     font-size: $text-md;

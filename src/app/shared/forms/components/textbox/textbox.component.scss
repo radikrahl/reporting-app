@@ -26,4 +26,8 @@
   &__unit {
     font-size: $text-lg;
   }
+
+  &.ng-valid, &.ng-invalid {
+    margin-bottom: 0;
+  }
 }
