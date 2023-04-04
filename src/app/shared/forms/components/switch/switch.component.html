@@ -1,10 +1,11 @@
 <StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hide' : ''">
-
-  <StackLayout justifyContent="space-between">
-    <Label class="text-lg" textWrap="true" [text]="question.label"></Label>
+  <Label class="text-lg form-item__label" textWrap="true" [text]="question.label"></Label>
+  <FlexboxLayout class="mt-6" justifyContent="space-around">
+    <Label class="text-lg" [class]="question.value ? '' : 'color-error'" textWrap="true" [text]="'NO'"></Label>
     <Switch class="" checked="{{ question.value }}" [required]="question.required" [formControl]="question.formControl"
       (checkedChange)="onCheckedChange($event)"></Switch>
-  </StackLayout>
+    <Label class="text-lg" [class]="question.value ? 'color-accent' : ''" textWrap="true" [text]="'YES'"></Label>
+  </FlexboxLayout>
 
   <Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>
 </StackLayout>

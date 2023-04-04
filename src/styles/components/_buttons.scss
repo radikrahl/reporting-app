@@ -9,6 +9,9 @@
     word-wrap: normal;
     word-break: keep-all;
     font-weight: bold;
+
+
+
     &.-bare {
         border-color: $complementary;
     }
@@ -26,6 +29,9 @@
 
         font-weight: bold;
 
+        &:active {
+            color: black;
+        }
     }
 
     &.-complementary {
@@ -34,8 +40,12 @@
     }
 
     &.-alert {
-        background-color: red;
+        background-color: $color-error;
         color: $white;
         border-color: transparent;
+
+        &:active {
+            color: black;
+        }
     }
 }

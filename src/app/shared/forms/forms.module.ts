@@ -11,6 +11,7 @@ import { SwitchComponent } from "./components/switch/switch.component";
 import { TextboxComponent } from "./components/textbox/textbox.component";
 import { TextViewComponent } from "./components/textview/textview.component";
 import { FormItemDirective } from "./directives/form-item.directive";
+import { ListpickerComponent } from "./components/listpicker/listpicker.component";
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { FormItemDirective } from "./directives/form-item.directive";
     SwitchComponent,
     TextViewComponent,
     DatepickerComponent,
+    ListpickerComponent
   ],
   exports: [ReportFormComponent],
   schemas: [NO_ERRORS_SCHEMA],

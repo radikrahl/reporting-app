@@ -1,5 +1,6 @@
 import { ReportForm } from "~/app/shared/forms/classes/report-form";
 import { DatepickerReportItem } from "~/app/shared/forms/components/datepicker/datepicker.component";
+import { ListpickerComponent, ListpickerReportItem } from "~/app/shared/forms/components/listpicker/listpicker.component";
 import { SwitchReportItem } from "~/app/shared/forms/components/switch/switch.component";
 import { TextboxReportItem } from "~/app/shared/forms/components/textbox/textbox.component";
 import { TextViewReportItem } from "~/app/shared/forms/components/textview/textview.component";
@@ -8,12 +9,11 @@ export class ReportFormFactory {
   createForm() {
     return [
       new ReportForm([
-        new TextboxReportItem({
+        new ListpickerReportItem({
           key: "parentName",
           label: "Parent name",
-          hint: "Enter name of parent.",
           required: true,
-          returnKeyType: "next",
+          items: this.parentNames
         }),
         new DatepickerReportItem({
           key: "date",
@@ -138,6 +138,8 @@ export class ReportFormFactory {
           key: "sickness",
           label: "Which sickness?",
           required: true,
+          placeholder: "e.g. newcastle, cough, etc...",
+          errorText: "Please provide a sickness reason.",
         }),
       ]),
 
@@ -180,4 +182,29 @@ export class ReportFormFactory {
       ]),
     ];
   }
+
+  parentNames = [
+    "Manana Moses",
+    "Shere Lydia",
+    "Rebecca Bilunji",
+    "Francis Gimungu",
+    "Kissa Joy",
+    "Beatrice",
+    "Kolya Martin",
+    "Olivia Namagendo",
+    "Nadundu Farida",
+    "Sano Zaina",
+    "Namajja, Suzan",
+    "Nagudi Juliet",
+    "Fazila Nawusanyi",
+    "Zulha Kagaya",
+    "Atim Sarah",
+    "Margret Wazemba",
+    "Witsulala John",
+    "Katono",
+    "Nasaka Jennipeher",
+    "Nasaka Jennifa",
+    "Hellen",
+    "Magret",
+  ];
 }

@@ -20,7 +20,9 @@
   font-size: $text-md;
   margin: 0;
   width: 100%;
+  line-height: 0;
   placeholder-color: lightgrey;
+
   &__unit {
     font-size: $text-lg;
   }

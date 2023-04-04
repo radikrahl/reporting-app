@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from "@angular/core";
+import { NativeScriptNgZone } from "@nativescript/angular";
 import { File } from "@nativescript/core";
 import { FileManager } from "~/app/core/services/files/file.manager";
 
@@ -16,20 +17,35 @@ import { FileManager } from "~/app/core/services/files/file.manager";
 export class FileComponent {
   @Input() fileSystemEntity!: File;
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
-  constructor(private files: FileManager) {}
+  constructor(private files: FileManager, private ngZone: NativeScriptNgZone) {}
 
   onShare() {
-    this.files.share({ path: this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name });
+    this.files.share({
+      path:
+        this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name,
+    });
   }
 
   onOpen() {
-    this.files.open({ path: this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name });
+    this.files.open({
+      path:
+        this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name,
+    });
   }
 
   onDelete() {
-    this.files
-      .delete({ path: this.fileSystemEntity.parent.name + "/" + this.fileSystemEntity.name })
-      ?.then(this.deleteEvent.emit)
-      .catch(console.error);
+    this.ngZone.runTask(() => {
+      this.files
+        .delete({
+          path:
+            this.fileSystemEntity.parent.name +
+            "/" +
+            this.fileSystemEntity.name,
+        })
+        ?.then(() => {
+          this.deleteEvent.emit();
+        })
+        .catch(console.error);
+    });
   }
 }
