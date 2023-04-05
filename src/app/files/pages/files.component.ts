@@ -1,33 +1,22 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ComponentRef,
-  OnInit,
-  ViewChildren,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { File, FileSystemEntity } from "@nativescript/core";
+import { FileSystemEntity, knownFolders } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
-import { FilesEntityComponent } from "../components/files.directive";
 import { ActivatedRoute } from "@angular/router";
-import { FileManager } from "~/app/core/services/files/file.manager";
 import { MockdataFactory } from "../services/mock-data.factory";
+import { FileManager } from "~/app/core/services/files/file.manager";
+import { CsvFolder } from "~/app/shared/files/classes/folder";
 
 @Component({
   selector: "afriknow-files",
   templateUrl: "./files.component.html",
 })
 export class FilesComponent implements OnInit {
-  entities$?: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
+  entities$: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
     FileSystemEntity[]
   >([]);
 
-  entities?: FileSystemEntity[];
-  reports: File[] = [];
   folderName: string = "";
-  path = "";
-  @ViewChildren(FilesEntityComponent)
-  components?: ComponentRef<FilesEntityComponent>[];
 
   constructor(
     private files: FileManager,
@@ -38,7 +27,6 @@ export class FilesComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe((x) => {
       this.folderName = x.folder || "";
-      this.path = x.path || "";
     });
   }
 
@@ -46,7 +34,7 @@ export class FilesComponent implements OnInit {
     this.files
       .getEntities(this.folderName)
       .then((x) =>
-        this.entities$?.next(x.sort((a, b) => a.name.localeCompare(b.name)))
+        this.entities$.next(x.sort((a, b) => a.name.localeCompare(b.name)))
       );
   }
 
@@ -57,9 +45,21 @@ export class FilesComponent implements OnInit {
   mock() {
     this.mockFactory.create().then((x) => {
       this.files.getEntities(this.folderName).then((x) => {
-        this.entities$?.next(x.sort((a, b) => a.name.localeCompare(b.name)));
+        this.entities$.next(x.sort((a, b) => a.name.localeCompare(b.name)));
         this.cdr.detectChanges();
       });
     });
+  }
+
+  shareAll() {
+    new CsvFolder(
+      this.entities$.value[0].parent || knownFolders.externalDocuments()
+    ).share();
+  }
+
+  downloadAll() {
+    new CsvFolder(
+      this.entities$.value[0].parent || knownFolders.externalDocuments()
+    ).download();
   }
 }

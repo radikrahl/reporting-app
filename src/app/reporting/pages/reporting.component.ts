@@ -33,14 +33,14 @@ export class ReportingComponent {
       this.questionGroups[0].form.get("parentName")?.value
     );
 
-    const data = this.toCsvData();
-    const fileName = `${parentName}-${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}.csv`;
-debugger;
-    this.files
-      .writeText({ content: data.text, path: parentName + "/" + fileName })
-      .then(() => {
-        this.router.navigate([""]);
-      });
+    const data = this.toCsvData().data;
+    const fileName = `${parentName}-${date.getUTCFullYear()}-${
+      date.getUTCMonth() + 1
+    }-${date.getUTCDate()}.csv`;
+
+    this.files.save(parentName + "/" + fileName, data).then(() => {
+      this.router.navigate([""]);
+    });
   }
 
   goBack() {

@@ -3,19 +3,20 @@
     <Label [text]="title" style="width: 100%;" class="text-lg text-center"></Label>
     <Label [text]="subtitle" style="width: 100%;" class="text-md text-center"></Label>
 </StackLayout>
-<FlexboxLayout  class="mt-4" flexWrap="nowrap" style="width:100%">
+<FlexboxLayout class="mt-4" flexWrap="nowrap" style="width:100%">
     <Button flexGrow="1" flexShrink="0" class="afriknow-btn -small" (tap)="onOpen()">
         <FormattedString>
             <Span class="fas" [text]="'&#xf019;' + '&nbsp; '"></Span>
             <Span [text]="' download'"></Span>
         </FormattedString>
     </Button>
-    <Button  flexGrow="1" flexShrink="0" class="afriknow-btn -small -full" (tap)="onShare()">
+    <Button flexGrow="1" flexShrink="0" class="afriknow-btn -small -full" (tap)="onShare()">
         <FormattedString>
             <Span class="fas text-sm" [text]="'&#xf1e0;' + '&nbsp; '"></Span>
             <Span [text]="' share'"></Span>
         </FormattedString>
     </Button>
-    <Button flexGrow="0" flexShrink="1" class="afriknow-btn -small -alert fas" style="width:50;" (tap)="onDelete()" [text]="'&#xf1f8;'">
+    <Button flexGrow="0" flexShrink="1" class="afriknow-btn -small -alert fas" style="width:50;" (tap)="onDelete()"
+        [text]="'&#xf1f8;'">
     </Button>
 </FlexboxLayout>

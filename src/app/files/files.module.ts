@@ -6,11 +6,11 @@ import {
   NativeScriptNgZone,
   NativeScriptRouterModule,
 } from "@nativescript/angular";
-import { FileComponent } from "./components/file/file.component";
-import { FilesEntityComponent } from "./components/files.directive";
-import { FolderComponent } from "./components/folder/folder.component";
 import { FilesComponent } from "./pages/files.component";
 import { MockdataFactory } from "./services/mock-data.factory";
+import { FolderComponent } from "../shared/files/components/folder/folder.component";
+import { FileComponent } from "../shared/files/components/file/file.component";
+import { FilesEntityComponent } from "../shared/files/components/files.directive";
 
 const routes: Routes = [
   { path: "", component: FilesComponent },

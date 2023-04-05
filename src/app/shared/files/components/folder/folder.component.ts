@@ -8,28 +8,23 @@ import {
 import { NavigationExtras, Router } from "@angular/router";
 import { NativeScriptNgZone } from "@nativescript/angular";
 import { Folder } from "@nativescript/core";
-import { FolderService } from "../../services/folder.service";
+import { CsvFolder } from "../../classes/folder";
 
 @Component({
   selector: "afriknow-folder",
   templateUrl: "./folder.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FolderService],
 })
 export class FolderComponent {
   @Input() fileSystemEntity!: Folder;
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(
-    private files: FolderService,
-    private ngZone: NativeScriptNgZone,
-    private router: Router
-  ) {}
+  constructor(private ngZone: NativeScriptNgZone, private router: Router) {}
 
   onDelete() {
     this.ngZone.runTask(() => {
-      this.files
-        .delete(this.fileSystemEntity)
+      new CsvFolder(this.fileSystemEntity)
+        .delete()
         ?.then(() => {
           this.deleteEvent.emit();
         })
@@ -44,10 +39,10 @@ export class FolderComponent {
   }
 
   onShare() {
-    this.files.share(this.fileSystemEntity);
+    new CsvFolder(this.fileSystemEntity).share();
   }
 
   onDownload() {
-    this.files.open(this.fileSystemEntity);
+    new CsvFolder(this.fileSystemEntity).download();
   }
 }

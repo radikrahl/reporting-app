@@ -1,6 +1,8 @@
 <ActionBar [title]="folderName || 'My Reports'">
     <NavigationButton text="Go back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
-    <!-- <ActionItem [text]="'Mock data'" (tap)="mock()"></ActionItem> -->
+    <ActionItem android.position="popup" [text]="'Test data'" (tap)="mock()"></ActionItem>
+    <ActionItem android.position="popup" text="Share all" (tap)="shareAll()" />
+    <ActionItem android.position="popup" text="Download all" (tap)="downloadAll()" />
 </ActionBar>
 
 <ScrollView>
