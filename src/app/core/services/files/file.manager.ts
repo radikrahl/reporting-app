@@ -2,14 +2,20 @@ import { Injectable } from "@angular/core";
 import { ShareFile } from "@nativescript-community/ui-share-file";
 import { File, Folder, knownFolders, Utils } from "@nativescript/core";
 
-@Injectable({ providedIn: "root" })
+@Injectable({
+  providedIn: 'root'
+})
 export class FileManager {
   private get documents() {
     return knownFolders.documents();
   }
 
+  private get externalDocuments() {
+    return knownFolders.externalDocuments();
+  }
+
   private get reports() {
-    return this.documents.getFolder("reports");
+    return this.externalDocuments.getFolder("reports");
   }
 
   private get temp() {

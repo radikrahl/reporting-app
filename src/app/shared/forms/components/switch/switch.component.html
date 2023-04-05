@@ -1,4 +1,3 @@
-<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hide' : ''">
   <Label class="text-lg form-item__label" textWrap="true" [text]="question.label"></Label>
   <FlexboxLayout class="mt-6" justifyContent="space-around" alignItems="center">
     <Label class="text-md" [class]="question.value ? '' : 'color-error'" textWrap="true" [text]="'NO'"></Label>
@@ -8,4 +7,3 @@
   </FlexboxLayout>
 
   <Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>
-</StackLayout>

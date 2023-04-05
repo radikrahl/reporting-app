@@ -1,17 +1,20 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Folder, File } from "@nativescript/core";
 import { CsvData } from "~/app/core/classes/csv-data";
 import { FileManager } from "~/app/core/services/files/file.manager";
 
 @Injectable()
-export class FolderService {
+export class FolderService implements OnDestroy {
   constructor(private files: FileManager) {
-    this.files.base = "temp";
+  }
+  ngOnDestroy(): void {
   }
 
   async open(folder: Folder) {
     var path = `temp/${folder.name}.csv`;
     var data = await this.readFolder(folder.name);
+
+    this.files.base = "temp";
 
     await this.files.writeText({
       content: data.text,
@@ -19,6 +22,8 @@ export class FolderService {
     });
 
     this.files.open({ path });
+    this.files.base = "reports";
+
   }
 
   async share(folder: Folder) {
@@ -26,12 +31,14 @@ export class FolderService {
 
     var data = await this.readFolder(folder.name);
 
+    this.files.base = "temp";
     await this.files.writeText({
       content: data.text,
       path,
     });
 
     await this.files.share({ path });
+    this.files.base = "reports";
   }
 
   delete(folder: Folder) {

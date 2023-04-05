@@ -17,6 +17,17 @@ import { FileManager } from "~/app/core/services/files/file.manager";
 export class FileComponent {
   @Input() fileSystemEntity!: File;
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
+
+  public get title() {
+    return this.fileSystemEntity.parent.name;
+  }
+
+  public get subtitle() {
+    var fileName = this.fileSystemEntity.name;
+    var dateStr= fileName.substring(fileName.indexOf('-') + 1, fileName.indexOf('.'));
+    return new Date(dateStr).toLocaleDateString();
+  }
+
   constructor(private files: FileManager, private ngZone: NativeScriptNgZone) {}
 
   onShare() {

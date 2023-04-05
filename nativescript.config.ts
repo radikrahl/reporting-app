@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.reportingapp',
+  id: 'org.africa_k_now.reportingapp',
   appPath: 'src',
   appResourcesPath: 'App_Resources',
   android: {

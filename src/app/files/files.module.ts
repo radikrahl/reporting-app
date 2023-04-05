@@ -10,6 +10,7 @@ import { FileComponent } from "./components/file/file.component";
 import { FilesEntityComponent } from "./components/files.directive";
 import { FolderComponent } from "./components/folder/folder.component";
 import { FilesComponent } from "./pages/files.component";
+import { MockdataFactory } from "./services/mock-data.factory";
 
 const routes: Routes = [
   { path: "", component: FilesComponent },
@@ -34,6 +35,6 @@ const routes: Routes = [
     NativeScriptRouterModule.forChild(routes),
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [NativeScriptNgZone],
+  providers: [NativeScriptNgZone, MockdataFactory],
 })
 export class FilesModule {}

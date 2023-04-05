@@ -1,0 +1,39 @@
+.form-item {
+  &__label {
+    font-size: $text-lg;
+    white-space: normal;
+    // text-align: center;
+    color: $complementary;
+  }
+
+  &__error {
+    font-size: $text-md;
+    color: $color-error;
+    margin-top: $space-2;
+  }
+
+  &__hint {
+    font-size: $text-sm;
+    margin-top: $space-2;
+  }
+}
+.text-field {
+  font-size: $text-md;
+  margin: 0;
+  width: 100%;
+  placeholder-color: lightgrey;
+
+  &__unit {
+    font-size: $text-lg;
+    margin-left: $space-6;
+  }
+}
+
+Switch[checked="false"] {
+  color: $color-error;
+}
+
+.afriknow-form {
+  margin-left: $space-10;
+  margin-right: $space-10;
+}

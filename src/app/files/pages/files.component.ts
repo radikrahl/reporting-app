@@ -16,7 +16,6 @@ import { MockdataFactory } from "../services/mock-data.factory";
 @Component({
   selector: "afriknow-files",
   templateUrl: "./files.component.html",
-  styleUrls: ["./files.component.scss"],
 })
 export class FilesComponent implements OnInit {
   entities$?: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<

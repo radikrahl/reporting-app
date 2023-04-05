@@ -58,7 +58,6 @@ export class TextboxReportItem extends ReportControl<unknown> {
 @Component({
   selector: "afriknow-textbox",
   templateUrl: "./textbox.component.html",
-  styleUrls: ["./textbox.component.scss"],
 })
 export class TextboxComponent {
   @Input() question!: TextboxReportItem;
@@ -69,5 +68,5 @@ export class TextboxComponent {
     return control?.invalid && control?.touched;
   }
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor() {}
 }

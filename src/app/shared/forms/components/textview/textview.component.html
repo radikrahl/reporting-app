@@ -1,4 +1,3 @@
-<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hidden' : ''">
 
   <Label class="form-item__label" [text]="question.label"></Label>
   <FlexboxLayout>
@@ -11,4 +10,4 @@
   </FlexboxLayout>
   <Label class="text-sm mt-2" [text]="question.hint"></Label>
   <Label class="form-item__error mt-2 text-sm" *ngIf="showError" [text]="question.errorText"></Label>
-</StackLayout>
+<!-- </StackLayout> -->

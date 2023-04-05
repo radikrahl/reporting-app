@@ -3,16 +3,15 @@ import { createMockData } from "~/app/core/constants/mockdata";
 import { CsvData } from "../../core/classes/csv-data";
 import { FileManager } from "../../core/services/files/file.manager";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class MockdataFactory {
   constructor(private csv: FileManager) {}
   async create(): Promise<CsvData> {
     const date = new Date(Date.now());
     var data = new CsvData(createMockData());
 
-    const dateString = `${date.getUTCMonth()}-${date.getUTCDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+    const dateString = `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+    debugger;
     const fileName = `${data.data.parentName}-${dateString}.csv`;
 
     return this.csv.writeText({

@@ -47,7 +47,6 @@ export class TextViewReportItem extends ReportControl<unknown> {
 @Component({
   selector: "afriknow-textview",
   templateUrl: "./textview.component.html",
-  styleUrls: ["./textview.component.scss"],
 })
 export class TextViewComponent {
   @Input() question!: TextViewReportItem;

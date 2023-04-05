@@ -1,18 +1,16 @@
-<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hidden' : ''">
 
   <Label class="form-item__label" [text]="question.label"></Label>
+  <Label class="form-item__hint"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
   <FlexboxLayout>
     <TextField flexShrink="1" flexGrow="0" class="text-field" [keyboardType]="question.keyboardType"
       [returnKeyType]="question.returnKeyType" [id]="question.key" [required]="question.required"
       [hint]="question.placeholder" [maxlength]="question.maxLength" [autocorrect]="false"
       [formControl]="question.formControl">
     </TextField>
-    <Label flexGrow="1" flexShrink="0" class="text-field__unit ml-6" *ngIf="question.unit" [text]="question.unit"></Label>
+    <Label flexGrow="1" flexShrink="0" class="text-field__unit" *ngIf="question.unit" [text]="question.unit"></Label>
   </FlexboxLayout>
-  <StackLayout class=" mt-2">
-    <Label class="text-sm"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
+  <StackLayout>
     <!-- <Label class="form-item__error mt-2" *ngIf="showError" [text]="'Please provide a value.'"></Label> -->
-    <Label class="form-item__error mt-2"  *ngIf="question.formControl.errors?.min && question.formControl.touched || question.formControl.dirty" [text]="'Minimum of ' + question.formControl.errors?.min.min"></Label>
-    <Label class="form-item__error mt-2"  *ngIf="question.formControl.errors?.max && question.formControl.touched || question.formControl.dirty" [text]="'Maximum of ' + question.formControl.errors?.max.max"></Label>
+    <Label class="form-item__error"  *ngIf="question.formControl.errors?.min && question.formControl.invalid && (question.formControl.touched || question.formControl.dirty)" [text]="'Minimum of ' + question.formControl.errors?.min.min"></Label>
+    <Label class="form-item__error"  *ngIf="question.formControl.errors?.max && question.formControl.invalid && (question.formControl.touched || question.formControl.dirty)" [text]="'Maximum of ' + question.formControl.errors?.max.max"></Label>
   </StackLayout>
-</StackLayout>

@@ -10,7 +10,6 @@ export class DatepickerReportItem extends ReportControl<Date> {
 @Component({
   selector: "afriknow-datepicker",
   templateUrl: "./datepicker.component.html",
-  styleUrls: ["./datepicker.component.scss"],
 })
 export class DatepickerComponent {
   @Input() question!: DatepickerReportItem;

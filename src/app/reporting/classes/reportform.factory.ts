@@ -71,7 +71,7 @@ export class ReportFormFactory {
         new TextboxReportItem({
           key: "foodQuantity",
           label: "Quantity of food this week?",
-          hint: "How much food was needed today?",
+          hint: "How much food was needed this week?",
           placeholder: "1-3 digits",
           unit: "kg",
           keyboardType: "number",
@@ -84,13 +84,12 @@ export class ReportFormFactory {
         new TextboxReportItem({
           key: "foodPrice",
           label: "Price of food",
-          unit: "ugx",
+          unit: "ugx/kg",
           placeholder: "3-4 digits",
           hint: "How much does 1kg of food cost?",
           errorText: "000, 0000",
           keyboardType: "integer",
           required: true,
-          value: '00',
           min: 100,
           max: 10000,
         }),
@@ -100,7 +99,8 @@ export class ReportFormFactory {
       new ReportForm([
         new TextboxReportItem({
           key: "eggs",
-          label: "How many eggs are in the shelter this week?",
+          label: "How many eggs?",
+          hint: "How many eggs are in the shelter this week?",
           placeholder: "1-2 digits",
           keyboardType: "integer",
           required: true,
@@ -112,13 +112,14 @@ export class ReportFormFactory {
         new SwitchReportItem({
           key: "newBorn",
           label: "Any new born this week?",
-          value: false,
+          value: true,
           switchFor: "amountNewBorn",
         }),
 
         new TextboxReportItem({
           key: "amountNewBorn",
-          label: "Amount of new born this week",
+          label: "New Born",
+          hint: "Amount of new born this week",
           placeholder: "1-3 digits",
           keyboardType: "integer",
           required: true,
@@ -133,13 +134,14 @@ export class ReportFormFactory {
         new SwitchReportItem({
           key: "soldBirds",
           label: "Any sold birds this week?",
-          value: false,
+          value: true,
           switchFor: ["soldBirdsAmount", "amountReceived"],
         }),
 
         new TextboxReportItem({
           key: "soldBirdsAmount",
-          label: "How many sold birds this week?",
+          label: "Sold birds",
+          hint: "How many sold birds this week?",
           placeholder: "1-3 digits",
           errorText: "0",
           keyboardType: "integer",
@@ -151,14 +153,14 @@ export class ReportFormFactory {
 
         new TextboxReportItem({
           key: "amountReceived",
-          label: "Amount received by the Parents",
+          label: "Amount received",
+          hint: "What is the amount received by the parents.",
           unit: "ugx",
           placeholder: "4-7 digits",
           errorText: "0000, 000000",
           keyboardType: "integer",
           required: true,
-          value: '000',
-          min: 1,
+          min: 1000,
           minLength: 4
         }),
       ]),
@@ -168,7 +170,7 @@ export class ReportFormFactory {
         new SwitchReportItem({
           key: "sickBirds",
           label: "Any sick birds this week?",
-          value: false,
+          value: true,
           switchFor: ["sickBirdsAmount", "sickness"],
         }),
 
@@ -188,7 +190,7 @@ export class ReportFormFactory {
           key: "sickness",
           label: "Which sickness?",
           required: true,
-          placeholder: "e.g. newcastle, cough, etc...",
+          placeholder: "e.g. Newcastle, cough, etc...",
           errorText: "Please provide a sickness reason.",
           minLength: 3
         }),
@@ -199,7 +201,7 @@ export class ReportFormFactory {
         new SwitchReportItem({
           key: "medicineNeeded",
           label: "Any medicine needed this week?",
-          value: false,
+          value: true,
           switchFor: "medicineAmount",
         }),
 
@@ -207,11 +209,11 @@ export class ReportFormFactory {
           key: "medicineAmount",
           label: "Amount of medicine bought.",
           placeholder: "4-7 digits",
+          unit: 'ugx',
           errorText: "0000, 000000",
           keyboardType: "integer",
           required: true,
-          value: '000',
-          min: 1,
+          min: 500,
           minLength: 4
         }),
       ]),
@@ -221,8 +223,8 @@ export class ReportFormFactory {
         new SwitchReportItem({
           key: "deadBirds",
           label: "Any dead birds this week?",
-          value: false,
-          switchFor: "deadBirdsAmount",
+          value: true,
+          switchFor: ["deadBirdsAmount", "deathReason"],
         }),
 
         new TextboxReportItem({
@@ -234,6 +236,14 @@ export class ReportFormFactory {
           required: true,
           min: 1,
           maxLength: 3
+        }),
+
+        new TextViewReportItem({
+          key: "deathReason",
+          label: "Reason of death",
+          placeholder: "e.g. sickness, environment, food poisoning",
+          required: true,
+          minLength: 3
         }),
       ]),
     ];

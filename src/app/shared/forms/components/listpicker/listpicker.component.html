@@ -1,7 +1,5 @@
-<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hide' : ''">
-  <Label class="text-lg form-item__label" textWrap="true" [text]="question.label"></Label>
+  <Label class="form-item__label" textWrap="true" [text]="question.label"></Label>
   <ListPicker (selectedIndexChange)="onSelectedIndexChange($event)" [items]="question.items" class="picker"> </ListPicker>
 
 
   <Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>
-</StackLayout>

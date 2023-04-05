@@ -21,7 +21,6 @@ export class ListpickerReportItem extends ReportControl<string> {
 @Component({
   selector: "afriknow-listpicker",
   templateUrl: "./listpicker.component.html",
-  styleUrls: ["./listpicker.component.scss"],
 })
 export class ListpickerComponent {
   @Input() question!: ListpickerReportItem;
@@ -38,7 +37,6 @@ export class ListpickerComponent {
   onSelectedIndexChange(e: any) {
     this.ngZone.runTask(() => {
       this.question.formControl.setValue(this.question.items[e.value]);
-      console.log(e.value, this.question.items[e.value] ,this.question.formControl.value);
     })
   }
 

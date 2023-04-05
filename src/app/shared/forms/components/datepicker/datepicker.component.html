@@ -1,10 +1,4 @@
-<StackLayout class="mt-6 form-item" [formGroup]="form" [class]="question.formControl.disabled ? 'hide' : ''">
-
-  <ng-container>
-    <Label class="form-item__label" [text]="question.label"></Label>
-    <DatePickerField width="100%" class="text-md" [formControl]="question.formControl" [required]="question.required"
-      date="{{ question.value }}"></DatePickerField>
-  </ng-container>
-  <Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>
-
-</StackLayout>
+<Label class="form-item__label" [text]="question.label"></Label>
+<DatePickerField class="text-field" [formControl]="question.formControl" [required]="question.required"
+  date="{{ question.value }}"></DatePickerField>
+<Label class="form-item__error" *ngIf="showError" [text]="question.errorText"></Label>

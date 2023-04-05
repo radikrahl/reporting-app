@@ -34,8 +34,8 @@ export class ReportingComponent {
     );
 
     const data = this.toCsvData();
-    const fileName = `${parentName}-${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}.csv`;
-
+    const fileName = `${parentName}-${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}.csv`;
+debugger;
     this.files
       .writeText({ content: data.text, path: parentName + "/" + fileName })
       .then(() => {
@@ -52,7 +52,7 @@ export class ReportingComponent {
     return this.questionGroups[this.pageIndex - 1].form.valid;
   }
 
-  toCsvData(): CsvData {
+  private toCsvData(): CsvData {
     let data = new CsvData({});
 
     for (let index = 0; index < this.questionGroups.length; index++) {

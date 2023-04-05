@@ -20,7 +20,6 @@ export class SwitchReportItem extends ReportControl<boolean> {
 @Component({
   selector: "afriknow-switch",
   templateUrl: "./switch.component.html",
-  styleUrls: ["./switch.component.scss"],
 })
 export class SwitchComponent implements OnInit {
   @Input() question!: SwitchReportItem;

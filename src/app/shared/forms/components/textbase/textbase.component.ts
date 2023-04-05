@@ -58,7 +58,6 @@ export class TextbaseReportItem extends ReportControl<unknown> {
 @Component({
   selector: "afriknow-textbase",
   templateUrl: "./textbase.component.html",
-  styleUrls: ["./textbase.component.scss"],
 })
 export class TextbaseComponent {
   @Input() question!: TextbaseReportItem;
