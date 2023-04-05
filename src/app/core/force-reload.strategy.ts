@@ -17,7 +17,7 @@ export class ForceReloadRouteReuseStrategy extends NSRouteReuseStrategy {
     let shouldDetach = super.shouldDetach(route);
 
     if (shouldDetach && route.data.noReuse) {
-      shouldDetach = false;
+      shouldDetach = true;
     }
 
     return shouldDetach;
@@ -25,7 +25,6 @@ export class ForceReloadRouteReuseStrategy extends NSRouteReuseStrategy {
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
     let shouldAttach = super.shouldAttach(route);
-
     return shouldAttach;
   }
 

@@ -1,14 +1,15 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptNgZone } from "@nativescript/angular";
 import { SharedModule } from "../shared/shared.module";
-import { ReportingComponent } from "./pages/reporting.component";
 import { ReportingRoutingModule } from "./reporting.routing";
-import { FileManager } from "../core/services/files/file.manager";
+import { ReportingComponent } from "./pages/report/reporting.component";
+import { MyReportsComponent } from "./pages/my-reports/my-reports.component";
+import { SharedFilesModule } from "../shared/files/files.module";
 
 @NgModule({
-  imports: [SharedModule, ReportingRoutingModule],
+  imports: [SharedModule, ReportingRoutingModule, SharedFilesModule],
   providers: [NativeScriptNgZone],
-  declarations: [ReportingComponent],
+  declarations: [ReportingComponent, MyReportsComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class ReportingModule {}

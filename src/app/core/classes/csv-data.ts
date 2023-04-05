@@ -1,4 +1,4 @@
-export type CsvDataRecord = Record<string, any | any[]>;
+export type CsvDataRecord = Record<string, unknown | unknown[]>;
 
 export class CsvData {
   private _data: CsvDataRecord;
@@ -24,14 +24,14 @@ export class CsvData {
         text.split("\n").forEach((row, index) => {
           if (index === 0) return;
           if (data[element]) {
-            data[element].push(row.split(",")[i]);
+            (<Array<unknown>>data[element]).push(row.split(",")[i]);
           } else {
             data[element] = [row.split(",")[i]];
           }
         });
       }
     }
-    return data;
+    return new CsvData(data);
   }
 
   public combine(newData: CsvDataRecord) {
@@ -44,9 +44,9 @@ export class CsvData {
           newData[key] = [newData[key]];
         }
 
-        newData[key].forEach((x: any) => {
-          if (this._data[key]) this._data[key].push(x);
-          else this._data[key] = [x];
+        (<Array<unknown>>newData[key]).forEach((value: any) => {
+          if (this._data[key]) (<Array<unknown>>this._data[key]).push(value);
+          else this._data[key] = [value];
         });
       }
     }
@@ -56,20 +56,20 @@ export class CsvData {
 
   private writeToText() {
     var keys: string[] = Object.keys(this._data);
-    var rows: string[][] = [];
-
-    if (Array.isArray(this._data[keys[0]])) {
-      for (let i = 0; i < this._data[keys[0]].length; i++) {
-        var row: string[] = [];
+    var rows: unknown[][] = [];
+    var firstElement = this._data[keys[0]];
+    if (Array.isArray(firstElement)) {
+      for (let i = 0; i < firstElement.length; i++) {
+        var row: unknown[] = [];
 
         keys.forEach((key, index) => {
-          var value = this._data[key];
+          var value = this._data[key] as unknown[];
           row.push(value[i]);
         });
         rows.push(row);
       }
     } else {
-      var row: string[] = [];
+      var row: unknown[] = [];
 
       keys.forEach((key, index) => {
         var value = this._data[key];

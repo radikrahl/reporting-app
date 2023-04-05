@@ -6,7 +6,7 @@ import {
   Output,
 } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
-import { NativeScriptNgZone } from "@nativescript/angular";
+import { NativeScriptNgZone, RouterExtensions } from "@nativescript/angular";
 import { Folder } from "@nativescript/core";
 import { CsvFolder } from "../../classes/folder";
 
@@ -19,7 +19,7 @@ export class FolderComponent {
   @Input() fileSystemEntity!: Folder;
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private ngZone: NativeScriptNgZone, private router: Router) {}
+  constructor(private ngZone: NativeScriptNgZone, private router: RouterExtensions) {}
 
   onDelete() {
     this.ngZone.runTask(() => {
@@ -33,9 +33,9 @@ export class FolderComponent {
   }
   onOpen(folder: Folder) {
     const extras: NavigationExtras = {
-      queryParams: { folder: folder.name, path: folder.path },
+      queryParams: { folder: folder.name },
     };
-    this.router.navigate(["/files/folder"], extras);
+    this.router.navigate(["reports/myreports/folder"], extras);
   }
 
   onShare() {

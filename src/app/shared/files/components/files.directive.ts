@@ -15,7 +15,7 @@ import { FolderComponent } from "./folder/folder.component";
 @Directive({
   selector: "[fileEntity]",
 })
-export class FilesEntityComponent implements OnInit, OnDestroy {
+export class FilesEntityDirective implements OnInit, OnDestroy {
   @Input("fileEntity") fileEntity?: FileSystemEntity;
 
   componentRef?: ComponentRef<any>;

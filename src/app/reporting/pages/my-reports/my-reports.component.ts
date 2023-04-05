@@ -1,17 +1,18 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { FileSystemEntity, knownFolders } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { ActivatedRoute } from "@angular/router";
-import { MockdataFactory } from "../services/mock-data.factory";
+import { MockdataFactory } from "../../services/mock-data.factory";
 import { FileManager } from "~/app/core/services/files/file.manager";
 import { CsvFolder } from "~/app/shared/files/classes/folder";
 
 @Component({
-  selector: "afriknow-files",
-  templateUrl: "./files.component.html",
+  selector: "afriknow-my-reports",
+  templateUrl: "./my-reports.component.html",
+  providers: [MockdataFactory],
 })
-export class FilesComponent implements OnInit {
+export class MyReportsComponent implements OnInit {
   entities$: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
     FileSystemEntity[]
   >([]);
@@ -52,14 +53,14 @@ export class FilesComponent implements OnInit {
   }
 
   shareAll() {
-    new CsvFolder(
+    this.files.share(
       this.entities$.value[0].parent || knownFolders.externalDocuments()
-    ).share();
+    );
   }
 
   downloadAll() {
-    new CsvFolder(
+    this.files.download(
       this.entities$.value[0].parent || knownFolders.externalDocuments()
-    ).download();
+    );
   }
 }
