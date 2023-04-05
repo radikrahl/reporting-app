@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
-import { FileSystemEntity, File, Folder, knownFolders } from "@nativescript/core";
-import { CsvDataRecord } from "../../classes/csv-data";
+import {
+  FileSystemEntity,
+  File,
+  Folder,
+  knownFolders,
+} from "@nativescript/core";
+import { CsvDataRecord } from "../classes/csv-data";
 import { CsvFile } from "~/app/shared/files/classes/file";
 import { CsvFolder } from "~/app/shared/files/classes/folder";
 
@@ -49,12 +54,10 @@ export class FileManager {
   private getCsvEntity(entity: FileSystemEntity) {
     if (entity instanceof File) {
       return new CsvFile(entity);
-    }
-    else if (entity instanceof Folder) {
-      return new CsvFolder(entity)
-    }
-    else {
-      throw new Error("not recognized")
+    } else if (entity instanceof Folder) {
+      return new CsvFolder(entity);
+    } else {
+      throw new Error("not recognized");
     }
   }
 }

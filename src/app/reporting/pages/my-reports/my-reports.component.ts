@@ -1,16 +1,20 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+} from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { FileSystemEntity, knownFolders } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { ActivatedRoute } from "@angular/router";
 import { MockdataFactory } from "../../services/mock-data.factory";
-import { FileManager } from "~/app/core/services/files/file.manager";
-import { CsvFolder } from "~/app/shared/files/classes/folder";
+import { FileManager } from "~/app/shared/files/services/file.manager";
 
 @Component({
   selector: "afriknow-my-reports",
   templateUrl: "./my-reports.component.html",
-  providers: [MockdataFactory],
 })
 export class MyReportsComponent implements OnInit {
   entities$: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
@@ -22,11 +26,9 @@ export class MyReportsComponent implements OnInit {
   constructor(
     private files: FileManager,
     private router: RouterExtensions,
-    private route: ActivatedRoute,
-    private mockFactory: MockdataFactory,
     private cdr: ChangeDetectorRef
   ) {
-    this.route.queryParams.subscribe((x) => {
+    inject(ActivatedRoute).queryParams.subscribe((x) => {
       this.folderName = x.folder || "";
     });
   }
@@ -44,7 +46,7 @@ export class MyReportsComponent implements OnInit {
   }
 
   mock() {
-    this.mockFactory.create().then((x) => {
+    new MockdataFactory(this.files).create().then((x) => {
       this.files.getEntities(this.folderName).then((x) => {
         this.entities$.next(x.sort((a, b) => a.name.localeCompare(b.name)));
         this.cdr.detectChanges();

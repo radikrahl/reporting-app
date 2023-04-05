@@ -1,11 +1,12 @@
 import { FormGroup } from "@angular/forms";
-import { CsvDataRecord } from "~/app/core/classes/csv-data";
-import { ReportControl } from "./report-control";
+import { ReportControl, ReportFormType } from "./report-control";
+
+export type ReportFormRecord = Record<string, ReportFormType | null>;
 
 export class ReportForm {
   private _form?: FormGroup;
 
-  constructor(public questions: ReportControl<unknown>[]) {}
+  constructor(public questions: ReportControl<ReportFormType>[]) {}
 
   public get form() {
     if (!this._form) this._form = this.toFormGroup();
@@ -21,8 +22,8 @@ export class ReportForm {
     return group;
   }
 
-  public toCsv(): CsvDataRecord {
-    const data: CsvDataRecord = {};
+  public toCsv(): ReportFormRecord {
+    const data: ReportFormRecord = {};
 
     for (let index = 0; index < this.questions.length; index++) {
       const element = this.questions[index];

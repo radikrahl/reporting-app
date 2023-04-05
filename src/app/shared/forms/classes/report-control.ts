@@ -1,6 +1,8 @@
 import { FormControl, Validators } from "@angular/forms";
 import { QuestionBase, QuestionOptions } from "~/app/core/models/report-item";
 
+export type ReportFormType = string | number | boolean | Date | undefined;
+
 export abstract class ReportControl<T> extends QuestionBase<T> {
   abstract component: any;
   formControl: FormControl<T | null>;

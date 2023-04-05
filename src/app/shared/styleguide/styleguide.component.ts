@@ -5,25 +5,24 @@ import { SwitchReportItem } from "../forms/components/switch/switch.component";
 import { TextboxReportItem } from "../forms/components/textbox/textbox.component";
 import { TextViewReportItem } from "../forms/components/textview/textview.component";
 import { NativeScriptCommonModule } from "@nativescript/angular";
-import { FormArray, FormsModule } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 import { SharedModule } from "../shared.module";
 
 @Component({
-  templateUrl: './styleguide.component.html',
+  templateUrl: "./styleguide.component.html",
   standalone: true,
   imports: [NativeScriptCommonModule, SharedModule],
-  schemas: [NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class StyleguideComponent {
   formData = formData();
-  form: FormArray<any> = new FormArray<any>([]);
+  form: FormArray<FormGroup<any>> = new FormArray<FormGroup<any>>([]);
   pageIndex = 1;
 
   constructor() {
     this.formData.forEach((group) => this.form.push(group.form));
   }
 }
-
 
 function formData() {
   return [
@@ -81,7 +80,7 @@ function formData() {
         label: "Which sickness?",
         required: true,
         placeholder: "e.g. newcastle, cough, etc...",
-        errorText: "Please provide a sickness reason."
+        errorText: "Please provide a sickness reason.",
       }),
     ]),
   ];

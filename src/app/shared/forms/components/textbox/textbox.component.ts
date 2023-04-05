@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
 import { QuestionOptions } from "~/app/core/models/report-item";
 import { ReportControl } from "../../classes/report-control";
 
-type TextboxType = string | number | "integer";
+type TextboxType = string | number;
 
-export interface TextboxReportItemOptions extends QuestionOptions<unknown> {
+export interface TextboxReportItemOptions extends QuestionOptions<TextboxType> {
   hint?: string;
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
@@ -18,7 +18,7 @@ export interface TextboxReportItemOptions extends QuestionOptions<unknown> {
   placeholder?: string;
 }
 
-export class TextboxReportItem extends ReportControl<unknown> {
+export class TextboxReportItem extends ReportControl<TextboxType> {
   component = TextboxComponent;
   controlType: string = "textbox";
   keyboardType?: CoreTypes.KeyboardInputType;
@@ -33,25 +33,24 @@ export class TextboxReportItem extends ReportControl<unknown> {
     this.returnKeyType = options.returnKeyType;
     this.hint = options.hint || "";
     this.unit = options.unit || "";
-    this.placeholder = options.placeholder || ""
+    this.placeholder = options.placeholder || "";
     this.maxLength = options.maxLength;
 
     if (options.maxLength) {
-      this.formControl.addValidators(Validators.maxLength(options.maxLength))
+      this.formControl.addValidators(Validators.maxLength(options.maxLength));
     }
 
     if (options.minLength) {
-      this.formControl.addValidators(Validators.minLength(options.minLength))
+      this.formControl.addValidators(Validators.minLength(options.minLength));
     }
 
     if (options.min) {
-      this.formControl.addValidators(Validators.min(options.min))
+      this.formControl.addValidators(Validators.min(options.min));
     }
 
     if (options.max) {
-      this.formControl.addValidators(Validators.max(options.max))
+      this.formControl.addValidators(Validators.max(options.max));
     }
-
   }
 }
 

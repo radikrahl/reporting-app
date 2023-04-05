@@ -1,7 +1,7 @@
 import { formatDate } from "@angular/common";
 import { Folder, File, knownFolders } from "@nativescript/core";
-import { CsvData, CsvDataRecord } from "~/app/core/classes/csv-data";
 import { CsvFile } from "./file";
+import { CsvData, CsvDataRecord } from "./csv-data";
 
 export class CsvFolder {
   path: string;

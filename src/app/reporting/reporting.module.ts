@@ -4,10 +4,10 @@ import { SharedModule } from "../shared/shared.module";
 import { ReportingRoutingModule } from "./reporting.routing";
 import { ReportingComponent } from "./pages/report/reporting.component";
 import { MyReportsComponent } from "./pages/my-reports/my-reports.component";
-import { SharedFilesModule } from "../shared/files/files.module";
+import { FilesModule } from "../shared/files/files.module";
 
 @NgModule({
-  imports: [SharedModule, ReportingRoutingModule, SharedFilesModule],
+  imports: [SharedModule, ReportingRoutingModule, FilesModule],
   providers: [NativeScriptNgZone],
   declarations: [ReportingComponent, MyReportsComponent],
   schemas: [NO_ERRORS_SCHEMA],

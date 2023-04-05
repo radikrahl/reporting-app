@@ -1,6 +1,6 @@
 import { ShareFile } from "@nativescript-community/ui-share-file";
 import { Utils, File } from "@nativescript/core";
-import { CsvDataRecord, CsvData } from "~/app/core/classes/csv-data";
+import { CsvDataRecord, CsvData } from "./csv-data";
 
 export class CsvFile {
   path: string;

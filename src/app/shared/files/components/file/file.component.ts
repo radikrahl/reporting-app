@@ -7,7 +7,6 @@ import {
 } from "@angular/core";
 import { NativeScriptNgZone } from "@nativescript/angular";
 import { File } from "@nativescript/core";
-import { FileManager } from "~/app/core/services/files/file.manager";
 import { CsvFile } from "../../classes/file";
 
 @Component({
@@ -32,7 +31,7 @@ export class FileComponent {
     return new Date(dateStr).toLocaleDateString();
   }
 
-  constructor(private files: FileManager, private ngZone: NativeScriptNgZone) {}
+  constructor(private ngZone: NativeScriptNgZone) {}
 
   onShare() {
     new CsvFile(this.fileSystemEntity).share();

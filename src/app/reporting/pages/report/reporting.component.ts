@@ -1,12 +1,11 @@
 import { Component } from "@angular/core";
-import { FormArray } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
-import { CsvData, CsvDataRecord } from "~/app/core/classes/csv-data";
-import { FileManager } from "~/app/core/services/files/file.manager";
 import { ReportForm } from "~/app/shared/forms/classes/report-form";
 import { ReportFormFactory } from "../../classes/reportform.factory";
 import { formatDate } from "@angular/common";
+import { FileManager } from "~/app/shared/files/services/file.manager";
 
 @Component({
   selector: "afriknow-reporting",
@@ -14,7 +13,7 @@ import { formatDate } from "@angular/common";
 })
 export class ReportingComponent {
   pageIndex = 1;
-  form: FormArray<any> = new FormArray<any>([]);
+  form: FormArray<FormGroup<any>> = new FormArray<FormGroup<any>>([]);
   questionGroups: ReportForm[];
 
   constructor(private files: FileManager, private router: RouterExtensions) {
@@ -54,15 +53,9 @@ export class ReportingComponent {
     return this.questionGroups[this.pageIndex - 1].form.valid;
   }
 
-  private toDataRecord(): CsvDataRecord {
-    let data = new CsvData({});
-
-    for (let index = 0; index < this.questionGroups.length; index++) {
-      const group = this.questionGroups[index];
-
-      data.combine(group.toCsv());
-    }
-
-    return data.data;
+  private toDataRecord(): Record<string, unknown> {
+    let data: Record<string, unknown> = {};
+    this.questionGroups.forEach((group) => Object.assign(data, group.toCsv()));
+    return data;
   }
 }

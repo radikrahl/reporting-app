@@ -7,15 +7,13 @@ import {
 import { FileComponent } from "./components/file/file.component";
 import { FilesEntityDirective } from "./components/files.directive";
 import { FolderComponent } from "./components/folder/folder.component";
+import { FileManager } from "./services/file.manager";
 
 @NgModule({
-  declarations: [    FolderComponent,
-    FileComponent,
-    FilesEntityDirective,],
-
+  declarations: [FolderComponent, FileComponent, FilesEntityDirective],
   imports: [CommonModule, NativeScriptCommonModule],
   exports: [FilesEntityDirective],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [NativeScriptNgZone],
+  providers: [NativeScriptNgZone, FileManager],
 })
-export class SharedFilesModule {}
+export class FilesModule {}

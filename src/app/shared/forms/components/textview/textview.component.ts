@@ -6,7 +6,8 @@ import { ReportControl } from "../../classes/report-control";
 
 type TextboxType = string | number | "integer";
 
-export interface TextViewReportItemOptions extends QuestionOptions<unknown> {
+export interface TextViewReportItemOptions
+  extends QuestionOptions<string | number> {
   hint?: string;
   keyboardType?: CoreTypes.KeyboardInputType;
   returnKeyType?: CoreTypes.ReturnKeyButtonType;
@@ -16,7 +17,7 @@ export interface TextViewReportItemOptions extends QuestionOptions<unknown> {
   placeholder?: string;
 }
 
-export class TextViewReportItem extends ReportControl<unknown> {
+export class TextViewReportItem extends ReportControl<string | number> {
   component = TextViewComponent;
   controlType: string = "textbox";
   keyboardType?: CoreTypes.KeyboardInputType;
@@ -31,15 +32,15 @@ export class TextViewReportItem extends ReportControl<unknown> {
     this.returnKeyType = options.returnKeyType;
     this.hint = options.hint || "";
     this.unit = options.unit || "";
-    this.placeholder = options.placeholder || ""
+    this.placeholder = options.placeholder || "";
     this.maxLength = options.maxLength;
 
     if (options.maxLength) {
-      this.formControl.addValidators(Validators.maxLength(options.maxLength))
+      this.formControl.addValidators(Validators.maxLength(options.maxLength));
     }
 
     if (options.minLength) {
-      this.formControl.addValidators(Validators.minLength(options.minLength))
+      this.formControl.addValidators(Validators.minLength(options.minLength));
     }
   }
 }
