@@ -18,7 +18,7 @@
     <Button class="afriknow-btn fas" text="&#xf061;" flexGrow="1" *ngIf="pageIndex < reportForm.groups.length" id="next"
       isEnabled="{{isCurrentFormValid()}}" (tap)="onTap($event)"></Button>
     <Button class="afriknow-btn -full" text="Save" flexGrow="1" *ngIf="pageIndex == reportForm.groups.length"
-      isEnabled="{{form.valid}}" (tap)="onSubmit()"></Button>
+      isEnabled="{{reportForm.valid}}" (tap)="onSubmit()"></Button>
   </FlexboxLayout>
 
 </GridLayout>

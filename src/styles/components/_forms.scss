@@ -27,6 +27,11 @@
     font-size: $text-lg;
     margin-left: $space-6;
   }
+
+  &.ng-valid,
+  &.ng-invalid {
+    margin-bottom: 0;
+  }
 }
 
 Switch[checked="false"] {

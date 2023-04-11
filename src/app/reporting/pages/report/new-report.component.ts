@@ -1,24 +1,25 @@
-import { Component, Inject } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
+import { Component } from "@angular/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
 import { ReportFormArray } from "~/app/shared/forms/classes/report-form";
-import { FileManager } from "~/app/shared/files/services/file.manager";
-import { createFilePath } from "~/app/shared/files/classes/file";
+import { ReportFormService } from "../../services/report-form.service";
 
 @Component({
   templateUrl: "./new-report.component.html",
+  providers: [
+    {
+      provide: ReportFormService,
+    },
+  ],
 })
 export class NewReportComponent {
   pageIndex = 1;
-  form: FormArray<FormGroup<any>>;
-
+  reportForm: ReportFormArray;
   constructor(
-    @Inject("REPORT_FORM") public reportForm: ReportFormArray,
-    private files: FileManager,
+    private reports: ReportFormService,
     private router: RouterExtensions
   ) {
-    this.form = reportForm.form
+    this.reportForm = this.reports.reportForm;
   }
 
   onTap(event: { object: Button }) {
@@ -27,24 +28,17 @@ export class NewReportComponent {
   }
 
   onSubmit() {
-    const firstPage = this.reportForm.groups[0];
-    let date: Date = firstPage.form.get("date")?.value;
-    const parentName: string = firstPage.form.get("parentName")?.value
-
-    const data = this.reportForm.toFormRecord();
-    var path = createFilePath(parentName, date);
-
-    this.files.save(path, data).then(() => {
+    this.reports.save().then(() => {
       this.router.navigate([""]);
     });
   }
 
   goBack() {
-    this.reportForm.groups.forEach((x) => x.form.reset());
+    this.reportForm.reset();
     this.router.back();
   }
 
   isCurrentFormValid() {
-    return this.reportForm.groups[this.pageIndex - 1].form.valid;
+    return this.reportForm.isCurrentValid(this.pageIndex - 1);
   }
 }

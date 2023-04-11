@@ -4,7 +4,12 @@ import { NativeScriptRouterModule } from "@nativescript/angular";
 import { MyReportsComponent } from "./pages/my-reports/my-reports.component";
 import { ReportingComponent } from "./pages/reporting.component";
 import { NewReportComponent } from "./pages/report/new-report.component";
-import { ReportFormFactory } from "./classes/reportform.factory";
+import {
+  ChickenReportFactory,
+  GoatReportFormFactory,
+  MonthlyFormFactory,
+} from "./classes/reportform.factory";
+import { REPORT_FACTORY } from "../shared/forms/classes/report-form";
 
 const routes: Routes = [
   { path: "", component: ReportingComponent },
@@ -25,22 +30,20 @@ const routes: Routes = [
         path: "chicken",
         component: NewReportComponent,
         providers: [
-          { provide: "REPORT_FORM", useValue: new ReportFormFactory().createForm() },
+          { provide: REPORT_FACTORY, useClass: ChickenReportFactory },
         ],
       },
       {
         path: "goat",
         component: NewReportComponent,
         providers: [
-          { provide: "REPORT_FORM", useValue: new ReportFormFactory().createGoatForm() },
+          { provide: REPORT_FACTORY, useClass: GoatReportFormFactory },
         ],
       },
       {
         path: "monthly",
         component: NewReportComponent,
-        providers: [
-          { provide: "REPORT_FORM", useValue: new ReportFormFactory().createMonthlyForm() },
-        ]
+        providers: [{ provide: REPORT_FACTORY, useClass: MonthlyFormFactory }],
       },
     ],
   },
