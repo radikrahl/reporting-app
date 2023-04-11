@@ -4,7 +4,7 @@ import {
   Component,
   Input,
 } from "@angular/core";
-import { ReportForm } from "../../classes/report-form";
+import { ReportFormGroup } from "../../classes/report-form";
 
 @Component({
   selector: "afriknow-report-form",
@@ -12,7 +12,7 @@ import { ReportForm } from "../../classes/report-form";
   providers: [],
 })
 export class ReportFormComponent implements AfterContentChecked {
-  @Input() questionGroup!: ReportForm;
+  @Input() questionGroup!: ReportFormGroup;
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterContentChecked(): void {

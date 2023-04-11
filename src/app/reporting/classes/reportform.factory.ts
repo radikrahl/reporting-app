@@ -1,4 +1,4 @@
-import { ReportForm } from "~/app/shared/forms/classes/report-form";
+import { ReportFormArray, ReportFormGroup } from "~/app/shared/forms/classes/report-form";
 import { DatepickerReportItem } from "~/app/shared/forms/components/datepicker/datepicker.component";
 import { ListpickerReportItem } from "~/app/shared/forms/components/listpicker/listpicker.component";
 import { SwitchReportItem } from "~/app/shared/forms/components/switch/switch.component";
@@ -6,7 +6,7 @@ import { TextboxReportItem } from "~/app/shared/forms/components/textbox/textbox
 import { TextViewReportItem } from "~/app/shared/forms/components/textview/textview.component";
 
 export interface ReportForm2 {
-  questionGroups: ReportForm[];
+  questionGroups: ReportFormGroup[];
 }
 
 export class ReportFormFactory {
@@ -38,8 +38,14 @@ export class ReportFormFactory {
   private readonly goatParentNames = ["Goat 1", "Goat 2"];
 
   createMonthlyForm() {
-    return [
-      new ReportForm([
+    return new ReportFormArray([
+      new ReportFormGroup([
+        new DatepickerReportItem({
+          key: "date",
+          label: "Enter Date",
+          value: new Date(Date.now()),
+          required: true,
+        }),
         new TextViewReportItem({
           key: 'birds',
           label: 'How are the parents and her birds doing this month?',
@@ -77,12 +83,12 @@ export class ReportFormFactory {
           required: true
         }),
       ])
-    ]
+    ])
   }
 
   createGoatForm() {
-    return [
-      new ReportForm([
+    return new ReportFormArray([
+      new ReportFormGroup([
         new ListpickerReportItem({
           key: "parentName",
           label: "Parent name",
@@ -99,7 +105,7 @@ export class ReportFormFactory {
 
       /* Inventory */
 
-      new ReportForm([
+      new ReportFormGroup([
         new TextboxReportItem({
           key: "chicken",
           label: "How many goats this week?",
@@ -115,7 +121,7 @@ export class ReportFormFactory {
       ]),
 
       /* FOOD */
-      new ReportForm([
+      new ReportFormGroup([
         new TextboxReportItem({
           key: "foodQuantity",
           label: "Quantity of food this week?",
@@ -144,7 +150,7 @@ export class ReportFormFactory {
       ]),
 
       /* NEW BIRDS */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "newBorn",
           label: "Any new born this week?",
@@ -166,7 +172,7 @@ export class ReportFormFactory {
       ]),
 
       /* SOLD */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "soldBirds",
           label: "Any sold goats this week?",
@@ -202,7 +208,7 @@ export class ReportFormFactory {
       ]),
 
       /* SICKNESS */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "sickBirds",
           label: "Any sick birds this week?",
@@ -233,7 +239,7 @@ export class ReportFormFactory {
       ]),
 
       /* MEDICINE */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "medicineNeeded",
           label: "Any medicine needed this week?",
@@ -255,7 +261,7 @@ export class ReportFormFactory {
       ]),
 
       /* DEAD */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "deadBirds",
           label: "Any dead birds this week?",
@@ -282,12 +288,12 @@ export class ReportFormFactory {
           minLength: 3,
         }),
       ]),
-    ];
+    ]);
   }
 
   createForm() {
-    return [
-      new ReportForm([
+    return new ReportFormArray([
+      new ReportFormGroup([
         new ListpickerReportItem({
           key: "parentName",
           label: "Parent name",
@@ -304,7 +310,7 @@ export class ReportFormFactory {
 
       /* Inventory */
 
-      new ReportForm([
+      new ReportFormGroup([
         new TextboxReportItem({
           key: "chicken",
           label: "How many chicken this week?",
@@ -320,7 +326,7 @@ export class ReportFormFactory {
       ]),
 
       /* FOOD */
-      new ReportForm([
+      new ReportFormGroup([
         new TextboxReportItem({
           key: "foodQuantity",
           label: "Quantity of food this week?",
@@ -349,7 +355,7 @@ export class ReportFormFactory {
       ]),
 
       /* NEW BIRDS */
-      new ReportForm([
+      new ReportFormGroup([
         new TextboxReportItem({
           key: "eggs",
           label: "How many eggs?",
@@ -383,7 +389,7 @@ export class ReportFormFactory {
       ]),
 
       /* SOLD */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "soldBirds",
           label: "Any sold birds this week?",
@@ -419,7 +425,7 @@ export class ReportFormFactory {
       ]),
 
       /* SICKNESS */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "sickBirds",
           label: "Any sick birds this week?",
@@ -450,7 +456,7 @@ export class ReportFormFactory {
       ]),
 
       /* MEDICINE */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "medicineNeeded",
           label: "Any medicine needed this week?",
@@ -472,7 +478,7 @@ export class ReportFormFactory {
       ]),
 
       /* DEAD */
-      new ReportForm([
+      new ReportFormGroup([
         new SwitchReportItem({
           key: "deadBirds",
           label: "Any dead birds this week?",
@@ -499,6 +505,6 @@ export class ReportFormFactory {
           minLength: 3,
         }),
       ]),
-    ];
+    ]);
   }
 }

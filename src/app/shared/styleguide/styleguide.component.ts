@@ -1,5 +1,5 @@
 import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
-import { ReportForm } from "../forms/classes/report-form";
+import { ReportFormGroup } from "../forms/classes/report-form";
 import { DatepickerReportItem } from "../forms/components/datepicker/datepicker.component";
 import { SwitchReportItem } from "../forms/components/switch/switch.component";
 import { TextboxReportItem } from "../forms/components/textbox/textbox.component";
@@ -26,7 +26,7 @@ export class StyleguideComponent {
 
 function formData() {
   return [
-    new ReportForm([
+    new ReportFormGroup([
       new TextboxReportItem({
         key: "parentName",
         label: "Parent name",

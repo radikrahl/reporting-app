@@ -2,7 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
-import { ReportForm } from "~/app/shared/forms/classes/report-form";
+import { ReportFormArray } from "~/app/shared/forms/classes/report-form";
 import { FileManager } from "~/app/shared/files/services/file.manager";
 import { createFilePath } from "~/app/shared/files/classes/file";
 
@@ -11,14 +11,14 @@ import { createFilePath } from "~/app/shared/files/classes/file";
 })
 export class NewReportComponent {
   pageIndex = 1;
-  form: FormArray<FormGroup<any>> = new FormArray<FormGroup<any>>([]);
+  form: FormArray<FormGroup<any>>;
 
   constructor(
-    @Inject("REPORT_FORM") public questionGroups: ReportForm[],
+    @Inject("REPORT_FORM") public reportForm: ReportFormArray,
     private files: FileManager,
     private router: RouterExtensions
   ) {
-    this.questionGroups.forEach((group) => this.form.push(group.form));
+    this.form = reportForm.form
   }
 
   onTap(event: { object: Button }) {
@@ -27,12 +27,11 @@ export class NewReportComponent {
   }
 
   onSubmit() {
-    let date = this.questionGroups[0].form.get("date")?.value;
-    const parentName = <string>(
-      this.questionGroups[0].form.get("parentName")?.value
-    );
+    const firstPage = this.reportForm.groups[0];
+    let date: Date = firstPage.form.get("date")?.value;
+    const parentName: string = firstPage.form.get("parentName")?.value
 
-    const data = this.toDataRecord();
+    const data = this.reportForm.toFormRecord();
     var path = createFilePath(parentName, date);
 
     this.files.save(path, data).then(() => {
@@ -41,17 +40,11 @@ export class NewReportComponent {
   }
 
   goBack() {
-    this.questionGroups.forEach((x) => x.form.reset());
+    this.reportForm.groups.forEach((x) => x.form.reset());
     this.router.back();
   }
 
   isCurrentFormValid() {
-    return this.questionGroups[this.pageIndex - 1].form.valid;
-  }
-
-  private toDataRecord(): Record<string, unknown> {
-    let data: Record<string, unknown> = {};
-    this.questionGroups.forEach((group) => Object.assign(data, group.toCsv()));
-    return data;
+    return this.reportForm.groups[this.pageIndex - 1].form.valid;
   }
 }

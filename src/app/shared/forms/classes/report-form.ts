@@ -1,15 +1,17 @@
-import { FormGroup } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 import { ReportControl, ReportFormType } from "./report-control";
+import { group } from "@angular/animations";
 
 export type ReportFormRecord = Record<string, ReportFormType | null>;
 
-export class ReportForm {
-  private _form?: FormGroup;
+export class ReportFormGroup {
+  private _form: FormGroup;
 
-  constructor(public questions: ReportControl<ReportFormType>[]) {}
+  constructor(public questions: ReportControl<ReportFormType>[]) {
+    this._form = this.toFormGroup()
+  }
 
   public get form() {
-    if (!this._form) this._form = this.toFormGroup();
     return this._form;
   }
 
@@ -32,6 +34,32 @@ export class ReportForm {
         data[element.label] = element.value;
       }
     }
+    return data;
+  }
+}
+
+export class ReportFormArray {
+  private _form: FormArray;
+
+  constructor(public groups: ReportFormGroup[]) {
+    this._form = this.toFormArray();
+  }
+
+  public get form() {
+    return this._form;
+  }
+
+  private toFormArray() {
+    const array = new FormArray<FormGroup<any>>([]);
+
+    this.groups.forEach(group => array.push(group.form))
+
+    return array;
+  }
+
+  public toFormRecord(): ReportFormRecord {
+    let data: ReportFormRecord = {};
+    this.groups.forEach((group) => Object.assign(data, group.toCsv()));
     return data;
   }
 }

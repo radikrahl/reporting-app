@@ -5,7 +5,7 @@
 <GridLayout columns="*" rows="40,*,auto" width="100%" height="100%">
 
   <ScrollView row="1" class="mb-6">
-    <ng-container col="0" *ngFor="let group of questionGroups; index as i">
+    <ng-container col="0" *ngFor="let group of reportForm.groups; index as i">
       <afriknow-report-form [formGroup]="form" *ngIf="i + 1 === pageIndex"
         [questionGroup]="group"></afriknow-report-form>
     </ng-container>
@@ -15,9 +15,9 @@
     <Button class="afriknow-btn fas" text="&#xf060;" flexGrow="1" *ngIf="pageIndex > 1" id="prev"
       (tap)="onTap($event)"></Button>
 
-    <Button class="afriknow-btn fas" text="&#xf061;" flexGrow="1" *ngIf="pageIndex < questionGroups.length" id="next"
+    <Button class="afriknow-btn fas" text="&#xf061;" flexGrow="1" *ngIf="pageIndex < reportForm.groups.length" id="next"
       isEnabled="{{isCurrentFormValid()}}" (tap)="onTap($event)"></Button>
-    <Button class="afriknow-btn -full" text="Save" flexGrow="1" *ngIf="pageIndex == questionGroups.length"
+    <Button class="afriknow-btn -full" text="Save" flexGrow="1" *ngIf="pageIndex == reportForm.groups.length"
       isEnabled="{{form.valid}}" (tap)="onSubmit()"></Button>
   </FlexboxLayout>
 
