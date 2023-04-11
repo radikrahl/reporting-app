@@ -19,7 +19,9 @@ export class FileComponent {
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter<void>();
 
   public get title() {
-    return this.fileSystemEntity.parent.name;
+    var fileName = this.fileSystemEntity.name;
+
+    return fileName.substring(0, fileName.indexOf("-"));
   }
 
   public get subtitle() {

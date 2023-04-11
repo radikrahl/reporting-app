@@ -1,6 +1,18 @@
 import { ShareFile } from "@nativescript-community/ui-share-file";
 import { Utils, File } from "@nativescript/core";
 import { CsvDataRecord, CsvData } from "./csv-data";
+import { formatDate } from "@angular/common";
+
+export function createFilePath(parentName: string, date: Date) {
+  const dateString = formatDate(date, "yyyy-MM-dd", "en-US");
+    const year = formatDate(date, 'yyyy', 'en-US');
+    const month = formatDate(date, 'MMM', 'en-US');
+    const day = formatDate(date, 'dd', 'en-US');
+    const folderPath = `${parentName}/${year}/${month}/`;
+    const fileName = `${parentName}-${dateString}.csv`;
+
+    return folderPath + fileName;
+}
 
 export class CsvFile {
   path: string;

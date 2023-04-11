@@ -1,23 +1,23 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { RouterExtensions } from "@nativescript/angular";
 import { Button } from "@nativescript/core";
 import { ReportForm } from "~/app/shared/forms/classes/report-form";
-import { ReportFormFactory } from "../../classes/reportform.factory";
-import { formatDate } from "@angular/common";
 import { FileManager } from "~/app/shared/files/services/file.manager";
+import { createFilePath } from "~/app/shared/files/classes/file";
 
 @Component({
-  selector: "afriknow-reporting",
-  templateUrl: "./reporting.component.html",
+  templateUrl: "./new-report.component.html",
 })
-export class ReportingComponent {
+export class NewReportComponent {
   pageIndex = 1;
   form: FormArray<FormGroup<any>> = new FormArray<FormGroup<any>>([]);
-  questionGroups: ReportForm[];
 
-  constructor(private files: FileManager, private router: RouterExtensions) {
-    this.questionGroups = new ReportFormFactory().createForm();
+  constructor(
+    @Inject("REPORT_FORM") public questionGroups: ReportForm[],
+    private files: FileManager,
+    private router: RouterExtensions
+  ) {
     this.questionGroups.forEach((group) => this.form.push(group.form));
   }
 
@@ -27,19 +27,15 @@ export class ReportingComponent {
   }
 
   onSubmit() {
-    const date = <Date>this.questionGroups[0].form.get("date")?.value;
+    let date = this.questionGroups[0].form.get("date")?.value;
     const parentName = <string>(
       this.questionGroups[0].form.get("parentName")?.value
     );
 
     const data = this.toDataRecord();
-    const fileName = `${parentName}-${formatDate(
-      date,
-      "yyyy-MM-dd",
-      "en-US"
-    )}.csv`;
+    var path = createFilePath(parentName, date);
 
-    this.files.save(parentName + "/" + fileName, data).then(() => {
+    this.files.save(path, data).then(() => {
       this.router.navigate([""]);
     });
   }

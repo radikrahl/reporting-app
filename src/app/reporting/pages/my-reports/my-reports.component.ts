@@ -1,7 +1,6 @@
 import {
   ChangeDetectorRef,
   Component,
-  OnDestroy,
   OnInit,
   inject,
 } from "@angular/core";
@@ -37,7 +36,8 @@ export class MyReportsComponent implements OnInit {
     this.files
       .getEntities(this.folderName)
       .then((x) =>
-        this.entities$.next(x.sort((a, b) => a.name.localeCompare(b.name)))
+        {
+          this.entities$.next(x.sort((a, b) => a.name.localeCompare(b.name)))}
       );
   }
 

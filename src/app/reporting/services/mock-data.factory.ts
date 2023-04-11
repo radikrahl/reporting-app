@@ -1,21 +1,20 @@
+import { createFilePath } from "~/app/shared/files/classes/file";
 import { FileManager } from "../../shared/files/services/file.manager";
 import { formatDate } from "@angular/common";
 
 export class MockdataFactory {
-  constructor(private csv: FileManager) {}
+  constructor(private files: FileManager) {}
   async create() {
     var data = this.createMockData();
 
-    const dateString = formatDate(data.date as Date, "yyyy-MM-dd", "en-US");
-
-    const fileName = `${data.parentName}-${dateString}.csv`;
-    return this.csv.save(data.parentName + "/" + fileName, data);
+    var path = createFilePath(data.parentName as string, data.date as Date)
+    return this.files.save(path, data);
   }
 
   private createMockData() {
     var data: Record<string, unknown> = {
-      parentName: "Parent " + randNumber(10),
-      date: randomDate(new Date(2022, 0), new Date(2023, 0)),
+      parentName: "Parent " + randNumber(2),
+      date: randomDate(new Date(2022, 0), new Date(2024, 0)),
       chicken: 4,
       foodQuantity: randNumber(100, 0),
       eggs: randNumber(10),

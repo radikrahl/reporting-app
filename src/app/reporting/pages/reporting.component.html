@@ -1,0 +1,23 @@
+<ActionBar title="Home">
+    <NavigationButton text="Go back" android.systemIcon="ic_menu_back" [nsRouterLink]="['/']"></NavigationButton>
+</ActionBar>
+<FlexboxLayout class="m-12" flexDirection="column" justifyContent="center" alignItems="center">
+    <Button class="afriknow-btn -complementary" (tap)="navigate('chicken')" pageTransition="slide">
+        <FormattedString>
+            <Label [text]="'&#xf7fb;\n'" class="fas"></Label>
+            <Label [text]="'Chicken'"></Label>
+        </FormattedString>
+    </Button>
+    <Button class="afriknow-btn -complementary" (tap)="navigate('goat')" pageTransition="slide">
+        <FormattedString>
+            <!-- <Span [text]="'&#xf07b;\n'" class="fas"></Span> -->
+            <Label [text]="'Goats'"></Label>
+        </FormattedString>
+    </Button>
+    <Button class="afriknow-btn -complementary" (tap)="navigate('monthly')" pageTransition="slide">
+        <FormattedString>
+            <!-- <Span [text]="'&#xf07b;\n'" class="fas"></Span> -->
+            <Label [text]="'Monthly'"></Label>
+        </FormattedString>
+    </Button>
+</FlexboxLayout>

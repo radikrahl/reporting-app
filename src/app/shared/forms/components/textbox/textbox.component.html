@@ -1,6 +1,6 @@
 
   <Label class="form-item__label" [text]="question.label"></Label>
-  <Label class="form-item__hint"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
+  <Label class="form-item__hint" textWrap="true"  *ngIf="question.hint" [class]="showError ? 'color-error' : ''" [text]="question.hint"></Label>
   <FlexboxLayout>
     <TextField flexShrink="1" flexGrow="0" class="text-field" [keyboardType]="question.keyboardType"
       [returnKeyType]="question.returnKeyType" [id]="question.key" [required]="question.required"

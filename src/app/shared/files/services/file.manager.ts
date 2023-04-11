@@ -39,7 +39,6 @@ export class FileManager {
 
   public save(relativePath: string, data: CsvDataRecord) {
     const file = new CsvFile(this.root.getFile(relativePath));
-
     return file.save(data);
   }
 
