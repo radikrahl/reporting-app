@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { QuestionOptions } from "~/app/core/models/report-item";
 import { ReportControl } from "../../classes/report-control";
+import { QuestionOptions } from "../../classes/question-base";
 
 export interface SwitchReportItemOptions extends QuestionOptions<boolean> {
   switchFor: string | string[];

@@ -11,4 +11,8 @@ export class ReportingComponent {
   navigate(route: string) {
     this.router.navigate(["reports/report/" + route]);
   }
+
+  goBack() {
+    this.router.back();
+  }
 }

@@ -1,5 +1,5 @@
 import { FormControl, Validators } from "@angular/forms";
-import { QuestionBase, QuestionOptions } from "~/app/core/models/report-item";
+import { QuestionBase, QuestionOptions } from "./question-base";
 
 export type ReportFormType = string | number | boolean | Date | undefined;
 

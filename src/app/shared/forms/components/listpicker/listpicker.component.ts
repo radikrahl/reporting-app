@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { QuestionOptions } from "~/app/core/models/report-item";
 import { ReportControl } from "../../classes/report-control";
 import { NativeScriptNgZone } from "@nativescript/angular";
+import { QuestionOptions } from "../../classes/question-base";
 
 export interface ListpickerReportItemOptions extends QuestionOptions<string> {
   items?: string[];

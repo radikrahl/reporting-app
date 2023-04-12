@@ -1,5 +1,5 @@
-<ActionBar title="Home">
-    <NavigationButton text="Go back" android.systemIcon="ic_menu_back" [nsRouterLink]="['/']"></NavigationButton>
+<ActionBar title="Choose Report">
+    <NavigationButton text="Go back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
 </ActionBar>
 <FlexboxLayout class="m-12" flexDirection="column" justifyContent="center" alignItems="center">
     <Button class="afriknow-btn -complementary" (tap)="navigate('chicken')" pageTransition="slide">

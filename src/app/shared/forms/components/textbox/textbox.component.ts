@@ -1,8 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { FormGroup, Validators } from "@angular/forms";
 import { CoreTypes } from "@nativescript/core";
-import { QuestionOptions } from "~/app/core/models/report-item";
 import { ReportControl } from "../../classes/report-control";
+import { QuestionOptions } from "../../classes/question-base";
 
 type TextboxType = string | number;
 
