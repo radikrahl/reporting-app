@@ -1,13 +1,15 @@
 import { createFilePath } from "~/app/shared/files/classes/file";
 import { FileManager } from "../../shared/files/services/file.manager";
-import { formatDate } from "@angular/common";
+import { ChickenReportFactory } from "../classes/reportform.factory";
 
-export class MockdataFactory {
-  constructor(private files: FileManager) {}
+export class MockdataFactory extends ChickenReportFactory {
+  constructor(private files: FileManager) {
+    super();
+  }
   async create() {
-    var data = this.createMockData();
+    var data = super.createReportForm().toFormRecord();
 
-    var path = createFilePath(data.parentName as string, data.date as Date)
+    var path = createFilePath(data.parentName as string, data.date as Date);
     return this.files.save(path, data);
   }
 

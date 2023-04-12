@@ -16,6 +16,10 @@ import { FileManager } from "~/app/shared/files/services/file.manager";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyReportsComponent {
+  public get title() {
+    return this.folder && !this.isRoot() ? this.folder.name : 'My reports';
+  }
+
   entities$: BehaviorSubject<FileSystemEntity[]> = new BehaviorSubject<
     FileSystemEntity[]
   >([]);
