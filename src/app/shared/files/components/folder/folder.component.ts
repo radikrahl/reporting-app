@@ -35,13 +35,13 @@ export class FolderComponent {
         .catch(console.error);
     });
   }
+
   onOpen(folder: Folder) {
     var folderName = this.route.snapshot.queryParams.folder;
 
     if (folderName) {
-      folderName = folderName + '/' + folder.name;
-    }
-    else {
+      folderName = folderName + "/" + folder.name;
+    } else {
       folderName = folder.name;
     }
     const extras: NavigationExtras = {
@@ -57,5 +57,9 @@ export class FolderComponent {
 
   onDownload() {
     new CsvFolder(this.fileSystemEntity).download();
+  }
+
+  canDelete() {
+    return this.fileSystemEntity.parent.name !== "reports";
   }
 }

@@ -18,13 +18,16 @@ export class ReportFormService {
     this.reportForm = factory.createReportForm();
   }
 
-  save() {
+  save(type: "chicken" | "goats" | "monthly") {
     let date: Date = this.reportForm.date;
-    const parentName: string = this.reportForm.name || "Monthly";
+    const parentName: string = this.reportForm.name || "";
 
     const data = this.reportForm.toFormRecord();
     var path = createFilePath(parentName, date);
 
-    return this.files.save(path, data);
+    return this.files.save(
+      type.charAt(0).toUpperCase() + type.slice(1) + "/" + path,
+      data
+    );
   }
 }

@@ -43,9 +43,13 @@ export class ReportFormArray {
   private _form: FormArray<FormGroup<any>>;
   nameKey = "parentName";
   dateKey = "date";
-
-  constructor(public groups: ReportFormGroup[]) {
+  type: "chicken" | "goats" | "monthly";
+  constructor(
+    type: "chicken" | "goats" | "monthly",
+    public groups: ReportFormGroup[]
+  ) {
     this._form = this.toFormArray();
+    this.type = type;
   }
 
   public get date(): Date {

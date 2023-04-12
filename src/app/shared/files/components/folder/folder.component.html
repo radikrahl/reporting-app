@@ -16,7 +16,7 @@
             <Span [text]="' share'"></Span>
         </FormattedString>
     </Button>
-    <Button flexGrow="0" flexShrink="1" class="afriknow-btn -small -alert fas" style="width:50;" (tap)="onDelete()"
+    <Button *ngIf="canDelete()" flexGrow="0" flexShrink="1" class="afriknow-btn -small -alert fas" style="width:50;" (tap)="onDelete()"
         [text]="'&#xf1f8;'">
     </Button>
 </FlexboxLayout>

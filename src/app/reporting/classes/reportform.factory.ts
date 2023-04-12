@@ -8,10 +8,6 @@ import { SwitchReportItem } from "~/app/shared/forms/components/switch/switch.co
 import { TextboxReportItem } from "~/app/shared/forms/components/textbox/textbox.component";
 import { TextViewReportItem } from "~/app/shared/forms/components/textview/textview.component";
 
-export interface ReportForm2 {
-  questionGroups: ReportFormGroup[];
-}
-
 export abstract class ReportFactory {
   abstract createReportForm(): ReportFormArray;
 }
@@ -43,7 +39,7 @@ export class ChickenReportFactory extends ReportFactory {
   ];
 
   createReportForm(): ReportFormArray {
-    return new ReportFormArray([
+    return new ReportFormArray("chicken", [
       new ReportFormGroup([
         new ListpickerReportItem({
           key: "parentName",
@@ -264,7 +260,7 @@ export class GoatReportFormFactory extends ReportFactory {
   private readonly goatParentNames = ["Zakia", "Zakia Wetikire"];
 
   createReportForm(): ReportFormArray {
-    return new ReportFormArray([
+    return new ReportFormArray("goats", [
       new ReportFormGroup([
         new ListpickerReportItem({
           key: "parentName",
@@ -284,7 +280,7 @@ export class GoatReportFormFactory extends ReportFactory {
 
       new ReportFormGroup([
         new TextboxReportItem({
-          key: "chicken",
+          key: "goats",
           label: "How many goats this week?",
           hint: "How many goats are at the parent's place.",
           placeholder: "1-3 digits",
@@ -351,15 +347,15 @@ export class GoatReportFormFactory extends ReportFactory {
       /* SOLD */
       new ReportFormGroup([
         new SwitchReportItem({
-          key: "soldBirds",
+          key: "soldGoats",
           label: "Any sold goats this week?",
           value: true,
-          switchFor: ["soldBirdsAmount", "amountReceived"],
+          switchFor: ["soldGoatsAmount", "amountReceived"],
         }),
 
         new TextboxReportItem({
-          key: "soldBirdsAmount",
-          label: "Sold birds",
+          key: "soldGoatsAmount",
+          label: "Sold Goats",
           hint: "How many sold goats this week?",
           placeholder: "1-3 digits",
           errorText: "0",
@@ -387,15 +383,15 @@ export class GoatReportFormFactory extends ReportFactory {
       /* SICKNESS */
       new ReportFormGroup([
         new SwitchReportItem({
-          key: "sickBirds",
-          label: "Any sick birds this week?",
+          key: "sickGoats",
+          label: "Any sick goats this week?",
           value: true,
-          switchFor: ["sickBirdsAmount", "sickness"],
+          switchFor: ["sickGoatsAmount", "sickness"],
         }),
 
         new TextboxReportItem({
-          key: "sickBirdsAmount",
-          label: "How many sick birds?",
+          key: "sickGoatsAmount",
+          label: "How many sick goats?",
           placeholder: "1-3 digits",
           errorText: "0",
           keyboardType: "integer",
@@ -440,15 +436,15 @@ export class GoatReportFormFactory extends ReportFactory {
       /* DEAD */
       new ReportFormGroup([
         new SwitchReportItem({
-          key: "deadBirds",
-          label: "Any dead birds this week?",
+          key: "deadGoats",
+          label: "Any dead goats this week?",
           value: true,
-          switchFor: ["deadBirdsAmount", "deathReason"],
+          switchFor: ["deadGoatsAmount", "deathReason"],
         }),
 
         new TextboxReportItem({
-          key: "deadBirdsAmount",
-          label: "How many dead birds?",
+          key: "deadGoatsAmount",
+          label: "How many dead goats?",
           placeholder: "1-3 digits",
           errorText: "0",
           keyboardType: "integer",
@@ -471,7 +467,7 @@ export class GoatReportFormFactory extends ReportFactory {
 
 export class MonthlyFormFactory extends ReportFactory {
   createReportForm(): ReportFormArray {
-    return new ReportFormArray([
+    return new ReportFormArray("monthly", [
       new ReportFormGroup([
         new DatepickerReportItem({
           key: "date",
@@ -506,7 +502,7 @@ export class MonthlyFormFactory extends ReportFactory {
         new TextViewReportItem({
           key: "economy",
           label: "Economy status",
-          hint: "Did the parents have any savings?\nDid some parents take out a loan?\n What is Marting saying about the situation right now?",
+          hint: "Did the parents have any savings?\nDid some parents take out a loan?\nWhat is Marting saying about the situation right now?",
           required: true,
         }),
         new TextViewReportItem({

@@ -28,7 +28,7 @@ export class NewReportComponent {
   }
 
   onSubmit() {
-    this.reports.save().then(() => {
+    this.reports.save(this.reportForm.type).then(() => {
       this.router.navigate([""]);
     });
   }

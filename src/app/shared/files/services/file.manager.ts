@@ -29,6 +29,10 @@ export class FileManager {
     return knownFolders.temp();
   }
 
+  public isRoot(entity: FileSystemEntity) {
+    return entity instanceof Folder && entity.path === this.root.path;
+  }
+
   public getFolder(path: string) {
     return this.root.getFolder(path);
   }
