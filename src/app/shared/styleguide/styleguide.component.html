@@ -1,11 +1,11 @@
-<StackLayout columns="*" rows="40,*,auto" width="100%" height="100%">
+<StackLayout  width="100%" height="100%">
 
 
-  <ScrollView row="1" class="mb-6">
-    <ng-container col="0" *ngFor="let group of formData; index as i">
+  <ScrollView  orientation="vertical" class="mb-6">
+    <StackLayout  *ngFor="let group of formData; index as i">
       <afriknow-report-form [formGroup]="form" *ngIf="i + 1 === pageIndex"
         [questionGroup]="group"></afriknow-report-form>
-    </ng-container>
+    </StackLayout>
 
   </ScrollView>
 

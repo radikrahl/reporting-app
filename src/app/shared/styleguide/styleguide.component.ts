@@ -82,6 +82,42 @@ function formData() {
         placeholder: "e.g. newcastle, cough, etc...",
         errorText: "Please provide a sickness reason.",
       }),
+      new TextViewReportItem({
+        key: "birds",
+        label: "How are the parents and her birds doing this month?",
+        hint: "Explain the general situation in the field and the devlopment of the project.",
+        required: true,
+      }),
+      new TextViewReportItem({
+        key: "goats",
+        label: "How are the parents and her goats doing this month?",
+        hint: "Explain the general situation in the field and the devlopment of the project.",
+        required: true,
+      }),
+      new TextViewReportItem({
+        key: "challenges",
+        label: "What challenges did you face this month?",
+        hint: "Are the some changes this month in the project? Why?",
+        required: true,
+      }),
+      new TextViewReportItem({
+        key: "health",
+        label: "Health status",
+        hint: "Please explain why some chicken got sick or died this month.",
+        required: true,
+      }),
+      new TextViewReportItem({
+        key: "economy",
+        label: "Economy status",
+        hint: "Did the parents have any savings?\nDid some parents take out a loan?\nWhat is Marting saying about the situation right now?",
+        required: true,
+      }),
+      new TextViewReportItem({
+        key: "learnings",
+        label: "Anything else?",
+        hint: "Is there any more learnings from the parents and yourself which you want to share with us?",
+        required: true,
+      }),
     ]),
   ];
 }

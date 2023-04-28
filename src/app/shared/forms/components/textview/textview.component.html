@@ -1,17 +1,15 @@
 <Label class="form-item__label" [text]="question.label"></Label>
 <Label class="form-item__hint" textWrap="true" *ngIf="question.hint" [class]="showError ? 'color-error' : ''"
   [text]="question.hint"></Label>
-<FlexboxLayout>
+<StackLayout>
 
-  <TextView flexShrink="1" whiteSpace="normal" flexGrow="0" class="text-field" [keyboardType]="question.keyboardType"
-    returnKeyType="{{ question.returnKeyType }}" [id]="question.key" [required]="question.required"
-    [hint]="question.placeholder" [maxlength]="question.maxLength" [autocorrect]="false"
+  <TextView whiteSpace="normal" class="text-field mt-4" [keyboardType]="question.keyboardType"
+    [returnKeyType]=" question.returnKeyType " [id]="question.key" [required]="question.required"
+    [hint]="question.placeholder"  [autocorrect]="false"
     [formControl]="question.formControl">
   </TextView>
-  <Label flexGrow="1" flexShrink="0" class="text-field__unit" *ngIf="question.unit" [text]="question.unit"></Label>
-</FlexboxLayout>
+</StackLayout>
 <StackLayout>
-  <!-- <Label class="form-item__error mt-2" *ngIf="showError" [text]="'Please provide a value.'"></Label> -->
   <Label class="form-item__error"
     *ngIf="question.formControl.errors?.min && question.formControl.invalid && (question.formControl.touched || question.formControl.dirty)"
     [text]="'Minimum of ' + question.formControl.errors?.min.min"></Label>

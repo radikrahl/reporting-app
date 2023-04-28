@@ -38,6 +38,13 @@ Switch[checked="false"] {
   color: $color-error;
 }
 
+TextView {
+  padding: $space-2;
+  &.text-field {
+    border-width: 1;
+  }
+}
+
 .afriknow-form {
   margin-left: $space-10;
   margin-right: $space-10;

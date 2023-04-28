@@ -1,8 +1,8 @@
 <StackLayout class="afriknow-form" [formGroup]="questionGroup.form">
 
-    <StackLayout class="mt-6" *ngFor="let question of questionGroup.questions">
+    <ng-container class="mt-6" *ngFor="let question of questionGroup.questions">
         <ng-container *ngIf="!question.formControl.disabled" [formItem]="question" [form]="questionGroup.form">
         </ng-container>
-    </StackLayout>
+    </ng-container>
 
 </StackLayout>
